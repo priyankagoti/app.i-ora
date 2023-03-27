@@ -31,7 +31,7 @@
           <p class="text-black text-xl mt-5 text-right font-semibold">Forgot your Password?</p>
         </div>
         <button class="auth-btn mb-20" type="button">Log In</button>
-        <p class="text-black text-xl mt-5 text-center">Don’t have an account? <span class="text-[#ffa384]">Sign Up</span></p>
+        <p class="text-black text-xl mt-5 text-center">Don’t have an account? <RouterLink to="/register" class="text-[#ffa384]">Sign Up</RouterLink></p>
       </div>
     </div>
     <AuthCover />
@@ -40,13 +40,15 @@
 
 <script>
 import AuthCover from "../../components/AuthCover.vue";
+import {RouterLink} from "vue-router";
 export default {
   name: "AuthLogin",
   props: {
     msg: String
   },
   components: {
-    AuthCover
+    AuthCover,
+    RouterLink
   }
 };
 </script>
