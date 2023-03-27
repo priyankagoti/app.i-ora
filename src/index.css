@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.auth-input {
+    @apply bg-white h-16 rounded-full w-full p-5 text-lg text-[#8F9BB3] pl-14 border border-transparent outline-0 focus:border-sky;
+}
+.auth-input-icon {
+    @apply absolute top-1/2 -translate-y-1/2 left-6;
+}
+
+.auth-btn {
+    @apply text-black font-bold w-full text-center bg-sky p-4 text-lg rounded-full hover:bg-[#5999a5] transition;
+}
