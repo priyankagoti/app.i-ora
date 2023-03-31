@@ -16,3 +16,24 @@
 .flex-center {
     @apply flex items-center justify-center;
 }
+.btn {
+    @apply text-xs font-bold py-2.5 px-5 rounded-full flex items-center;
+}
+.btn-sky {
+    @apply bg-sky hover:bg-body;
+}
+.btn-light-sky {
+    @apply bg-body hover:bg-body;
+}
+.label {
+    @apply text-sm mb-1 leading-4;
+}
+.input {
+    @apply bg-body w-full text-xs p-3.5 rounded-lg border border-transparent focus:outline-0 focus:border-sky;
+}
+.btn-pager {
+    @apply w-6 h-6 bg-body rounded-md flex items-center justify-center text-xs
+}
+.btn-pager-active {
+    @apply bg-sky font-bold;
+}
