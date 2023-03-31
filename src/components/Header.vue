@@ -1,8 +1,8 @@
 <template>
   <div
-    class="bg-white p-5 fixed top-0 left-0 w-full flex justify-between h-[88px] pl-[330px] items-center"
+    class="bg-white 2xl:p-5 p-4 fixed top-0 left-0 w-full flex justify-between 2xl:h-[88px] h-[70px] 3xl:pl-[330px] 2xl:pl-[280px] pl-[250px] items-center z-10"
   >
-    <h2 class="text-black font-bold text-xl">Dashboard</h2>
+    <h2 class="text-black font-bold text-xl">{{title}}</h2>
     <div class="relative w-1/2">
       <input
         type="text"
@@ -75,6 +75,9 @@ export default {
   name: "HeaderComponent",
   components: {
     // RouterLink,
+  },
+  props: {
+    title: String,
   },
 };
 </script>

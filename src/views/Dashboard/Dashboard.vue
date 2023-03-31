@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-body w-screen h-screen pl-[330px] pt-[110px] pr-[30px] pb-[30px] overflow-auto">
+  <div class="body-space">
     <SideBarComponent />
-    <HeaderComponent />
+    <HeaderComponent title="Dashboard" />
     <DashboardStatistics />
-    <div class="grid gap-[30px] grid-cols-2">
+    <div class="grid 3xl:gap-[30px] gap-6 grid-cols-2">
       <DashboardEmployees />
       <DashboardRecentObjects />
     </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="text-center">
       <div
-        class="bg-sky p-16 h-full rounded-[40px] flex items-center justify-center"
+        class="bg-sky 3xl:p-16 p-10 h-full rounded-[40px] flex items-center justify-center"
       >
         <div class="">
           <img
@@ -12,9 +12,9 @@
           <img
             src="../assets/images/cover/logo-cover.png"
             alt=""
-            class="mb-5"
+            class="mb-5 mx-auto h-[450px] 2xl:h-auto"
           />
-          <p class="text-xl font-semibold text-black">
+          <p class="2xl:text-xl text-lg font-semibold text-black">
             Workforce Analytics for team productivity <br />
             management
           </p>

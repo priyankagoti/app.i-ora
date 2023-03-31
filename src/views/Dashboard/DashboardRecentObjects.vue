@@ -5,7 +5,7 @@
       <thead class="bg-body">
         <tr class="text-sm font-bold">
           <td class="p-4 rounded-l-xl">Project Name</td>
-          <td class="p-4" width="250px">Progress</td>
+          <td class="p-4 3xl:w-[250px] w-[200px]">Progress</td>
           <td class="p-4 text-center">Status</td>
           <td class="p-4 rounded-r-xl text-center">Action</td>
         </tr>

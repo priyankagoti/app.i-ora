@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-10 w-screen h-screen bg-body grid gap-10 grid-cols-2 overflow-auto"
+    class="3xl:p-10 p-7 w-screen h-screen bg-body grid gap-10 grid-cols-2 overflow-auto"
   >
     <div class="p-16">
       <div class="max-w-[582px] mx-auto h-full">

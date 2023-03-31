@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-body w-screen h-screen pl-[330px] pt-[110px] pr-[30px] pb-[30px] overflow-auto">
+  <div class="body-space">
     <SideBarComponent />
-    <HeaderComponent />
-    <div class="flex items-center justify-between mb-7">
+    <HeaderComponent title="Admin" />
+    <div class="flex items-center justify-between mb-30">
       <button class="btn btn-sky">
         <svg class="mr-2" width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path

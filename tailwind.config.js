@@ -12,6 +12,9 @@ module.exports = {
       },
       fontFamily: {
         'OpenSans': "'Open Sans', sans-serif"
+      },
+      screens: {
+        '3xl': '1699px',
       }
     }
   },

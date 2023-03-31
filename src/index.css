@@ -1,39 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.nav-link {
+  @apply p-3.5 h-11 flex rounded-full bg-transparent text-sm items-center;
+}
+.nav-link-active {
+  @apply bg-body text-sky font-bold;
+}
 .auth-input {
-    @apply bg-white h-16 rounded-full w-full p-5 text-lg text-[#8F9BB3] pl-14 border border-transparent outline-0 focus:border-sky;
+  @apply bg-white h-16 rounded-full w-full p-5 text-lg text-[#8F9BB3] pl-14 border border-transparent outline-0 focus:border-sky;
 }
 .auth-input-icon {
-    @apply absolute top-1/2 -translate-y-1/2 left-6;
+  @apply absolute top-1/2 -translate-y-1/2 left-6;
 }
 .auth-btn {
-    @apply text-black font-bold w-full text-center bg-sky p-4 text-lg rounded-full hover:bg-[#5999a5] transition;
+  @apply text-black font-bold w-full text-center bg-sky p-4 text-lg rounded-full hover:bg-[#5999a5] transition;
 }
 .flex-center {
-    @apply flex items-center justify-center;
+  @apply flex items-center justify-center;
 }
 .btn {
-    @apply text-xs font-bold py-2.5 px-5 rounded-full flex items-center;
+  @apply text-xs font-bold py-2.5 px-5 rounded-full flex items-center;
 }
 .btn-sky {
-    @apply bg-sky hover:bg-body;
+  @apply bg-sky hover:bg-body;
 }
 .btn-light-sky {
-    @apply bg-body hover:bg-body;
+  @apply bg-body hover:bg-body;
 }
 .label {
-    @apply text-sm mb-1 leading-4;
+  @apply text-sm mb-1 leading-4 text-[#222B45];
 }
 .input {
-    @apply bg-body w-full text-xs p-3.5 rounded-lg border border-transparent focus:outline-0 focus:border-sky;
+  @apply bg-body w-full text-xs p-3.5 rounded-lg border border-transparent focus:outline-0 focus:border-sky;
 }
 .btn-pager {
-    @apply w-6 h-6 bg-body rounded-md flex items-center justify-center text-xs
+  @apply w-6 h-6 bg-body rounded-md flex items-center justify-center text-xs;
 }
 .btn-pager-active {
-    @apply bg-sky font-bold;
+  @apply bg-sky font-bold;
+}
+.body-space {
+  @apply bg-body w-screen h-screen 
+    3xl:pl-[330px] 2xl:pl-[270px] pl-[250px] 
+    3xl:pt-[118px] 2xl:pt-[108px] pt-[90px] 3xl:pr-[30px] pr-5 3xl:pb-[30px] pb-5 overflow-auto;
+}
+.statistics-card {
+  @apply flex bg-white 3xl:p-6 p-5 3xl:pr-11 pr-7 rounded-[20px] items-center;
+}
+.statistics-icon {
+  @apply 3xl:w-20 w-16 3xl:h-20 h-16 bg-body flex-center rounded-full 3xl:mr-5 mr-3;
+}
+.statistics-svg {
+  @apply 3xl:w-10 w-7 h-auto;
+}
+
+.statistics-text {
+  @apply 3xl:text-lg 2xl:text-base text-sm;
+}
+
+.statistics-number {
+  @apply 3xl:text-2xl text-xl font-bold flex ml-auto justify-end;
+}
+.statistics-number-text {
+  @apply text-[#8F9BB3] 3xl:text-base text-sm;
+}
+.mb-30 {
+  @apply 3xl:mb-[30px] mb-6;
+}
+.mt-30 {
+  @apply 3xl:mt-[30px] mt-6;
+}
+.gap-30 {
+  @apply 3xl:gap-[30px] gap-6;
+}
+.gap-20 {
+  @apply 3xl:gap-5 gap-4;
 }

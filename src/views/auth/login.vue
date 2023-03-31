@@ -1,10 +1,10 @@
 <template>
   <div
-    class="p-10 w-screen h-screen bg-body grid gap-10 grid-cols-2 overflow-auto"
+    class="3xl:p-10 p-7 w-screen h-screen bg-body grid gap-10 grid-cols-2 overflow-auto"
   >
-    <div class="p-16">
-      <div class="max-w-[582px] mx-auto h-full flex flex-col">
-        <div class="flex h-full items-center pb-24">
+    <div class="3xl:p-16 2xl:p-7 p-8">
+      <div class="2xl:max-w-[582px] max-w-[482px] mx-auto h-full flex flex-col">
+        <div class="flex h-full items-center 3xl:pb-24 pb-16">
           <div class="w-full">
             <h1 class="text-black font-bold text-4xl mb-1">
               Hey, Welcome Back!
@@ -56,7 +56,7 @@
             </p>
           </div>
         </div>
-        <button class="auth-btn mb-20" type="button">Log In</button>
+        <button class="auth-btn 3xl:mb-20 mb-10" type="button">Log In</button>
         <p class="text-black text-xl mt-5 text-center">
           Don’t have an account?
           <RouterLink to="/register" class="text-[#ffa384]">Sign Up</RouterLink>

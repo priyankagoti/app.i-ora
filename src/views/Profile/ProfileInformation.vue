@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="grid grid-cols-3 gap-5">
+  <div class="grid grid-cols-3 gap-20">
     <div class="">
       <label class="label" for="Salutation">Salutation</label>
       <input type="text" id="Salutation" placeholder="Salutation" class="input" />
