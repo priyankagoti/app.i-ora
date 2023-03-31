@@ -10,7 +10,9 @@
 .auth-input-icon {
     @apply absolute top-1/2 -translate-y-1/2 left-6;
 }
-
 .auth-btn {
     @apply text-black font-bold w-full text-center bg-sky p-4 text-lg rounded-full hover:bg-[#5999a5] transition;
+}
+.flex-center {
+    @apply flex items-center justify-center;
 }
