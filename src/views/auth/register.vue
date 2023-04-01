@@ -2,13 +2,63 @@
   <div
     class="3xl:p-10 p-7 w-screen h-screen bg-body grid gap-10 grid-cols-2 overflow-auto"
   >
-    <div class="p-16">
-      <div class="max-w-[582px] mx-auto h-full">
-        <div class="d-flex">
-          <h1 class="text-black font-bold text-4xl mb-1">Let’s Get Started!</h1>
-          <p class="text-[#8F9BB3] mb-14 text-xl">
-            Please Sign up here to your Account.
-          </p>
+    <div class="3xl:p-16 2xl:p-7 p-8">
+      <div class="2xl:max-w-[582px] max-w-[482px] mx-auto h-full">
+        <div class="">
+          <div class="flex items-center justify-between 3xl:mb-14 mb-10">
+            <div class="">
+              <h1 class="text-black font-bold 3xl:text-4xl text-3xl mb-1">
+                Let’s Get Started!
+              </h1>
+              <p class="text-[#8F9BB3] 3xl:text-xl 2xl:text-lg text-base">
+                Please Sign up here to your Account.
+              </p>
+            </div>
+            <div
+              class="w-[100px] h-[100px] bg-white rounded-2xl flex-center relative"
+            >
+              <svg
+                width="25"
+                height="32"
+                viewBox="0 0 25 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M19.5003 7.25C19.5003 11.2541 16.3663 14.5 12.5003 14.5C8.63431 14.5 5.50031 11.2541 5.50031 7.25C5.50031 3.24594 8.63431 0 12.5003 0C16.3663 0 19.5003 3.24594 19.5003 7.25ZM0 28.6309C0 21.6548 5.59646 15.9993 12.5 15.9993C19.4035 15.9993 24.9999 21.6548 25 28.6309C25 30.4912 23.5076 31.9993 21.6667 31.9993H3.33335C1.49241 31.9993 0 30.4912 0 28.6309Z"
+                  fill="#74BDCB"
+                />
+              </svg>
+              <input
+                type="file"
+                name=""
+                id="UploadProfile"
+                class="hidden w-0 h-0"
+              />
+              <label class="bg-[#FFA384] cursor-pointer flex-center rounded-full absolute -bottom-[2px] -left-[2px] w-7 h-7" for="UploadProfile">
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 11 11"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M9.52548 4.92524H6.0731V1.47286C6.0731 1.15466 5.81532 0.897461 5.49771 0.897461C5.18009 0.897461 4.92231 1.15466 4.92231 1.47286V4.92524H1.46993C1.15231 4.92524 0.894531 5.18244 0.894531 5.50064C0.894531 5.81883 1.15231 6.07603 1.46993 6.07603H4.92231V9.52841C4.92231 9.84661 5.18009 10.1038 5.49771 10.1038C5.81532 10.1038 6.0731 9.84661 6.0731 9.52841V6.07603H9.52548C9.8431 6.07603 10.1009 5.81883 10.1009 5.50064C10.1009 5.18244 9.8431 4.92524 9.52548 4.92524Z"
+                    fill="black"
+                  />
+                  <path
+                    d="M9.52548 4.92524H6.0731V1.47286C6.0731 1.15466 5.81532 0.897461 5.49771 0.897461C5.18009 0.897461 4.92231 1.15466 4.92231 1.47286V4.92524H1.46993C1.15231 4.92524 0.894531 5.18244 0.894531 5.50064C0.894531 5.81883 1.15231 6.07603 1.46993 6.07603H4.92231V9.52841C4.92231 9.84661 5.18009 10.1038 5.49771 10.1038C5.81532 10.1038 6.0731 9.84661 6.0731 9.52841V6.07603H9.52548C9.8431 6.07603 10.1009 5.81883 10.1009 5.50064C10.1009 5.18244 9.8431 4.92524 9.52548 4.92524"
+                    stroke="black"
+                  />
+                </svg>
+              </label>
+            </div>
+          </div>
           <div class="relative mb-3">
             <svg
               class="auth-input-icon"
@@ -154,8 +204,19 @@
             />
           </div>
         </div>
-        <button class="auth-btn mb-8" type="button">Sign Up</button>
-        <p class="text-black text-xl mt-5 text-center">
+        <div class="flex items-center mb-2.5">
+          <input type="checkbox" id="conditions" class="w-7 h-7 mr-2.5 flex-shrink-0">
+          <label class="text-xs" for="conditions">I have read and agree to the website terms and conditions.*</label>
+        </div>
+        <div class="flex items-center mb-10">
+          <input type="checkbox" id="privacyPolicy" class="w-7 h-7 mr-2.5 flex-shrink-0">
+          <label class="text-xs" for="privacyPolicy">
+            By using this from you agree with the storage and handling of your data by this website in accordance with our 
+            <span class="text-[#ffa384]">Privacy Policy.</span>.*
+          </label>
+        </div>
+        <button class="auth-btn mb-7" type="button">Sign Up</button>
+        <p class="text-black 3xl:text-xl text-lg text-center">
           Already have an account?
           <RouterLink to="/login" class="text-[#ffa384]">Sign In</RouterLink>
         </p>

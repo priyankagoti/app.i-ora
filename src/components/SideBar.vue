@@ -1,6 +1,8 @@
 <template>
   <div
-    class="bg-white 2xl:p-5 p-4 3xl:w-[300px] 2xl:w-[250px] w-[230px] h-screen fixed top-0 left-0 flex justify-between flex-col z-20"
+    class="
+    shadow-lg shadow-black/10
+    bg-white 2xl:p-5 p-4 3xl:w-[300px] 2xl:w-[250px] w-[230px] h-screen fixed top-0 left-0 flex justify-between flex-col z-20"
   >
     <div class="flex flex-col">
       <img

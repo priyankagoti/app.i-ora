@@ -9,11 +9,11 @@
             <h1 class="text-black font-bold text-4xl mb-1">
               Hey, Welcome Back!
             </h1>
-            <p class="text-[#8F9BB3] mb-14 text-xl">
+            <p class="text-[#8F9BB3] mb-14 3xl:text-xl text-lg">
               Please Sign in here to your Account,<br />
               Have your landing pages online in minutes.
             </p>
-            <div class="relative mb-14">
+            <div class="relative 3xl:mb-14 mb-10">
               <svg
                 class="auth-input-icon"
                 width="16"
@@ -51,13 +51,13 @@
                 class="auth-input"
               />
             </div>
-            <p class="text-black text-xl mt-5 text-right font-semibold">
+            <p class="text-black 3xl:text-xl text-base mt-5 text-right font-semibold">
               Forgot your Password?
             </p>
           </div>
         </div>
-        <button class="auth-btn 3xl:mb-20 mb-10" type="button">Log In</button>
-        <p class="text-black text-xl mt-5 text-center">
+        <button class="auth-btn 3xl:mb-20 2xl:mb-10 mb-7" type="button">Log In</button>
+        <p class="text-black 3xl:text-xl text-lg mt-5 text-center">
           Don’t have an account?
           <RouterLink to="/register" class="text-[#ffa384]">Sign Up</RouterLink>
         </p>

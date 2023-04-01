@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 bg-white rounded-[20px] pb-0">
+  <div class="p-5 bg-white rounded-[20px] pb-0 shadow-lg shadow-black/5">
     <h4 class="mb-5 text-base font-bold">Recent Objects</h4>
     <table class="w-full text-xs font-semibold">
       <thead class="bg-body">

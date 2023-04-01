@@ -50,7 +50,7 @@
       </h3>
       <span class="statistics-number">25</span>
     </div>
-    <div class="flex bg-white p-6 pr-11 rounded-[20px] items-center">
+    <div class="statistics-card">
       <div class="statistics-icon">
         <svg width="39" height="40" viewBox="0 0 39 40" fill="none" class="statistics-svg">
           <path

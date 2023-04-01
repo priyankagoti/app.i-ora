@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="body-space"
-  >
+  <div class="body-space">
     <SideBarComponent />
     <HeaderComponent title="Add New Object" />
     <div class="p-5 bg-white rounded-[20px]">
@@ -157,44 +155,290 @@
         </div>
         <div class="col-span-2">
           <label class="label">Rotation</label>
-          <div class="flex gap-5">
-            <input
-              class="hidden peer"
-              type="radio"
-              name="Rotation"
-              id="rotation"
-              checked
+          <div class="flex gap-20">
+            <div class="relative">
+              <input
+                class="hidden peer"
+                type="radio"
+                name="Rotation"
+                id="rotation"
+              />
+              <label for="rotation" class="rotation-check">
+                <span class="text-xs">Weekly</span>
+              </label>
+              <span for="rotation" class="rotation-checkmark"></span>
+              <svg
+                class="rotation-checkmark-svg"
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="28" height="28" rx="14" fill="#74BDCB" />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M20.606 11.3784C20.8617 11.1137 21.0031 10.7592 20.9999 10.3913C20.9967 10.0233 20.8491 9.67127 20.5889 9.41106C20.3287 9.15085 19.9767 9.00325 19.6087 9.00005C19.2408 8.99686 18.8863 9.13832 18.6216 9.39396L12.5966 15.419L9.37844 12.2009C9.11375 11.9452 8.75923 11.8038 8.39125 11.807C8.02327 11.8101 7.67127 11.9577 7.41106 12.218C7.15085 12.4782 7.00325 12.8302 7.00005 13.1982C6.99686 13.5661 7.13832 13.9206 7.39397 14.1853L11.6043 18.3957C11.8675 18.6588 12.2244 18.8066 12.5966 18.8066C12.9687 18.8066 13.3256 18.6588 13.5888 18.3957L20.606 11.3784Z"
+                  fill="white"
+                />
+              </svg>
+            </div>
+            <div class="relative">
+              <input
+                class="hidden peer"
+                type="radio"
+                name="Rotation"
+                id="rotation-weekly"
+              />
+              <label for="rotation-weekly" class="rotation-check">
+                <span class="text-xs">Every 2 weeks</span>
+              </label>
+              <span class="rotation-checkmark"></span>
+              <svg
+                class="rotation-checkmark-svg"
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="28" height="28" rx="14" fill="#74BDCB" />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M20.606 11.3784C20.8617 11.1137 21.0031 10.7592 20.9999 10.3913C20.9967 10.0233 20.8491 9.67127 20.5889 9.41106C20.3287 9.15085 19.9767 9.00325 19.6087 9.00005C19.2408 8.99686 18.8863 9.13832 18.6216 9.39396L12.5966 15.419L9.37844 12.2009C9.11375 11.9452 8.75923 11.8038 8.39125 11.807C8.02327 11.8101 7.67127 11.9577 7.41106 12.218C7.15085 12.4782 7.00325 12.8302 7.00005 13.1982C6.99686 13.5661 7.13832 13.9206 7.39397 14.1853L11.6043 18.3957C11.8675 18.6588 12.2244 18.8066 12.5966 18.8066C12.9687 18.8066 13.3256 18.6588 13.5888 18.3957L20.606 11.3784Z"
+                  fill="white"
+                />
+              </svg>
+            </div>
+            <div class="relative">
+              <input
+                class="hidden peer"
+                type="radio"
+                name="Rotation"
+                id="rotation-monthly"
+              />
+              <label for="rotation-monthly" class="rotation-check">
+                <span class="text-xs">Monthly</span>
+              </label>
+              <span class="rotation-checkmark"></span>
+              <svg
+                class="rotation-checkmark-svg"
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="28" height="28" rx="14" fill="#74BDCB" />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M20.606 11.3784C20.8617 11.1137 21.0031 10.7592 20.9999 10.3913C20.9967 10.0233 20.8491 9.67127 20.5889 9.41106C20.3287 9.15085 19.9767 9.00325 19.6087 9.00005C19.2408 8.99686 18.8863 9.13832 18.6216 9.39396L12.5966 15.419L9.37844 12.2009C9.11375 11.9452 8.75923 11.8038 8.39125 11.807C8.02327 11.8101 7.67127 11.9577 7.41106 12.218C7.15085 12.4782 7.00325 12.8302 7.00005 13.1982C6.99686 13.5661 7.13832 13.9206 7.39397 14.1853L11.6043 18.3957C11.8675 18.6588 12.2244 18.8066 12.5966 18.8066C12.9687 18.8066 13.3256 18.6588 13.5888 18.3957L20.606 11.3784Z"
+                  fill="white"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-2">
+          <label class="label">Day</label>
+          <div class="flex justify-between items-center">
+            <div>
+              <input
+                class="hidden peer"
+                type="radio"
+                name="WeekDay"
+                id="Monday"
+              />
+              <label for="Monday" class="day-check">
+                <span class="text-xs">Mon</span>
+              </label>
+            </div>
+            <div>
+              <input
+                class="hidden peer"
+                type="radio"
+                name="WeekDay"
+                id="Tuesday"
+              />
+              <label for="Tuesday" class="day-check">
+                <span class="text-xs">Tue</span>
+              </label>
+            </div>
+            <div>
+              <input
+                class="hidden peer"
+                type="radio"
+                name="WeekDay"
+                id="Wednesday"
+              />
+              <label for="Wednesday" class="day-check">
+                <span class="text-xs">Wed</span>
+              </label>
+            </div>
+            <div>
+              <input
+                class="hidden peer"
+                type="radio"
+                name="WeekDay"
+                id="Thusday"
+              />
+              <label for="Thusday" class="day-check">
+                <span class="text-xs">Thu</span>
+              </label>
+            </div>
+            <div>
+              <input
+                class="hidden peer"
+                type="radio"
+                name="WeekDay"
+                id="Friday"
+              />
+              <label for="Friday" class="day-check">
+                <span class="text-xs">Fri</span>
+              </label>
+            </div>
+            <div>
+              <input
+                class="hidden peer"
+                type="radio"
+                name="WeekDay"
+                id="Saturday"
+              />
+              <label for="Saturday" class="day-check">
+                <span class="text-xs">Sat</span>
+              </label>
+            </div>
+            <div>
+              <input
+                class="hidden peer"
+                type="radio"
+                name="WeekDay"
+                id="Sunday"
+              />
+              <label for="Sunday" class="day-check">
+                <span class="text-xs">Sun</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-3 flex flex-col">
+          <label class="label">Upload Pdf Document *</label>
+          <input type="file" id="UploadPdf" class="h-0 w-0 hidden" />
+          <label
+            class="h-full cursor-pointer rounded-lg p-4 border-dashed border-2 border-[#74BDCB] bg-body flex items-center justify-center flex-col"
+            for="UploadPdf"
+          >
+            <img
+              class="mb-6"
+              src="../../assets/images/icons/upload.png"
+              alt=""
             />
-            <label
-              for="rotation"
-              class="relative flex items-center bg-body p-2.5 px-5 rounded-full cursor-pointer peer-checked:bg-sky peer-checked:text-white text-center h-12"
+            <span class="block text-xs text-black">Upload Now</span>
+          </label>
+        </div>
+        <div class="col-span-3">
+          <label class="label">Task List Contract</label>
+          <div class="rounded-lg p-5 bg-body">
+            <div class="relative mb-5">
+              <input
+                type="text"
+                placeholder="Employee Id"
+                class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full border-2 border-white"
+              />
+              <button
+                class="w-8 h-8 flex-center absolute top-1.5 right-1.5 bg-white rounded-full"
+              >
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.161 12.622C9.99752 13.4847 8.55708 13.9949 6.99747 13.9949C3.13289 13.9949 0 10.8621 0 6.99747C0 3.13286 3.13286 0 6.99747 0C10.8621 0 13.9949 3.13282 13.9949 6.99743C13.9949 8.56773 13.4777 10.0172 12.6043 11.1848L15.7043 14.2848L15.7101 14.2906C16.0989 14.6826 16.0963 15.3155 15.7043 15.7043C15.6109 15.7969 15.5001 15.8702 15.3783 15.92C15.2565 15.9697 15.1261 15.995 14.9946 15.9942C14.863 15.995 14.7326 15.9697 14.6108 15.92C14.489 15.8702 14.3782 15.7969 14.2848 15.7043L11.161 12.622ZM10.4376 10.6234C9.5415 11.4739 8.33042 11.9956 6.99747 11.9956C4.23703 11.9956 1.99929 9.7579 1.99929 6.99747C1.99929 4.23703 4.23707 1.99929 6.99747 1.99929C9.7579 1.99929 11.9956 4.23703 11.9956 6.99747C11.9956 8.34088 11.4656 9.56049 10.6033 10.4586C10.5677 10.4868 10.5336 10.5176 10.5012 10.5512C10.4787 10.5745 10.4575 10.5986 10.4376 10.6234Z"
+                    fill="#74BDCB"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              class="relative mb-2.5 rounded-full flex justify-between items-center bg-white p-1 pl-4"
             >
-              <span class="text-xs">Weekly</span>
-            </label>
-            <input
-              class="hidden peer"
-              type="radio"
-              name="Rotation"
-              id="rotation-weekly"
-            />
-            <label
-              for="rotation-weekly"
-              class="relative flex items-center bg-body p-2.5 px-5 rounded-full cursor-pointer peer-checked:bg-sky peer-checked:text-white text-center h-12"
+              <span class="text-xs">Tasks 1.PDF</span>
+              <div class="flex">
+                <button
+                  class="mr-1 w-[30px] h-[30px] bg-body rounded-full flex-center"
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 13 13"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.1111 13H2.8889C2.11729 13 1.39183 12.6995 0.846166 12.1538C0.300504 11.6082 0 10.8828 0 10.1111V9.38889C0 8.99001 0.323348 8.66666 0.722233 8.66666C1.12112 8.66666 1.44447 8.99003 1.44447 9.38889V10.1111C1.44447 10.4969 1.59472 10.8596 1.86754 11.1325C2.14038 11.4053 2.5031 11.5556 2.8889 11.5556H10.1111C10.4969 11.5556 10.8596 11.4053 11.1325 11.1325C11.4053 10.8596 11.5556 10.4969 11.5556 10.1111V9.38889C11.5556 8.99001 11.8789 8.66666 12.2778 8.66666C12.6767 8.66666 13 8.99003 13 9.38889V10.1111C13 10.8827 12.6995 11.6082 12.1538 12.1538C11.6081 12.6995 10.8827 13 10.1111 13ZM6.49999 10.1111C6.1011 10.1111 5.77775 9.78775 5.77775 9.38886V2.46584L4.12178 4.12181C3.83974 4.40387 3.38245 4.40387 3.10041 4.12181C2.81837 3.83974 2.81837 3.38248 3.10041 3.10044L5.98932 0.211535C5.98984 0.211008 5.99037 0.210488 5.9909 0.209976L5.99172 0.209155L5.99246 0.208416C5.99283 0.208038 5.99321 0.207673 5.99361 0.207322L5.99399 0.206912L5.99544 0.205516L5.9955 0.205462C6.13029 0.0735816 6.31141 -0.000185551 6.49999 3.50518e-07C6.59919 3.50518e-07 6.69371 0.0199993 6.77975 0.0561944L6.78055 0.0565227L6.78123 0.0568236C6.86431 0.0919436 6.94005 0.142365 7.0045 0.205462L7.00456 0.205516L7.00598 0.206912L7.00642 0.207322L7.00754 0.208416L7.00828 0.209155L7.0091 0.209976L7.01068 0.211535L9.89956 3.10041C10.1816 3.38245 10.1816 3.83974 9.89956 4.12178C9.61755 4.40382 9.1602 4.40382 8.87819 4.12178L7.22225 2.46581V9.38884C7.22225 9.78775 6.89887 10.1111 6.49999 10.1111Z"
+                      fill="#74BDCB"
+                    />
+                  </svg>
+                </button>
+                <button
+                  class="w-[30px] h-[30px] bg-body rounded-full flex-center"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.4 1.8H0.6C0.44087 1.8 0.288258 1.86321 0.175736 1.97574C0.0632141 2.08826 0 2.24087 0 2.4C0 2.55913 0.0632141 2.71174 0.175736 2.82426C0.288258 2.93679 0.44087 3 0.6 3H1.8V10.2C1.8 10.6774 1.98964 11.1352 2.32721 11.4728C2.66477 11.8104 3.12261 12 3.6 12H8.4C8.87739 12 9.33523 11.8104 9.67279 11.4728C10.0104 11.1352 10.2 10.6774 10.2 10.2V3H11.4C11.5591 3 11.7117 2.93679 11.8243 2.82426C11.9368 2.71174 12 2.55913 12 2.4C12 2.24087 11.9368 2.08826 11.8243 1.97574C11.7117 1.86321 11.5591 1.8 11.4 1.8ZM5.4 8.4C5.4 8.55913 5.33679 8.71174 5.22426 8.82426C5.11174 8.93679 4.95913 9 4.8 9C4.64087 9 4.48826 8.93679 4.37574 8.82426C4.26321 8.71174 4.2 8.55913 4.2 8.4V5.4C4.2 5.24087 4.26321 5.08826 4.37574 4.97574C4.48826 4.86321 4.64087 4.8 4.8 4.8C4.95913 4.8 5.11174 4.86321 5.22426 4.97574C5.33679 5.08826 5.4 5.24087 5.4 5.4V8.4ZM7.8 8.4C7.8 8.55913 7.73679 8.71174 7.62426 8.82426C7.51174 8.93679 7.35913 9 7.2 9C7.04087 9 6.88826 8.93679 6.77574 8.82426C6.66321 8.71174 6.6 8.55913 6.6 8.4V5.4C6.6 5.24087 6.66321 5.08826 6.77574 4.97574C6.88826 4.86321 7.04087 4.8 7.2 4.8C7.35913 4.8 7.51174 4.86321 7.62426 4.97574C7.73679 5.08826 7.8 5.24087 7.8 5.4V8.4ZM4.8 1.2H7.2C7.35913 1.2 7.51174 1.13679 7.62426 1.02426C7.73679 0.911742 7.8 0.75913 7.8 0.6C7.8 0.44087 7.73679 0.288258 7.62426 0.175736C7.51174 0.0632141 7.35913 0 7.2 0H4.8C4.64087 0 4.48826 0.0632141 4.37574 0.175736C4.26321 0.288258 4.2 0.44087 4.2 0.6C4.2 0.75913 4.26321 0.911742 4.37574 1.02426C4.48826 1.13679 4.64087 1.2 4.8 1.2Z"
+                      fill="#FFA384"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div
+              class="relative rounded-full flex justify-between items-center bg-white p-1 pl-4"
             >
-              <span class="text-xs">Every 2 weeks</span>
-            </label>
-            <input
-              class="hidden peer"
-              type="radio"
-              name="Rotation"
-              id="rotation-monthly"
-            />
-            <label
-              for="rotation-monthly"
-              class="relative flex items-center bg-body p-2.5 px-5 rounded-full cursor-pointer peer-checked:bg-sky peer-checked:text-white text-center h-12"
-            >
-              <span class="text-xs">Monthly</span>
-            </label>
+              <span class="text-xs">Tasks 1.PDF</span>
+              <div class="flex">
+                <button
+                  class="mr-1 w-[30px] h-[30px] bg-body rounded-full flex-center"
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 13 13"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.1111 13H2.8889C2.11729 13 1.39183 12.6995 0.846166 12.1538C0.300504 11.6082 0 10.8828 0 10.1111V9.38889C0 8.99001 0.323348 8.66666 0.722233 8.66666C1.12112 8.66666 1.44447 8.99003 1.44447 9.38889V10.1111C1.44447 10.4969 1.59472 10.8596 1.86754 11.1325C2.14038 11.4053 2.5031 11.5556 2.8889 11.5556H10.1111C10.4969 11.5556 10.8596 11.4053 11.1325 11.1325C11.4053 10.8596 11.5556 10.4969 11.5556 10.1111V9.38889C11.5556 8.99001 11.8789 8.66666 12.2778 8.66666C12.6767 8.66666 13 8.99003 13 9.38889V10.1111C13 10.8827 12.6995 11.6082 12.1538 12.1538C11.6081 12.6995 10.8827 13 10.1111 13ZM6.49999 10.1111C6.1011 10.1111 5.77775 9.78775 5.77775 9.38886V2.46584L4.12178 4.12181C3.83974 4.40387 3.38245 4.40387 3.10041 4.12181C2.81837 3.83974 2.81837 3.38248 3.10041 3.10044L5.98932 0.211535C5.98984 0.211008 5.99037 0.210488 5.9909 0.209976L5.99172 0.209155L5.99246 0.208416C5.99283 0.208038 5.99321 0.207673 5.99361 0.207322L5.99399 0.206912L5.99544 0.205516L5.9955 0.205462C6.13029 0.0735816 6.31141 -0.000185551 6.49999 3.50518e-07C6.59919 3.50518e-07 6.69371 0.0199993 6.77975 0.0561944L6.78055 0.0565227L6.78123 0.0568236C6.86431 0.0919436 6.94005 0.142365 7.0045 0.205462L7.00456 0.205516L7.00598 0.206912L7.00642 0.207322L7.00754 0.208416L7.00828 0.209155L7.0091 0.209976L7.01068 0.211535L9.89956 3.10041C10.1816 3.38245 10.1816 3.83974 9.89956 4.12178C9.61755 4.40382 9.1602 4.40382 8.87819 4.12178L7.22225 2.46581V9.38884C7.22225 9.78775 6.89887 10.1111 6.49999 10.1111Z"
+                      fill="#74BDCB"
+                    />
+                  </svg>
+                </button>
+                <button
+                  class="w-[30px] h-[30px] bg-body rounded-full flex-center"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11.4 1.8H0.6C0.44087 1.8 0.288258 1.86321 0.175736 1.97574C0.0632141 2.08826 0 2.24087 0 2.4C0 2.55913 0.0632141 2.71174 0.175736 2.82426C0.288258 2.93679 0.44087 3 0.6 3H1.8V10.2C1.8 10.6774 1.98964 11.1352 2.32721 11.4728C2.66477 11.8104 3.12261 12 3.6 12H8.4C8.87739 12 9.33523 11.8104 9.67279 11.4728C10.0104 11.1352 10.2 10.6774 10.2 10.2V3H11.4C11.5591 3 11.7117 2.93679 11.8243 2.82426C11.9368 2.71174 12 2.55913 12 2.4C12 2.24087 11.9368 2.08826 11.8243 1.97574C11.7117 1.86321 11.5591 1.8 11.4 1.8ZM5.4 8.4C5.4 8.55913 5.33679 8.71174 5.22426 8.82426C5.11174 8.93679 4.95913 9 4.8 9C4.64087 9 4.48826 8.93679 4.37574 8.82426C4.26321 8.71174 4.2 8.55913 4.2 8.4V5.4C4.2 5.24087 4.26321 5.08826 4.37574 4.97574C4.48826 4.86321 4.64087 4.8 4.8 4.8C4.95913 4.8 5.11174 4.86321 5.22426 4.97574C5.33679 5.08826 5.4 5.24087 5.4 5.4V8.4ZM7.8 8.4C7.8 8.55913 7.73679 8.71174 7.62426 8.82426C7.51174 8.93679 7.35913 9 7.2 9C7.04087 9 6.88826 8.93679 6.77574 8.82426C6.66321 8.71174 6.6 8.55913 6.6 8.4V5.4C6.6 5.24087 6.66321 5.08826 6.77574 4.97574C6.88826 4.86321 7.04087 4.8 7.2 4.8C7.35913 4.8 7.51174 4.86321 7.62426 4.97574C7.73679 5.08826 7.8 5.24087 7.8 5.4V8.4ZM4.8 1.2H7.2C7.35913 1.2 7.51174 1.13679 7.62426 1.02426C7.73679 0.911742 7.8 0.75913 7.8 0.6C7.8 0.44087 7.73679 0.288258 7.62426 0.175736C7.51174 0.0632141 7.35913 0 7.2 0H4.8C4.64087 0 4.48826 0.0632141 4.37574 0.175736C4.26321 0.288258 4.2 0.44087 4.2 0.6C4.2 0.75913 4.26321 0.911742 4.37574 1.02426C4.48826 1.13679 4.64087 1.2 4.8 1.2Z"
+                      fill="#FFA384"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-span-3">

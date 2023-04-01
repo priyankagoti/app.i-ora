@@ -11,13 +11,14 @@
   @apply bg-body text-sky font-bold;
 }
 .auth-input {
-  @apply bg-white h-16 rounded-full w-full p-5 text-lg text-[#8F9BB3] pl-14 border border-transparent outline-0 focus:border-sky;
+  @apply bg-white 3xl:h-[60px] h-[54px] rounded-full w-full p-5 3xl:text-lg text-base text-[#8F9BB3] pl-14 border border-transparent outline-0 focus:border-sky;
 }
 .auth-input-icon {
   @apply absolute top-1/2 -translate-y-1/2 left-6;
 }
 .auth-btn {
-  @apply text-black font-bold w-full text-center bg-sky p-4 text-lg rounded-full hover:bg-[#5999a5] transition;
+  @apply text-black font-bold w-full text-center bg-sky p-4 rounded-full hover:bg-[#5999a5] transition
+  3xl:text-lg text-base shadow-lg shadow-sky/40;
 }
 .flex-center {
   @apply flex items-center justify-center;
@@ -26,10 +27,11 @@
   @apply text-xs font-bold py-2.5 px-5 rounded-full flex items-center;
 }
 .btn-sky {
-  @apply bg-sky hover:bg-body;
+  @apply bg-sky shadow-lg shadow-sky/40
+  hover:bg-[#2b99af];
 }
 .btn-light-sky {
-  @apply bg-body hover:bg-body;
+  @apply bg-body hover:bg-[#bbd3e1];
 }
 .label {
   @apply text-sm mb-1 leading-4 text-[#222B45];
@@ -49,7 +51,7 @@
     3xl:pt-[118px] 2xl:pt-[108px] pt-[90px] 3xl:pr-[30px] pr-5 3xl:pb-[30px] pb-5 overflow-auto;
 }
 .statistics-card {
-  @apply flex bg-white 3xl:p-6 p-5 3xl:pr-11 pr-7 rounded-[20px] items-center;
+  @apply shadow-lg shadow-black/5 flex bg-white 3xl:p-6 p-5 3xl:pr-11 pr-7 rounded-[20px] items-center;
 }
 .statistics-icon {
   @apply 3xl:w-20 w-16 3xl:h-20 h-16 bg-body flex-center rounded-full 3xl:mr-5 mr-3;
@@ -79,4 +81,20 @@
 }
 .gap-20 {
   @apply 3xl:gap-5 gap-4;
+}
+.rotation-check {
+  @apply relative flex items-center bg-body p-2.5 h-12 px-5 rounded-full cursor-pointer 
+  pl-[50px]
+}
+.rotation-checkmark {
+  @apply w-7 h-7 rounded-full absolute top-2.5 left-2.5 bg-white
+  peer-checked:bg-sky ;
+}
+.rotation-checkmark-svg {
+  @apply absolute top-2.5 left-2.5 opacity-0
+  peer-checked:opacity-100;
+}
+.day-check {
+  @apply w-12 h-12 flex items-center justify-center text-xs text-black bg-body cursor-pointer rounded-full
+  peer-checked:bg-sky peer-checked:font-bold
 }
