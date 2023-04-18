@@ -299,7 +299,7 @@
                 >
                   Cancel
                 </button>
-                <button type="button" class="btn btn-sky">Add User</button>
+                <button type="button" class="btn btn-sky" @click="$event => toggleConf(true)">Add User</button>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -307,6 +307,13 @@
       </div>
     </Dialog>
   </TransitionRoot>
+  <ConfirmationModal 
+    :isOpenModal="isConfOpen" 
+    title="Add Employee without an Object?"
+    text="You didn't add an Object to this Employee, are you sure you want to save?" 
+    :closeModal="$event => toggleConf(false)"
+    btnText="Yes, save without Object"
+  />
 </template>
 
 <script>
@@ -318,6 +325,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/vue";
+import ConfirmationModal from "../../components/ConfirmationModal.vue";
 
 export default {
   name: "AddEmployeeComponent",
@@ -327,8 +335,10 @@ export default {
     Dialog,
     DialogPanel,
     DialogTitle,
+    ConfirmationModal,
   },
   setup() {
+    let isConfOpen = ref(false);
     let isOpen = ref(false);
     let closeModal = () => {
       isOpen.value = false;
@@ -336,7 +346,10 @@ export default {
     let openModal = () => {
       isOpen.value = true;
     };
-    return { isOpen, closeModal, openModal };
+    let toggleConf = (s) => {
+      isConfOpen.value = s;
+    }
+    return { isOpen, closeModal, openModal, isConfOpen, toggleConf };
   },
 };
 </script>
