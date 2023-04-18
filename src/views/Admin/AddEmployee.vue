@@ -313,6 +313,14 @@
     text="You didn't add an Object to this Employee, are you sure you want to save?" 
     :closeModal="$event => toggleConf(false)"
     btnText="Yes, save without Object"
+    :SubmitModal="$event => {toggleConf(false); toggleConfSuccess(true)}"
+  />
+  <ConfirmationModal 
+    :isOpenModal="isConfSuccessOpen" 
+    title="Update Successful"
+    :closeModal="$event => toggleConfSuccess(false)"
+    btnText="Back to Employees"
+    :SubmitModal="$event => {toggleConfSuccess(false); closeModal() }"
   />
 </template>
 
@@ -340,6 +348,8 @@ export default {
   setup() {
     let isConfOpen = ref(false);
     let isOpen = ref(false);
+    let isConfSuccessOpen = ref(false);
+
     let closeModal = () => {
       isOpen.value = false;
     };
@@ -349,7 +359,10 @@ export default {
     let toggleConf = (s) => {
       isConfOpen.value = s;
     }
-    return { isOpen, closeModal, openModal, isConfOpen, toggleConf };
+    let toggleConfSuccess = (s) => {
+      isConfSuccessOpen.value = s;
+    }
+    return { isOpen, closeModal, openModal, isConfOpen, toggleConf, isConfSuccessOpen, toggleConfSuccess };
   },
 };
 </script>

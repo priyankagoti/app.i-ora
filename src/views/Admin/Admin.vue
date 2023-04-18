@@ -101,7 +101,7 @@
                     />
                   </svg>
                 </button>
-                <button class="p-2">
+                <button class="p-2" @click="$event => toggleConfDelete(true)">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M14.4141 2.75H0.914062C0.71515 2.75 0.524385 2.82902 0.383732 2.96967C0.24308 3.11032 0.164063 3.30109 0.164062 3.5C0.164063 3.69891 0.24308 3.88968 0.383732 4.03033C0.524385 4.17098 0.71515 4.25 0.914062 4.25H2.41406V13.25C2.41406 13.8467 2.65112 14.419 3.07307 14.841C3.49503 15.2629 4.06733 15.5 4.66406 15.5H10.6641C11.2608 15.5 11.8331 15.2629 12.2551 14.841C12.677 14.419 12.9141 13.8467 12.9141 13.25V4.25H14.4141C14.613 4.25 14.8037 4.17098 14.9444 4.03033C15.085 3.88968 15.1641 3.69891 15.1641 3.5C15.1641 3.30109 15.085 3.11032 14.9444 2.96967C14.8037 2.82902 14.613 2.75 14.4141 2.75ZM6.91406 11C6.91406 11.1989 6.83504 11.3897 6.69439 11.5303C6.55374 11.671 6.36297 11.75 6.16406 11.75C5.96515 11.75 5.77438 11.671 5.63373 11.5303C5.49308 11.3897 5.41406 11.1989 5.41406 11V7.25C5.41406 7.05109 5.49308 6.86032 5.63373 6.71967C5.77438 6.57902 5.96515 6.5 6.16406 6.5C6.36297 6.5 6.55374 6.57902 6.69439 6.71967C6.83504 6.86032 6.91406 7.05109 6.91406 7.25V11ZM9.91406 11C9.91406 11.1989 9.83504 11.3897 9.69439 11.5303C9.55374 11.671 9.36298 11.75 9.16406 11.75C8.96515 11.75 8.77438 11.671 8.63373 11.5303C8.49308 11.3897 8.41406 11.1989 8.41406 11V7.25C8.41406 7.05109 8.49308 6.86032 8.63373 6.71967C8.77438 6.57902 8.96515 6.5 9.16406 6.5C9.36298 6.5 9.55374 6.57902 9.69439 6.71967C9.83504 6.86032 9.91406 7.05109 9.91406 7.25V11ZM6.16406 2H9.16406C9.36298 2 9.55374 1.92098 9.69439 1.78033C9.83504 1.63968 9.91406 1.44891 9.91406 1.25C9.91406 1.05109 9.83504 0.860322 9.69439 0.71967C9.55374 0.579018 9.36298 0.5 9.16406 0.5H6.16406C5.96515 0.5 5.77438 0.579018 5.63373 0.71967C5.49308 0.860322 5.41406 1.05109 5.41406 1.25C5.41406 1.44891 5.49308 1.63968 5.63373 1.78033C5.77438 1.92098 5.96515 2 6.16406 2Z"
@@ -120,20 +120,31 @@
       </div>
     </div>
   </div>
+  <ConfirmationModal 
+    :isOpenModal="isConfDeleteOpen" 
+    title="Are you sure you want do delete the Object"
+    text="Do you really want to delete this Object from the  Emloyee?"
+    :closeModal="$event => toggleConfDelete(false)"
+    btnText="Yes, delete the Object"
+    :SubmitModal="$event => {toggleConfDelete(false);}"
+  />
 </template>
 
 <script>
+import { ref } from "vue";
 import SideBarComponent from "../../components/SideBar.vue";
 import HeaderComponent from "../../components/Header.vue";
 import PagerComponent from "../../components/Pager.vue";
-import AddEmployeeComponent from "./AddEmployee.vue"
+import AddEmployeeComponent from "./AddEmployee.vue";
+import ConfirmationModal from "../../components/ConfirmationModal.vue";
 export default {
   name: "AdminComponent",
   components: {
     SideBarComponent,
     HeaderComponent,
     PagerComponent,
-    AddEmployeeComponent
+    AddEmployeeComponent,
+    ConfirmationModal
   },
   data() {
     return {
@@ -230,6 +241,13 @@ export default {
         }
       ]
     };
+  },
+  setup() {
+    let isConfDeleteOpen = ref(false);
+    let toggleConfDelete = (s) => {
+      isConfDeleteOpen.value = s;
+    }
+    return {isConfDeleteOpen, toggleConfDelete}
   }
 };
 </script>

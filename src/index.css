@@ -30,6 +30,10 @@
   @apply bg-sky shadow-lg shadow-sky/40
   hover:bg-[#2b99af];
 }
+.btn-red {
+  @apply bg-[#ff0000] shadow-lg shadow-[#ff0000]/40
+  hover:shadow-red-500;
+}
 .btn-light-sky {
   @apply bg-body hover:bg-[#bbd3e1];
 }

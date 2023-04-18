@@ -169,7 +169,7 @@
                     />
                   </svg>
                 </button>
-                <button class="p-2">
+                <button class="p-2" @click="$event => toggleConfDelete(true)">
                   <svg
                     width="16"
                     height="16"
@@ -190,12 +190,22 @@
       </table>
     </div>
   </div>
+  <ConfirmationModal 
+    :isOpenModal="isConfDeleteOpen" 
+    title="Do you really want to delete the Object?"
+    text="Please enter “Delete”"
+    :closeModal="$event => toggleConfDelete(false)"
+    btnText="Delete Object"
+    :SubmitModal="$event => {toggleConfDelete(false);}"
+  />
 </template>
   
   <script>
+  import {ref} from "vue";
 import SideBarComponent from "../../components/SideBar.vue";
 import HeaderComponent from "../../components/Header.vue";
 import ObjectStatistics from "./ObjectStatistics.vue";
+import ConfirmationModal from "../../components/ConfirmationModal.vue";
 import { RouterLink } from "vue-router";
 export default {
   name: "ObjectComponent",
@@ -203,7 +213,8 @@ export default {
     SideBarComponent,
     HeaderComponent,
     ObjectStatistics,
-    RouterLink
+    RouterLink,
+    ConfirmationModal,
   },
   data() {
     return {
@@ -311,6 +322,13 @@ export default {
       ],
     };
   },
+  setup() {
+    let isConfDeleteOpen = ref(false);
+    let toggleConfDelete = (s) => {
+      isConfDeleteOpen.value = s;
+    }
+    return {isConfDeleteOpen, toggleConfDelete}
+  }
 };
 </script>
   

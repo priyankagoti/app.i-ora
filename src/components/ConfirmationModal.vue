@@ -41,7 +41,7 @@
               <p class="text-sm text-black mb-2">{{text}}</p>
               <div class="mt-5 flex justify-end">
                 <button type="button" class="btn btn-light-sky mr-5" @click="closeModal">Cancel</button>
-                <button type="button" class="btn btn-sky">{{btnText}}</button>
+                <button type="button" class="btn btn-sky" @click="SubmitModal">{{btnText}}</button>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -69,6 +69,7 @@ export default {
     btnText:  String,
     isOpenModal: Boolean,
     closeModal: Function,
+    SubmitModal: Function,
   }
 };
 </script>
