@@ -98,7 +98,7 @@
         <div class="col-span-2">
           <div class="grid grid-cols-2 gap-6">
             <div class="">
-              <label class="label" for="PhoneNumber">Phone Number</label>
+              <label class="label" for="ImplementationTime">Implementation Time</label>
               <div
                 class="flex bg-body rounded-full p-1 items-center justify-between"
               >
@@ -248,7 +248,7 @@
             <div>
               <input
                 class="hidden peer"
-                type="radio"
+                type="checkbox"
                 name="WeekDay"
                 id="Monday"
               />
@@ -259,7 +259,7 @@
             <div>
               <input
                 class="hidden peer"
-                type="radio"
+                type="checkbox"
                 name="WeekDay"
                 id="Tuesday"
               />
@@ -270,7 +270,7 @@
             <div>
               <input
                 class="hidden peer"
-                type="radio"
+                type="checkbox"
                 name="WeekDay"
                 id="Wednesday"
               />
@@ -281,7 +281,7 @@
             <div>
               <input
                 class="hidden peer"
-                type="radio"
+                type="checkbox"
                 name="WeekDay"
                 id="Thusday"
               />
@@ -292,7 +292,7 @@
             <div>
               <input
                 class="hidden peer"
-                type="radio"
+                type="checkbox"
                 name="WeekDay"
                 id="Friday"
               />
@@ -303,7 +303,7 @@
             <div>
               <input
                 class="hidden peer"
-                type="radio"
+                type="checkbox"
                 name="WeekDay"
                 id="Saturday"
               />
@@ -314,7 +314,7 @@
             <div>
               <input
                 class="hidden peer"
-                type="radio"
+                type="checkbox"
                 name="WeekDay"
                 id="Sunday"
               />
@@ -503,7 +503,7 @@
         <div class="relative mb-5">
           <input
             type="text"
-            placeholder="Employee Id"
+            placeholder="Task Search"
             class="w-full text-xs py-4 pl-5 pr-20 bg-[#E7F2F8] rounded-full"
           />
           <button
