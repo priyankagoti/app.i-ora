@@ -158,7 +158,7 @@
           <div class="flex gap-20">
             <div class="relative">
               <input
-                class="hidden peer"
+                class="rotation-input peer"
                 type="radio"
                 name="Rotation"
                 id="rotation"
@@ -186,7 +186,7 @@
             </div>
             <div class="relative">
               <input
-                class="hidden peer"
+                class="rotation-input peer"
                 type="radio"
                 name="Rotation"
                 id="rotation-weekly"
@@ -214,7 +214,7 @@
             </div>
             <div class="relative">
               <input
-                class="hidden peer"
+                class="rotation-input peer"
                 type="radio"
                 name="Rotation"
                 id="rotation-monthly"
