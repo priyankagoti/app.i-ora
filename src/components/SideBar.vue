@@ -47,7 +47,7 @@
             fill="currentcolor"
           />
         </svg>
-        <span class="inline-block ml-3"> Admin </span>
+        <span class="inline-block ml-3"> Employees </span>
       </RouterLink>
       <RouterLink
         to="/object"

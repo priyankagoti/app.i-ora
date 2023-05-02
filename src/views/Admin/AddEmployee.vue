@@ -213,20 +213,20 @@
                   />
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="ZopCode">Zop Code *</label>
+                  <label class="label" for="ZopCode">Zip Code *</label>
                   <input
                     type="text"
                     id="ZopCode"
-                    placeholder="Enter Zop Code"
+                    placeholder="Enter Zip Code"
                     class="input"
                   />
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="Region">Region *</label>
+                  <label class="label" for="City">City *</label>
                   <input
                     type="text"
-                    id="Region"
-                    placeholder="Enter Region"
+                    id="City"
+                    placeholder="Enter City"
                     class="input"
                   />
                 </div>
