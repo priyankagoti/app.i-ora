@@ -146,7 +146,7 @@
                 </p>
               <div class="mt-5 flex justify-center">
                 <button type="button" class="btn btn-light-sky mr-5" @click="$event => toggleLogoutModal(false)">Cancel</button>
-                <button type="button" class="btn btn-red text-white" @click="$event => toggleLogoutModal(false)">Logout</button>
+                <button type="button" class="btn btn-red text-white" @click="logout">Logout</button>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -157,9 +157,10 @@
 </template>
   
 <script>
-import {ref} from "vue";
+// import {ref} from "vue";
 import { RouterLink } from "vue-router";
 import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle} from "@headlessui/vue";
+import store from "@/store";
 export default {
   name: "SideBarComponent",
   components: {
@@ -170,13 +171,33 @@ export default {
     RouterLink,
     DialogTitle 
   },
-  setup() {
-    let isLogoutModalOpen = ref(false);
-    let toggleLogoutModal = (s) => {
-      isLogoutModalOpen.value = s;
+  data() {
+    return {
+      isLogoutModalOpen: false,
     }
-    return {isLogoutModalOpen, toggleLogoutModal}
-  }
+  },
+  methods: {
+    toggleLogoutModal(s){
+      this.isLogoutModalOpen = s;
+    },
+    async logout() {
+      await store.dispatch('auth/logOut')
+
+      this.$router.go({ name: 'login' })
+    }
+  },
+  // setup() {
+  //   let isLogoutModalOpen = ref(false);
+  //   let toggleLogoutModal = (s) => {
+  //     isLogoutModalOpen.value = s;
+  //   }
+  //   async function logout() {
+  //     await store.dispatch('auth/logOut')
+  //
+  //     this.$router.go({ name: 'login' })
+  //   }
+  //   return {isLogoutModalOpen, toggleLogoutModal, logout}
+  // }
 };
 </script>
   

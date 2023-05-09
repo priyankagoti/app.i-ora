@@ -11,7 +11,7 @@
   @apply bg-body text-sky font-bold;
 }
 .auth-input {
-  @apply bg-white 3xl:h-[60px] h-[54px] rounded-full w-full p-5 3xl:text-lg text-base text-[#8F9BB3] pl-14 border border-transparent outline-0 focus:border-sky;
+  @apply bg-white 3xl:h-[60px] h-[54px] rounded-full w-full p-2 3xl:text-lg text-base text-[#8F9BB3] pl-14 border border-transparent outline-0 focus:border-sky;
 }
 .auth-input-icon {
   @apply absolute top-1/2 -translate-y-1/2 left-6;
@@ -107,4 +107,7 @@
 .day-check {
   @apply w-12 h-12 flex items-center justify-center text-xs text-black bg-body cursor-pointer rounded-full
   peer-checked:bg-sky peer-checked:font-bold
+}
+.text-danger {
+  @apply text-red-500
 }
