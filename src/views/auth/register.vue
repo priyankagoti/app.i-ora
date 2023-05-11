@@ -8,11 +8,15 @@
           <div class="flex items-center justify-between 3xl:mb-14 mb-10">
             <div class="">
               <h1 class="text-black font-bold 3xl:text-4xl text-3xl mb-1">
-                Let’s Get Started!
+                {{ $t('Let’s Get Started!') }}
               </h1>
               <p class="text-[#8F9BB3] 3xl:text-xl 2xl:text-lg text-base">
-                Please Sign up here to your Account.
+                {{ $t('Please Sign up here to your Account.') }}
               </p>
+              <small
+                  v-if="errors && errors.profile"
+                  class="text-danger"
+              >{{ errors.profile[0] }}</small>
             </div>
             <div
                 class="w-[100px] h-[100px] bg-white rounded-2xl flex-center relative"
@@ -78,7 +82,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" placeholder="Company Name" class="auth-input" v-model="form.company_name" />
+              <input type="text" :placeholder="$t('Company Name')" class="auth-input" v-model="form.company_name" />
             </div>
             <small
                 v-if="errors && errors.company_name"
@@ -102,7 +106,7 @@
               </svg>
               <!--            <input type="text" placeholder="Salutation" class="auth-input" v-model="form.salutation_id"/>-->
               <select v-model="form.salutation_id" class="auth-input">
-                <option value="" selected>--Please choose an option--</option>
+                <option value="" selected>{{ $t('--Please choose an option--') }}</option>
                 <option v-for="salutation in salutations" :key="salutation.id" :value="salutation.id">{{salutation.name}}</option>
               </select>
             </div>
@@ -128,7 +132,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" placeholder="First Name" class="auth-input" v-model="form.first_name" />
+              <input type="text" :placeholder="$t('First Name')" class="auth-input" v-model="form.first_name" />
             </div>
             <small
                 v-if="errors && errors.first_name"
@@ -152,7 +156,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" placeholder="Surname" class="auth-input" v-model="form.last_name"/>
+              <input type="text" :placeholder="$t('Surname')" class="auth-input" v-model="form.last_name"/>
             </div>
             <small
                 v-if="errors && errors.last_name"
@@ -178,7 +182,7 @@
               </svg>
               <input
                   type="email"
-                  placeholder="Email Address"
+                  :placeholder="$t('Email Address')"
                   class="auth-input"
                   v-model="form.email"
               />
@@ -205,7 +209,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" placeholder="Username" class="auth-input" v-model="form.username"/>
+              <input type="text" :placeholder="$t('Username')" class="auth-input" v-model="form.username"/>
             </div>
             <small
                 v-if="errors && errors.username"
@@ -227,7 +231,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="password" placeholder="Password" class="auth-input" v-model="form.password"/>
+              <input type="password" :placeholder="$t('Password')" class="auth-input" v-model="form.password"/>
             </div>
             <small
                 v-if="errors && errors.password"
@@ -251,7 +255,7 @@
               </svg>
               <input
                   type="password"
-                  placeholder="Confirm Password"
+                  :placeholder="$t('Confirm Password')"
                   class="auth-input"
                   v-model="form.password_confirmation"
               />
@@ -265,13 +269,13 @@
         </div>
         <div class="flex items-center mb-2.5">
           <input type="checkbox" id="conditions" class="w-7 h-7 mr-2.5 flex-shrink-0" v-model="terms_conditions">
-          <label class="text-xs" for="conditions">I have read and agree to the website terms and conditions.*</label>
+          <label class="text-xs" for="conditions">{{ $t('I have read and agree to the website terms and conditions.') }}*</label>
         </div>
         <div class="flex items-center mb-2.5">
           <input type="checkbox" id="privacyPolicy" class="w-7 h-7 mr-2.5 flex-shrink-0" v-model="privacyPolicy">
           <label class="text-xs" for="privacyPolicy">
-            By using this from you agree with the storage and handling of your data by this website in accordance with our
-            <span class="text-[#ffa384]">Privacy Policy.</span>.*
+            {{ $t(`By using this from you agree with the storage and handling of your data by this website in accordance with our`)}}
+            <span class="text-[#ffa384]">{{ $t('Privacy Policy.') }}</span>.*
           </label>
         </div>
         <div class="mb-10">
@@ -281,10 +285,10 @@
           >{{ errMsg }}</small>
         </div>
 
-        <button class="auth-btn mb-7" type="button" @click="register">Sign Up</button>
+        <button class="auth-btn mb-7" type="button" @click="register">{{ $t('Sign Up') }}</button>
         <p class="text-black 3xl:text-xl text-lg text-center">
-          Already have an account?
-          <RouterLink to="/login" class="text-[#ffa384]">Sign In</RouterLink>
+          {{ $t('Already have an account ?') }}
+          <RouterLink to="/login" class="text-[#ffa384]">{{ $t('Sign In') }}</RouterLink>
         </p>
       </div>
     </div>

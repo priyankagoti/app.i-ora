@@ -7,12 +7,20 @@
         <div class="flex h-full items-center 3xl:pb-24 pb-16">
           <div class="w-full">
             <h1 class="text-black font-bold text-4xl mb-1">
-              Hey, Welcome Back!
+              {{ $t('Hey, Welcome Back!') }}
             </h1>
             <p class="text-[#8F9BB3] mb-14 3xl:text-xl text-lg">
-              Please Sign in here to your Account,<br />
-              Have your landing pages online in minutes.
+              {{ $t('Please Sign in here to your Account,') }}<br />
+              {{ $t('Have your landing pages online in minutes.') }}
             </p>
+            <div class="relative mb-20">
+              <select v-model="$i18n.locale" @change="$store.dispatch('auth/changeLocale',$event.target.value)" class="lang-select">
+                <option value="en" >
+                  English
+                </option>
+                <option value="de">German</option>
+              </select>
+            </div>
             <div class="mb-10">
               <div class="relative 3xl:mb-14 ">
                 <svg
@@ -30,7 +38,7 @@
                       fill="#74BDCB"
                   />
                 </svg>
-                <input type="text" placeholder="User Name" class="auth-input" v-model="form.username" />
+                <input type="text" :placeholder="$t('User Name')" class="auth-input" v-model="form.username" />
               </div>
               <small
                   v-if="errors && errors.username"
@@ -54,7 +62,7 @@
                 </svg>
                 <input
                     type="password"
-                    placeholder="Password"
+                    :placeholder="$t('Password')"
                     v-model="form.password"
                     class="auth-input"
                 />
@@ -66,14 +74,14 @@
             </div>
 
             <p class="text-black 3xl:text-xl text-base mt-5 text-right font-semibold">
-              Forgot your Password?
+              {{ $t('Forgot your password?') }}
             </p>
           </div>
         </div>
-        <button class="auth-btn 3xl:mb-20 2xl:mb-10 mb-7" type="button" @click="submit">Log In</button>
+        <button class="auth-btn 3xl:mb-20 2xl:mb-10 mb-7" type="button" @click="submit">{{ $t('Log In') }}</button>
         <p class="text-black 3xl:text-xl text-lg mt-5 text-center">
-          Don’t have an account?
-          <RouterLink to="/register" class="text-[#ffa384]">Sign Up</RouterLink>
+          {{ $t('Don’t have an account?') }}
+          <RouterLink to="/register" class="text-[#ffa384]">{{ $t('Sign Up') }}</RouterLink>
         </p>
       </div>
     </div>
@@ -85,6 +93,7 @@
 import AuthCover from "../../components/AuthCover.vue";
 import { RouterLink } from "vue-router";
 import { authMethods } from '@/store/helpers'
+import i18n from "@/plugins/i18n";
 export default {
   name: "AuthLogin",
   props: {
@@ -100,6 +109,7 @@ export default {
         username: '',
         password: '',
       },
+      language: 'en',
       status: '',
       errMsg: '',
       errors: {},
@@ -107,10 +117,12 @@ export default {
   },
   methods: {
     ...authMethods,
+    handleLanguageChange() {
+      i18n.locale = this.language
+    },
     submit(){
       this.logIn(this.form)
           .then(response => {
-            console.log(response)
             if (response.status === 401) {
               this.errMsg = response.data.message
             }
@@ -119,7 +131,7 @@ export default {
             }
             if (response.status === 200){
               // this.$router.go({ name: this.$route.query.redirectFrom || 'Dashboard' })
-              this.$router.push('/dashboard'||this.$route.path)
+              this.$router.go('/dashboard'||this.$route.path)
             }
             // this.$router.push(this.$route.query.redirectFrom || { name: 'home' })
           })
