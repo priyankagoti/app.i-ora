@@ -8,10 +8,12 @@ const emitter = mitt();
 import "@/plugins/lodash"
 import store from "./store"
 import "@/plugins/axios"
+import globalMixin from './mixin'
 
 let app = createApp(App)
 app.config.globalProperties.emitter = emitter;
 app.use(router);
 app.use(store);
-// app.config.globalProperties.$axios = { ...axiosInstance }
+app.mixin(globalMixin);
+
 app.mount("#app");
