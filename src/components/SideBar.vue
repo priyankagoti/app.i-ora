@@ -72,6 +72,15 @@
     <div class="3xl:p-5 text-xs">
       <RouterLink to="/profile" class="flex items-center mb-10">
         <img
+            v-if="auth_user.profile"
+            :src="auth_user.profile"
+            alt="Michael Smith"
+            width="40"
+            height="40"
+            class="shrink-0 border rounded-full mr-2 border-[#74BDCB]"
+        />
+        <img
+            v-else
           src="../assets/images/profiles/59.png"
           alt="Michael Smith"
           width="40"
@@ -79,8 +88,8 @@
           class="shrink-0 border rounded-full mr-2 border-[#74BDCB]"
         />
         <div class="font-normal">
-          <span class="block mb-1 text-[#324054]">Michael Smith</span>
-          <span class="color-[#71839B]">michaelsmith12@gmail.com</span>
+          <span class="block mb-1 text-[#324054]">{{auth_user.first_name}} {{auth_user.last_name}}</span>
+          <span class="color-[#71839B]">{{auth_user.email}}</span>
         </div>
       </RouterLink>
       <span @click="$event => toggleLogoutModal(true)" class="flex items-center text-[#FF0000] cursor-pointer">

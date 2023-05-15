@@ -8,10 +8,10 @@
           <div class="flex items-center justify-between 3xl:mb-14 mb-10">
             <div class="">
               <h1 class="text-black font-bold 3xl:text-4xl text-3xl mb-1">
-                {{ $t('Let’s Get Started!') }}
+                Let’s Get Started!
               </h1>
               <p class="text-[#8F9BB3] 3xl:text-xl 2xl:text-lg text-base">
-                {{ $t('Please Sign up here to your Account.') }}
+                Please Sign up here to your Account.
               </p>
               <small
                   v-if="errors && errors.profile"
@@ -82,7 +82,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" :placeholder="$t('Company Name')" class="auth-input" v-model="form.company_name" />
+              <input type="text" placeholder="Company Name" class="auth-input" v-model="form.company_name" />
             </div>
             <small
                 v-if="errors && errors.company_name"
@@ -106,7 +106,7 @@
               </svg>
               <!--            <input type="text" placeholder="Salutation" class="auth-input" v-model="form.salutation_id"/>-->
               <select v-model="form.salutation_id" class="auth-input">
-                <option value="" selected>{{ $t('--Please choose an option--') }}</option>
+                <option value="" selected>--Please choose an option--</option>
                 <option v-for="salutation in salutations" :key="salutation.id" :value="salutation.id">{{salutation.name}}</option>
               </select>
             </div>
@@ -132,7 +132,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" :placeholder="$t('First Name')" class="auth-input" v-model="form.first_name" />
+              <input type="text" placeholder="First Name" class="auth-input" v-model="form.first_name" />
             </div>
             <small
                 v-if="errors && errors.first_name"
@@ -156,7 +156,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" :placeholder="$t('Surname')" class="auth-input" v-model="form.last_name"/>
+              <input type="text" placeholder="Surname" class="auth-input" v-model="form.last_name"/>
             </div>
             <small
                 v-if="errors && errors.last_name"
@@ -182,7 +182,7 @@
               </svg>
               <input
                   type="email"
-                  :placeholder="$t('Email Address')"
+                  placeholder="Email Address"
                   class="auth-input"
                   v-model="form.email"
               />
@@ -209,7 +209,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" :placeholder="$t('Username')" class="auth-input" v-model="form.username"/>
+              <input type="text" placeholder="Username" class="auth-input" v-model="form.username"/>
             </div>
             <small
                 v-if="errors && errors.username"
@@ -231,7 +231,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="password" :placeholder="$t('Password')" class="auth-input" v-model="form.password"/>
+              <input type="password" placeholder="Password" class="auth-input" v-model="form.password"/>
             </div>
             <small
                 v-if="errors && errors.password"
@@ -255,7 +255,7 @@
               </svg>
               <input
                   type="password"
-                  :placeholder="$t('Confirm Password')"
+                  placeholder="Confirm Password"
                   class="auth-input"
                   v-model="form.password_confirmation"
               />
@@ -269,13 +269,13 @@
         </div>
         <div class="flex items-center mb-2.5">
           <input type="checkbox" id="conditions" class="w-7 h-7 mr-2.5 flex-shrink-0" v-model="terms_conditions">
-          <label class="text-xs" for="conditions">{{ $t('I have read and agree to the website terms and conditions.') }}*</label>
+          <label class="text-xs" for="conditions">I have read and agree to the website terms and conditions.*</label>
         </div>
         <div class="flex items-center mb-2.5">
           <input type="checkbox" id="privacyPolicy" class="w-7 h-7 mr-2.5 flex-shrink-0" v-model="privacyPolicy">
           <label class="text-xs" for="privacyPolicy">
-            {{ $t(`By using this from you agree with the storage and handling of your data by this website in accordance with our`)}}
-            <span class="text-[#ffa384]">{{ $t('Privacy Policy.') }}</span>.*
+            By using this from you agree with the storage and handling of your data by this website in accordance with our
+            <span class="text-[#ffa384]">Privacy Policy.</span>.*
           </label>
         </div>
         <div class="mb-10">
@@ -285,10 +285,10 @@
           >{{ errMsg }}</small>
         </div>
 
-        <button class="auth-btn mb-7" type="button" @click="register">{{ $t('Sign Up') }}</button>
+        <button class="auth-btn mb-7" type="button" @click="register">Sign Up</button>
         <p class="text-black 3xl:text-xl text-lg text-center">
-          {{ $t('Already have an account ?') }}
-          <RouterLink to="/login" class="text-[#ffa384]">{{ $t('Sign In') }}</RouterLink>
+          Already have an account ?
+          <RouterLink to="/login" class="text-[#ffa384]">Sign In</RouterLink>
         </p>
       </div>
     </div>
@@ -299,7 +299,6 @@
 <script>
 import AuthCover from "../../components/AuthCover.vue";
 // import axios from "@/plugins/axios";
-import axios from "axios";
 export default {
   name: "AuthRegister",
   components: {
@@ -321,7 +320,6 @@ export default {
 
       errors: {},
       salutations: [],
-      tempCompanyName: '',
       terms_conditions: false,
       privacyPolicy:false,
       errMsg: '',
@@ -332,10 +330,10 @@ export default {
   },
   methods:{
     fetchSalutation(){
-      axios.get('http://i-ora.dreamspotacademy.com/api/salutation')
+      // eslint-disable-next-line no-undef
+      axios.get('salutation')
           .then(response => {
             this.salutations = response.data
-            console.log(response)
           })
     },
     changeProfile() {
@@ -357,9 +355,9 @@ export default {
         formData.append('username',this.form.username )
         formData.append('password',this.form.password )
         formData.append('password_confirmation',this.form.password_confirmation)
-        axios.post('http://i-ora.dreamspotacademy.com/api/auth/register',formData)
-            .then(response => {
-              console.log(response)
+        // eslint-disable-next-line no-undef
+        axios.post('auth/register',formData)
+            .then(() => {
               // const user =
               // window.localStorage.setItem('auth.user', JSON.stringify(state))
               this.$router.push('/dashboard'||this.$route.path)

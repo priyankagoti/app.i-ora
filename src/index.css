@@ -30,6 +30,10 @@
   @apply bg-sky shadow-lg shadow-sky/40
   hover:bg-[#2b99af];
 }
+.choose-file-label {
+  @apply bg-sky shadow-lg shadow-sky/40 text-xs font-bold py-2.5 px-5 rounded-full flex items-center
+  hover:bg-[#2b99af];
+}
 .btn-red {
   @apply bg-[#ff0000] shadow-lg shadow-[#ff0000]/40
   hover:shadow-red-500;
@@ -45,6 +49,9 @@
 }
 .input {
   @apply bg-body w-full text-xs p-3.5 rounded-lg border border-transparent focus:outline-0 focus:border-sky;
+}
+.time-input {
+  @apply bg-body text-xs w-4 px-0 py-0 text-center rounded-lg border border-transparent focus:outline-0 focus:border-transparent appearance-none;
 }
 .btn-pager {
   @apply w-6 h-6 bg-body rounded-md flex items-center justify-center text-xs;
