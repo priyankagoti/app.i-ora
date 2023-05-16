@@ -65,5 +65,13 @@ const routes = [
       middleware: [auth],
     },
   },
+  {
+    path: "/edit-object/:id",
+    name: "EditObject",
+    component: NewObject,
+    meta: {
+      middleware: [auth],
+    },
+  },
 ];
 export default routes

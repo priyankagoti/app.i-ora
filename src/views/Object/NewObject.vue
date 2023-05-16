@@ -1,7 +1,7 @@
 <template>
   <div class="body-space">
     <SideBarComponent />
-    <HeaderComponent title="Add New Object" />
+    <HeaderComponent :title="isEditing? 'Edit Object':'Add New Object'" />
     <div class="p-5 bg-white rounded-[20px]">
       <div class="flex items-cente justify-between mb-5">
         <h4 class="text-xl font-bold">Object Client Details</h4>
@@ -19,7 +19,7 @@
               fill="black"
             />
           </svg>
-          <span>Edit</span>
+          <span>{{ isEditing ? 'Edit' : 'Add' }}</span>
         </button>
       </div>
       <div class="grid grid-cols-6 gap-20">
@@ -30,7 +30,12 @@
             id="ClientName"
             placeholder="Enter Client Name"
             class="input"
+            v-model="form.client_name"
           />
+          <small
+              v-if="errors && errors.client_name"
+              class="text-danger"
+          >{{ errors.client_name[0] }}</small>
         </div>
         <div class="col-span-2">
           <label class="label" for="ClientNumber">Client Number *</label>
@@ -39,7 +44,12 @@
             id="ClientNumber"
             placeholder="Enter Client Number"
             class="input"
+            v-model="form.client_number"
           />
+          <small
+              v-if="errors && errors.client_number"
+              class="text-danger"
+          >{{ errors.client_number[0] }}</small>
         </div>
         <div class="col-span-2">
           <label class="label" for="Address">Address</label>
@@ -48,16 +58,48 @@
             id="Address"
             placeholder="Enter Address"
             class="input"
+            v-model="form.address"
           />
+          <small
+              v-if="errors && errors.address"
+              class="text-danger"
+          >{{ errors.address[0] }}</small>
         </div>
-        <div class="col-span-2">
-          <label class="label" for="PostcodeCity">Postcode City</label>
+        <div class="col-span-1">
+          <label class="label" for="PostcodeCity">Postcode</label>
           <input
             type="text"
             id="PostcodeCity"
             placeholder="Enter Postcode City"
             class="input"
+            v-model="form.postcode"
           />
+          <small
+              v-if="errors && errors.postcode"
+              class="text-danger"
+          >{{ errors.postcode[0] }}</small>
+        </div>
+        <div class="col-span-1">
+          <label class="label" for="City">City *</label>
+          <input
+              type="text"
+              id="City"
+              placeholder="Enter City"
+              class="input"
+              v-model="form.city_id"
+          />
+          <small
+              v-if="errors && errors.city_id"
+              class="text-danger"
+          >{{ errors.city_id[0] }}</small>
+<!--          <select v-model="form.city_id" class="input" id="City">
+            <option value="" selected disabled>Select city</option>
+            <option v-for="city in cities" :key="city.id" :value="city.id">{{city.name}}</option>
+          </select>-->
+<!--          <small
+              v-if="errors && errors.city_id"
+              class="text-danger"
+          >{{ errors.city_id[0] }}</small>-->
         </div>
         <div class="col-span-2">
           <label class="label" for="KeyNumber">Key Number</label>
@@ -66,7 +108,12 @@
             id="KeyNumber"
             placeholder="Enter Key Number"
             class="input"
+            v-model="form.key_number"
           />
+          <small
+              v-if="errors && errors.key_number"
+              class="text-danger"
+          >{{ errors.key_number[0] }}</small>
         </div>
         <div class="col-span-2">
           <label class="label" for="StartDate">Start Date *</label>
@@ -75,7 +122,12 @@
             id="StartDate"
             placeholder="dd/mm/yyyy"
             class="input"
+            v-model="form.start_date"
           />
+          <small
+              v-if="errors && errors.start_date"
+              class="text-danger"
+          >{{ errors.start_date[0] }}</small>
         </div>
         <div class="col-span-3">
           <label class="label" for="PhoneNumber">Phone Number</label>
@@ -84,7 +136,12 @@
             id="PhoneNumber"
             placeholder="Enter Phone Number"
             class="input"
+            v-model="form.phone_number"
           />
+          <small
+              v-if="errors && errors.phone_number"
+              class="text-danger"
+          >{{ errors.phone_number[0] }}</small>
         </div>
         <div class="col-span-3">
           <label class="label" for="GoogleMapURL">Google Map URL*</label>
@@ -93,7 +150,12 @@
             id="GoogleMapURL"
             placeholder="https://google.com"
             class="input"
+            v-model="form.google_map_url"
           />
+          <small
+              v-if="errors && errors.google_map_url"
+              class="text-danger"
+          >{{ errors.google_map_url[0] }}</small>
         </div>
         <div class="col-span-2">
           <div class="grid grid-cols-2 gap-6">
@@ -104,6 +166,7 @@
               >
                 <button
                   class="w-10 h-10 flex items-center justify-center rounded-full bg-white"
+                  @click="decrement"
                 >
                   <svg
                     width="15"
@@ -118,9 +181,22 @@
                     />
                   </svg>
                 </button>
-                <span class="text-xs">00:00 hrs</span>
+                <div class="flex space-x-1">
+                  <input v-model.number="hours"  type="number" class="time-input" />
+                  <span>:</span>
+                  <input v-model.number="minutes" type="number" class="time-input" />
+                  <span>:</span>
+                  <input v-model.number="seconds" type="number" class="time-input" />
+                </div>
+<!--                <div class="flex">
+                  <input type="text" class="time-input" :value="implementationTime" @input="changeTimeFormat($event.target.value)">
+                  <input type="text" class="time-input" :value="implementationTime" @input="changeTimeFormat($event.target.value)">
+                </div>-->
+
+<!--                <span class="text-xs">00:00 hrs</span>-->
                 <button
                   class="w-10 h-10 flex items-center justify-center rounded-full bg-white"
+                  @click="increment"
                 >
                   <svg
                     width="16"
@@ -148,7 +224,10 @@
               <div
                 class="bg-body rounded-full p-1 flex items-center justify-center h-12"
               >
-                <span class="text-xs">At / From 00:00</span>
+                <span class="text-xs">At / From &nbsp;</span>
+                <input v-model.number="fromHours"  type="number" class="time-input" />
+                <span>:</span>
+                <input v-model.number="fromMinutes" type="number" class="time-input" />
               </div>
             </div>
           </div>
@@ -326,7 +405,7 @@
         </div>
         <div class="col-span-3 flex flex-col">
           <label class="label">Upload Pdf Document *</label>
-          <input type="file" id="UploadPdf" class="h-0 w-0 hidden" />
+          <input type="file" multiple ref="pdfFile" @change="changePDF" id="UploadPdf" class="h-0 w-0 hidden" />
           <label
             class="h-full cursor-pointer rounded-lg p-4 border-dashed border-2 border-[#74BDCB] bg-body flex items-center justify-center flex-col"
             for="UploadPdf"
@@ -338,6 +417,9 @@
             />
             <span class="block text-xs text-black">Upload Now</span>
           </label>
+          <p v-for="pdf in pdfs" class="text-blue-700 font-bold" :key="pdf.name">
+            {{pdf.name}}
+          </p>
         </div>
         <div class="col-span-3">
           <label class="label">Task List Contract</label>
@@ -447,8 +529,13 @@
             type="text"
             id="PersonName"
             placeholder="Enter Person Name"
+            v-model="form.contact_person_name"
             class="input"
           />
+          <small
+              v-if="errors && errors.contact_person_name"
+              class="text-danger"
+          >{{ errors.contact_person_name[0] }}</small>
         </div>
         <div class="col-span-3">
           <label class="label" for="PersonPhoneNumber">Phone Number</label>
@@ -457,7 +544,12 @@
             id="PersonPhoneNumber"
             placeholder="Enter Phone Number"
             class="input"
+            v-model="form.contact_person_phone_number"
           />
+          <small
+              v-if="errors && errors.contact_person_phone_number"
+              class="text-danger"
+          >{{ errors.contact_person_phone_number[0] }}</small>
         </div>
       </div>
     </div>
@@ -465,6 +557,17 @@
       <h4 class="text-xl font-bold mb-5">Employee Information</h4>
       <div class="">
         <label class="label" for="EmployeeName">Employee Name *</label>
+<!--        <select v-model="form.employee_id" class="input" multiple>
+          <option value="" selected disabled>Select Employee</option>
+          <option v-for="emp in employees" :key="emp.id" value=""> {{emp.first_name}} {{emp.last_name}}</option>
+        </select>-->
+<!--        <MultiSelect
+            v-model="form.employee_id"
+            :options="employees"
+            trackBy="id"
+            label="first_name"
+            @changed="onChange"
+        ></MultiSelect>-->
         <input
           type="text"
           id="EmployeeName"
@@ -473,7 +576,7 @@
         />
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-30">
+    <div v-if="isEditing" class="grid grid-cols-2 gap-30">
       <div class="p-5 bg-white rounded-[20px]">
         <div class="flex items-center justify-between mb-5">
           <h4 class="text-xl font-bold">All Tasks</h4>
@@ -503,7 +606,9 @@
         <div class="relative mb-5">
           <input
             type="text"
+            v-model="search_task"
             placeholder="Task Search"
+            @input="fetchTask"
             class="w-full text-xs py-4 pl-5 pr-20 bg-[#E7F2F8] rounded-full"
           />
           <button
@@ -520,9 +625,53 @@
           </button>
         </div>
         <div
-          class="flex items-center py-2 justify-between border-b-2 border-[body]"
+            v-for="(task,index) in tasks"
+            :key="task.id"
+          class="flex items-center py-2 justify-between border-[body]"
+            :class="tasks.length-1!==index && 'border-b-2'"
         >
-          <p class="text-sm">Task 1</p>
+          <p class="text-sm">{{index+1}}. {{task.name}}</p>
+          <div class="flex">
+            <button class="p-2 mr-2" @click="fetchSingleTask(task)">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.35674 2.32816L0.613909 8.07099C0.402294 8.283 0.268554 8.56031 0.234403 8.85791L0.00558271 10.8671C-0.0093331 11.0083 0.00572183 11.1512 0.0497644 11.2863C0.0938069 11.4213 0.165846 11.5456 0.261178 11.6509C0.35651 11.7563 0.47299 11.8403 0.603011 11.8976C0.733032 11.9548 0.87367 11.984 1.01574 11.9833H1.13294L3.14209 11.7544C3.4385 11.7201 3.71521 11.5887 3.92901 11.3805L9.67184 5.6321L6.35674 2.32816ZM11.614 1.84262L10.1574 0.385983C10.0355 0.263644 9.89071 0.16657 9.73125 0.100334C9.57179 0.0340967 9.40082 0 9.22815 0C9.05548 0 8.88451 0.0340967 8.72504 0.100334C8.56558 0.16657 8.42077 0.263644 8.29892 0.385983L6.94832 1.73658L10.2634 5.05168L11.614 3.70108C11.7364 3.57923 11.8334 3.43442 11.8997 3.27496C11.9659 3.11549 12 2.94452 12 2.77185C12 2.59918 11.9659 2.42821 11.8997 2.26875C11.8334 2.10928 11.7364 1.96447 11.614 1.84262Z"
+                  fill="#15C787"
+                />
+              </svg>
+            </button>
+            <button class="p-2" @click="$event => {toggleConfDeleteTask(true),this.taskDeletingID=task.id}">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.4 1.8H0.6C0.44087 1.8 0.288258 1.86321 0.175736 1.97574C0.0632141 2.08826 0 2.24087 0 2.4C0 2.55913 0.0632141 2.71174 0.175736 2.82426C0.288258 2.93679 0.44087 3 0.6 3H1.8V10.2C1.8 10.6774 1.98964 11.1352 2.32721 11.4728C2.66477 11.8104 3.12261 12 3.6 12H8.4C8.87739 12 9.33523 11.8104 9.67279 11.4728C10.0104 11.1352 10.2 10.6774 10.2 10.2V3H11.4C11.5591 3 11.7117 2.93679 11.8243 2.82426C11.9368 2.71174 12 2.55913 12 2.4C12 2.24087 11.9368 2.08826 11.8243 1.97574C11.7117 1.86321 11.5591 1.8 11.4 1.8ZM5.4 8.4C5.4 8.55913 5.33679 8.71174 5.22426 8.82426C5.11174 8.93679 4.95913 9 4.8 9C4.64087 9 4.48826 8.93679 4.37574 8.82426C4.26321 8.71174 4.2 8.55913 4.2 8.4V5.4C4.2 5.24087 4.26321 5.08826 4.37574 4.97574C4.48826 4.86321 4.64087 4.8 4.8 4.8C4.95913 4.8 5.11174 4.86321 5.22426 4.97574C5.33679 5.08826 5.4 5.24087 5.4 5.4V8.4ZM7.8 8.4C7.8 8.55913 7.73679 8.71174 7.62426 8.82426C7.51174 8.93679 7.35913 9 7.2 9C7.04087 9 6.88826 8.93679 6.77574 8.82426C6.66321 8.71174 6.6 8.55913 6.6 8.4V5.4C6.6 5.24087 6.66321 5.08826 6.77574 4.97574C6.88826 4.86321 7.04087 4.8 7.2 4.8C7.35913 4.8 7.51174 4.86321 7.62426 4.97574C7.73679 5.08826 7.8 5.24087 7.8 5.4V8.4ZM4.8 1.2H7.2C7.35913 1.2 7.51174 1.13679 7.62426 1.02426C7.73679 0.911742 7.8 0.75913 7.8 0.6C7.8 0.44087 7.73679 0.288258 7.62426 0.175736C7.51174 0.0632141 7.35913 0 7.2 0H4.8C4.64087 0 4.48826 0.0632141 4.37574 0.175736C4.26321 0.288258 4.2 0.44087 4.2 0.6C4.2 0.75913 4.26321 0.911742 4.37574 1.02426C4.48826 1.13679 4.64087 1.2 4.8 1.2Z"
+                  fill="#FFA384"
+                />
+              </svg>
+            </button>
+          </div>
+          <ConfirmationModal
+              :isOpenModal="isConfDeleteTask"
+              title="Do you really want to delete the Task?"
+              text="Please enter “Delete”"
+              :closeModal="$event => toggleConfDeleteTask(false)"
+              btnText="Delete"
+              :SubmitModal="deleteTask"
+          />
+        </div>
+<!--        <div class="flex items-center py-2 justify-between">
+          <p class="text-sm">Task 1 @@</p>
           <div class="flex">
             <button class="p-2 mr-2">
               <svg
@@ -553,40 +702,7 @@
               </svg>
             </button>
           </div>
-        </div>
-        <div class="flex items-center py-2 justify-between">
-          <p class="text-sm">Task 1</p>
-          <div class="flex">
-            <button class="p-2 mr-2">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.35674 2.32816L0.613909 8.07099C0.402294 8.283 0.268554 8.56031 0.234403 8.85791L0.00558271 10.8671C-0.0093331 11.0083 0.00572183 11.1512 0.0497644 11.2863C0.0938069 11.4213 0.165846 11.5456 0.261178 11.6509C0.35651 11.7563 0.47299 11.8403 0.603011 11.8976C0.733032 11.9548 0.87367 11.984 1.01574 11.9833H1.13294L3.14209 11.7544C3.4385 11.7201 3.71521 11.5887 3.92901 11.3805L9.67184 5.6321L6.35674 2.32816ZM11.614 1.84262L10.1574 0.385983C10.0355 0.263644 9.89071 0.16657 9.73125 0.100334C9.57179 0.0340967 9.40082 0 9.22815 0C9.05548 0 8.88451 0.0340967 8.72504 0.100334C8.56558 0.16657 8.42077 0.263644 8.29892 0.385983L6.94832 1.73658L10.2634 5.05168L11.614 3.70108C11.7364 3.57923 11.8334 3.43442 11.8997 3.27496C11.9659 3.11549 12 2.94452 12 2.77185C12 2.59918 11.9659 2.42821 11.8997 2.26875C11.8334 2.10928 11.7364 1.96447 11.614 1.84262Z"
-                  fill="#15C787"
-                />
-              </svg>
-            </button>
-            <button class="p-2">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.4 1.8H0.6C0.44087 1.8 0.288258 1.86321 0.175736 1.97574C0.0632141 2.08826 0 2.24087 0 2.4C0 2.55913 0.0632141 2.71174 0.175736 2.82426C0.288258 2.93679 0.44087 3 0.6 3H1.8V10.2C1.8 10.6774 1.98964 11.1352 2.32721 11.4728C2.66477 11.8104 3.12261 12 3.6 12H8.4C8.87739 12 9.33523 11.8104 9.67279 11.4728C10.0104 11.1352 10.2 10.6774 10.2 10.2V3H11.4C11.5591 3 11.7117 2.93679 11.8243 2.82426C11.9368 2.71174 12 2.55913 12 2.4C12 2.24087 11.9368 2.08826 11.8243 1.97574C11.7117 1.86321 11.5591 1.8 11.4 1.8ZM5.4 8.4C5.4 8.55913 5.33679 8.71174 5.22426 8.82426C5.11174 8.93679 4.95913 9 4.8 9C4.64087 9 4.48826 8.93679 4.37574 8.82426C4.26321 8.71174 4.2 8.55913 4.2 8.4V5.4C4.2 5.24087 4.26321 5.08826 4.37574 4.97574C4.48826 4.86321 4.64087 4.8 4.8 4.8C4.95913 4.8 5.11174 4.86321 5.22426 4.97574C5.33679 5.08826 5.4 5.24087 5.4 5.4V8.4ZM7.8 8.4C7.8 8.55913 7.73679 8.71174 7.62426 8.82426C7.51174 8.93679 7.35913 9 7.2 9C7.04087 9 6.88826 8.93679 6.77574 8.82426C6.66321 8.71174 6.6 8.55913 6.6 8.4V5.4C6.6 5.24087 6.66321 5.08826 6.77574 4.97574C6.88826 4.86321 7.04087 4.8 7.2 4.8C7.35913 4.8 7.51174 4.86321 7.62426 4.97574C7.73679 5.08826 7.8 5.24087 7.8 5.4V8.4ZM4.8 1.2H7.2C7.35913 1.2 7.51174 1.13679 7.62426 1.02426C7.73679 0.911742 7.8 0.75913 7.8 0.6C7.8 0.44087 7.73679 0.288258 7.62426 0.175736C7.51174 0.0632141 7.35913 0 7.2 0H4.8C4.64087 0 4.48826 0.0632141 4.37574 0.175736C4.26321 0.288258 4.2 0.44087 4.2 0.6C4.2 0.75913 4.26321 0.911742 4.37574 1.02426C4.48826 1.13679 4.64087 1.2 4.8 1.2Z"
-                  fill="#FFA384"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
+        </div>-->
       </div>
       <div class="p-5 bg-white rounded-[20px] pb-0">
         <h4 class="text-xl font-bold mb-5">Object History</h4>
@@ -725,7 +841,7 @@
           >
             <DialogPanel class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
               <div class="flex items-center justify-between mb-5 pb-5 border-b border-body">
-                <DialogTitle as="h3" class="text-xl font-bold text-black">Add Tasks</DialogTitle>
+                <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? 'Edit' : 'Add' }} Tasks</DialogTitle>
                 <button @click="$event => toggleAddTaskModal(false)" class="w-7 h-7 bg-body rounded-md flex items-center justify-center">
                   <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -738,17 +854,18 @@
                 </button>
               </div>
               <div>
-                  <label class="label" for="Address">Task 3</label>
+                  <label class="label" for="Address">Task </label>
                   <input
                     type="text"
                     id="Task"
+                    v-model="task.name"
                     placeholder="Enter your task"
                     class="input"
                   />
                 </div>
               <div class="mt-5 flex justify-end">
-                <button type="button" class="btn btn-light-sky mr-5" @click="$event => toggleAddTaskModal(false)">Cancel</button>
-                <button type="button" class="btn btn-sky" @click="$event => toggleAddTaskModal(false)">Save</button>
+                <button type="button" class="btn btn-light-sky mr-5" @click="$event => {toggleAddTaskModal(false), this.task={}}">Cancel</button>
+                <button type="button" class="btn btn-sky" @click="isTaskEditing?editTask():addTask()">Save</button>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -780,7 +897,7 @@
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
           >
-            <DialogPanel class="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+            <DialogPanel class=" w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
               <TabGroup>
                 <div class="flex items-center justify-between p-5 border-b-2 border-body">
                 <TabList class="inline-flex space-x-1 rounded-full bg-body p-1 text-xs text-black">
@@ -897,6 +1014,7 @@ import {TabGroup, TabList, Tab, TabPanels, TabPanel, TransitionRoot, TransitionC
 import SideBarComponent from "../../components/SideBar.vue";
 import HeaderComponent from "../../components/Header.vue";
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
+// import MultiSelect from "../../components/MultiSelect";
 export default {
   name: "NewObject",
 
@@ -904,6 +1022,7 @@ export default {
     SideBarComponent,
     HeaderComponent,
     ConfirmationModal,
+    // MultiSelect,
     TransitionRoot,
     TransitionChild,
     Dialog,
@@ -917,6 +1036,40 @@ export default {
   },
   data() {
     return {
+      objectID: this.$route.params.id,
+      form: {
+        employee_id: [],
+        client_name: '',
+        client_number: '',
+        address: '',
+        postcode: '',
+        city_id: '',
+        key_number: '',
+        start_date: '',
+        phone_number: '',
+        google_map_url: '',
+        implementation_time: '',
+        from_time: '',
+        rotation_type: '',
+        pdf: '',
+        contact_person_name: '',
+        contact_person_phone_number: '',
+      },
+      task:{
+        name:'',
+      },
+      tasks: [],
+      search_task:'',
+      taskDeletingID: '',
+      pdfs: [],
+      hours:0,
+      minutes:0,
+      seconds:0,
+      fromHours:0,
+      fromMinutes:0,
+      cities: [],
+      errors: {},
+      implementationTime: 0,
       Employees: [
         {
           ID: "1",
@@ -937,6 +1090,7 @@ export default {
           deadline: "20/05/2023 \n 15:30",
         },
       ],
+      employees: [],
       CompleteTask: [
         {
           ID: "1",
@@ -1001,11 +1155,157 @@ export default {
       ]
     };
   },
+  computed:{
+    isEditing() {
+      return !!this.objectID
+    },
+    isTaskEditing() {
+      return !!this.task.id
+    }
+  },
+  watch: {
+    hours(newValue) {
+      this.hours = this.padNumber(newValue);
+    },
+    minutes(newValue) {
+      this.minutes = this.padNumber(this.validateTime(newValue));
+    },
+    seconds(newValue) {
+      this.seconds = this.padNumber(this.validateTime(newValue));
+    },
+    fromHours(newValue) {
+      this.fromHours = this.padNumber(this.validateHours(newValue));
+    },
+    fromMinutes(newValue) {
+      this.fromMinutes = this.padNumber(this.validateTime(newValue));
+    }
+  },
+  mounted() {
+    this.hours = this.padNumber(this.hours);
+    this.minutes = this.padNumber(this.minutes);
+    this.seconds = this.padNumber(this.seconds);
+    this.fromHours = this.padNumber(this.fromHours);
+    this.fromMinutes = this.padNumber(this.fromMinutes);
+    this.fetchEmployee()
+    this.fetchTask()
+  },
+  methods: {
+    onChange(value) {
+      this.emitter.emit('change', value);
+    },
+    changePDF(){
+      this.pdfs=this.$refs.pdfFile.files
+      console.log(this.pdfs)
+      // this.form.pdf= this.$refs.pdfFile.files.item(0)
+    },
+    increment() {
+      this.seconds++;
+
+      if (this.seconds >= 60) {
+        this.seconds = 0;
+        this.minutes++;
+
+        if (this.minutes >= 60) {
+          this.minutes = 0;
+          this.hours++;
+
+          /*if (this.hours >= 24) {
+            this.hours = 0;
+          }*/
+        }
+      }
+    },
+    decrement() {
+      this.seconds--;
+
+      if (this.seconds < 0) {
+        this.seconds = 59;
+        this.minutes--;
+
+        if (this.minutes < 0) {
+          this.minutes = 59;
+          this.hours--;
+
+          if (this.hours < 0) {
+            this.hours = 0;
+          }
+        }
+      }
+    },
+
+    fetchEmployee(){
+      // eslint-disable-next-line no-undef
+      axios.get('employee')
+          .then(response => {
+            console.log(response)
+            this.employees = response.data.object
+          })
+    },
+    addTask(){
+      // eslint-disable-next-line no-undef
+      axios.post('tasks',{
+        name: this.task.name,
+        object_id: this.objectID
+      })
+          .then(() => {
+            this.task={}
+            this.toggleAddTaskModal(false)
+            this.fetchTask()
+          })
+    },
+    fetchTask(){
+      // eslint-disable-next-line no-undef
+      axios.get('tasks',{
+        params:{
+          name: this.search_task,
+          object_id: this.objectID
+        }
+      })
+          .then(response => {
+            console.log(response)
+            this.tasks = response.data.data
+          })
+    },
+    fetchSingleTask(task){
+      // this.task = task
+      this.toggleAddTaskModal(true)
+      // eslint-disable-next-line no-undef
+      axios.get(`tasks/${task.id}`)
+          .then((response) => {
+            console.log(response)
+            this.task = response.data.task
+          })
+    },
+    editTask(){
+      // eslint-disable-next-line no-undef
+      axios.put(`tasks/${this.task.id}`,{
+        name: this.task.name,
+        object_id: this.objectID
+      })
+          .then(() => {
+            this.toggleAddTaskModal(false)
+            this.task={}
+            this.fetchTask()
+          })
+    },
+    deleteTask(){
+      // eslint-disable-next-line no-undef
+      axios.delete(`tasks/${this.taskDeletingID}`)
+          .then(() => {
+            this.toggleConfDeleteTask(false)
+            this.fetchTask()
+          })
+    }
+  },
   setup() {
+    let isConfDeleteTask= ref(false);
     let isConfOpen = ref(false);
     let isConfSuccessOpen = ref(false);
     let isAddTaskModalOpen = ref(false);
     let isCompleteTaskModalOpen = ref(false);
+    let toggleConfDeleteTask = (s) => {
+      isConfDeleteTask.value = s;
+    }
     let toggleConf = (s) => {
       isConfOpen.value = s;
     }
@@ -1022,9 +1322,20 @@ export default {
       isConfOpen, toggleConf,
       isConfSuccessOpen, toggleConfSuccess, 
       isAddTaskModalOpen, toggleAddTaskModal,
-      isCompleteTaskModalOpen, toggleCompleteTaskModal
+      isCompleteTaskModalOpen, toggleCompleteTaskModal,
+      isConfDeleteTask,toggleConfDeleteTask,
     }
   }
 };
 </script>
+<style>
+.time-input::-webkit-outer-spin-button,
+.time-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.time-input[type="number"] {
+  -moz-appearance: textfield;
+}
+</style>
     

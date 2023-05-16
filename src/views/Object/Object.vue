@@ -99,39 +99,39 @@
         </thead>
         <tbody>
           <tr
-            v-for="project in Projects"
-            :key="project.ID"
+            v-for="object in objects"
+            :key="object.id"
             class="border-b border-body"
           >
             <td class="p-4">
               <div class="flex">
                 <img
                   class="mr-2"
-                  :src="project.img"
+                  src="../../assets/images/profiles/profile-1.png"
                   alt=""
                   width="32"
                   height="32"
                 />
                 <div class="">
                   <span class="block text-black font-semibold">{{
-                    project.name
+                      object.client_name
                   }}</span>
                   <span class="block text-[#8F9BB3] text-[10px]"
-                    >{{ project.open }} Open,
-                    {{ project.completed }} Completed</span
+                    >{{ object.open }} Open,
+                    {{ object.completed }} Completed</span
                   >
                 </div>
               </div>
             </td>
             <td class="text-xs font-normal p-4">
-              {{ project.employee }}
+              {{ object.employee_id }}
             </td>
             <td class="text-xs font-normal p-4">
-              {{ project.date }}
+              {{ object.start_date }}
             </td>
             <td class="p-4">
               <span
-                v-if="project.isCompleted"
+                v-if="object.status==='1'"
                 class="py-2 px-3 rounded-full bg-[#BFFFE8] text-[#15C787]"
                 >Active</span
               >
@@ -155,20 +155,22 @@
                     />
                   </svg>
                 </button>
-                <button class="p-2">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M8.10998 3.42095L0.931449 10.5995C0.66693 10.8645 0.499756 11.2111 0.457066 11.5831L0.171041 14.0946C0.152396 14.2712 0.171215 14.4497 0.226268 14.6186C0.281321 14.7874 0.371371 14.9427 0.490535 15.0744C0.6097 15.2061 0.7553 15.3111 0.917826 15.3827C1.08035 15.4543 1.25615 15.4908 1.43374 15.4898H1.58024L4.09168 15.2038C4.46219 15.1609 4.80808 14.9966 5.07533 14.7364L12.2539 7.55087L8.10998 3.42095ZM14.6816 2.81402L12.8608 0.993221C12.7085 0.840297 12.5275 0.718955 12.3281 0.636159C12.1288 0.553363 11.9151 0.510742 11.6992 0.510742C11.4834 0.510742 11.2697 0.553363 11.0704 0.636159C10.871 0.718955 10.69 0.840297 10.5377 0.993221L8.84946 2.68147L12.9933 6.82534L14.6816 5.1371C14.8345 4.98478 14.9558 4.80376 15.0386 4.60444C15.1214 4.40511 15.1641 4.1914 15.1641 3.97556C15.1641 3.75972 15.1214 3.546 15.0386 3.34668C14.9558 3.14735 14.8345 2.96633 14.6816 2.81402Z"
-                      fill="#15C787"
-                    />
-                  </svg>
-                </button>
+                <RouterLink :to="{name:'EditObject',params:{id:object.id}}">
+                  <button class="p-2">
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                          d="M8.10998 3.42095L0.931449 10.5995C0.66693 10.8645 0.499756 11.2111 0.457066 11.5831L0.171041 14.0946C0.152396 14.2712 0.171215 14.4497 0.226268 14.6186C0.281321 14.7874 0.371371 14.9427 0.490535 15.0744C0.6097 15.2061 0.7553 15.3111 0.917826 15.3827C1.08035 15.4543 1.25615 15.4908 1.43374 15.4898H1.58024L4.09168 15.2038C4.46219 15.1609 4.80808 14.9966 5.07533 14.7364L12.2539 7.55087L8.10998 3.42095ZM14.6816 2.81402L12.8608 0.993221C12.7085 0.840297 12.5275 0.718955 12.3281 0.636159C12.1288 0.553363 11.9151 0.510742 11.6992 0.510742C11.4834 0.510742 11.2697 0.553363 11.0704 0.636159C10.871 0.718955 10.69 0.840297 10.5377 0.993221L8.84946 2.68147L12.9933 6.82534L14.6816 5.1371C14.8345 4.98478 14.9558 4.80376 15.0386 4.60444C15.1214 4.40511 15.1641 4.1914 15.1641 3.97556C15.1641 3.75972 15.1214 3.546 15.0386 3.34668C14.9558 3.14735 14.8345 2.96633 14.6816 2.81402Z"
+                          fill="#15C787"
+                      />
+                    </svg>
+                  </button>
+                </RouterLink>
                 <button class="p-2" @click="$event => toggleConfDelete(true)">
                   <svg
                     width="16"
@@ -207,6 +209,7 @@ import HeaderComponent from "../../components/Header.vue";
 import ObjectStatistics from "./ObjectStatistics.vue";
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
 import { RouterLink } from "vue-router";
+  import axios from "axios";
 export default {
   name: "ObjectComponent",
   components: {
@@ -320,7 +323,20 @@ export default {
           isCompleted: true,
         },
       ],
+      objects: [],
     };
+  },
+  mounted() {
+    this.fetch()
+  },
+  methods:{
+    fetch() {
+      axios.get('object')
+      .then(response => {
+        this.objects = response.data.object
+        console.log('object',response)
+      })
+    }
   },
   setup() {
     let isConfDeleteOpen = ref(false);
