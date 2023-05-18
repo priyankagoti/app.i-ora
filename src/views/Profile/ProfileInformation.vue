@@ -177,6 +177,7 @@ export default {
           .then(() => {
             this.errors = {}
             this.emitter.emit('profile-edit')
+            this.$refs.profileImg.value = ''
             this.fetchAuthUser()
           })
       .catch(error => {
