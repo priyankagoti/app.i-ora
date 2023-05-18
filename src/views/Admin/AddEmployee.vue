@@ -271,14 +271,21 @@
                 </div>
                 <div class="col-span-2">
                   <label class="label" for="City">City *</label>
-                  <select v-model="form.city_id" class="input" id="City">
+                  <input
+                      type="text"
+                      id="City"
+                      placeholder="Enter City Name"
+                      class="input"
+                      v-model="form.city_name"
+                  />
+<!--                  <select v-model="form.city_id" class="input" id="City">
                     <option value="" selected disabled>Select city</option>
                     <option v-for="city in cities" :key="city.id" :value="city.id">{{city.name}}</option>
-                  </select>
+                  </select>-->
                   <small
-                      v-if="errors && errors.city_id"
+                      v-if="errors && errors.city_name"
                       class="text-danger"
-                  >{{ errors.city_id[0] }}</small>
+                  >{{ errors.city_name[0] }}</small>
                 </div>
                 <div class="col-span-2">
                   <label class="label" for="Country">Country *</label>
@@ -434,7 +441,7 @@ export default {
         password: '',
         address: '',
         zipcode: '',
-        city_id: '',
+        city_name: '',
         country_id: '',
         phone_number: '',
         join_date: '',
@@ -475,19 +482,22 @@ export default {
       this.form.first_name= ''
       this.form.last_name= ''
       this.form.email= ''
+      this.form.profile=null
       this.form.username= ''
       this.form.password= ''
       this.form.address= ''
       this.form.zipcode= ''
       this.form.region= ''
       this.form.country_id= ''
-      this.form.city_id= ''
+      this.form.city_name= ''
       this.form.phone_number= ''
       this.form.join_date= ''
       this.form.employee_number= ''
       this.form.amount_of_vacation_days= ''
       this.form.amount_of_hours_work= ''
+      this.$refs.empProfileImg.value = '';
       this.employee = {}
+      this.errors = {}
     },
     changeProfile() {
       const binaryData = []
@@ -544,7 +554,7 @@ export default {
       formData.append('password',this.form.password)
       formData.append('address',this.form.address)
       formData.append('zipcode',this.form.zipcode)
-      formData.append('city_id',this.form.city_id)
+      formData.append('city_name',this.form.city_name)
       formData.append('country_id',this.form.country_id)
       formData.append('phone_number',this.form.phone_number)
       formData.append('join_date',this.form.join_date)
@@ -557,6 +567,7 @@ export default {
       .then(response=>{
         console.log(response)
         this.toggleConfSuccess(true)
+        this.refreshForm()
         this.emitter.emit("employee.refresh");
       })
       .catch(error => {
@@ -579,7 +590,7 @@ export default {
       }
       formData.append('address',this.form.address)
       formData.append('zipcode',this.form.zipcode)
-      formData.append('city_id',this.form.city_id)
+      formData.append('city_name',this.form.city_name)
       formData.append('country_id',this.form.country_id)
       formData.append('phone_number',this.form.phone_number)
       formData.append('join_date',this.form.join_date)
@@ -594,6 +605,7 @@ export default {
             console.log(response)
             this.toggleConfSuccess(true)
             this.emitter.emit("employee.refresh");
+            this.refreshForm()
           })
           .catch(error => {
             console.log(error.response)
