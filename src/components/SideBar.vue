@@ -50,7 +50,7 @@
         <span class="inline-block ml-3"> Employees </span>
       </RouterLink>
       <RouterLink
-        to="/object"
+        to="/customer"
         exact-active-class="nav-link-active"
         class="nav-link mb-2.5"
       >
@@ -66,7 +66,7 @@
             fill="currentcolor"
           />
         </svg>
-        <span class="inline-block ml-3"> Object </span>
+        <span class="inline-block ml-3"> Cutomer </span>
       </RouterLink>
     </div>
     <div class="3xl:p-5 text-xs">

@@ -1,7 +1,7 @@
 <template>
   <div class="body-space">
     <SideBarComponent />
-    <HeaderComponent :title="isEditing? 'Edit Object':'Add New Object'" />
+    <HeaderComponent :title="isEditing? 'Edit Customer':'Add New Customer'" />
     <div class="p-5 bg-white rounded-[20px]">
       <div class="flex items-cente justify-between mb-5">
         <h4 class="text-xl font-bold">Object Client Details</h4>

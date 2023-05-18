@@ -58,16 +58,16 @@ const routes = [
     },
   },
   {
-    path: "/object",
-    name: "Object",
+    path: "/customer",
+    name: "Customer",
     component: ObjectComponent,
     meta: {
       middleware: [auth],
     },
   },
   {
-    path: "/new-object",
-    name: "NewObject",
+    path: "/new-customer",
+    name: "NewCustomer",
     component: NewObject,
     meta: {
       middleware: [auth],
@@ -75,7 +75,7 @@ const routes = [
   },
   {
     path: "/edit-object/:id",
-    name: "EditObject",
+    name: "EditCustomer",
     component: NewObject,
     meta: {
       middleware: [auth],

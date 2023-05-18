@@ -99,7 +99,7 @@
                   <h3 class="w-full text-xl font-bold text-black mb-9">Alert</h3>
                   <img src="../assets/images/cover/alert.png" class="block mx-auto mix-blend-multiply" />
                   <p class="text-sm text-black my-5">
-                    Are you sure you want to assign this <br/> Employee to this object?
+                    Are you sure you want to assign this <br/> Employee to this customer?
                   </p>
                   <div class="mt-5 flex justify-center">
                     <button type="button" class="btn btn-white mr-5" @click="$event => toggleAlertModal(false)">No</button>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="w-full max-w-sm bg-white p-6">
                   <div class="flex items-center justify-between mb-5 ">
-                    <DialogTitle as="h3" class="text-xl font-bold text-black">Employee Objects</DialogTitle>
+                    <DialogTitle as="h3" class="text-xl font-bold text-black">Employee Customers</DialogTitle>
                     <button @click="$event => toggleAlertModal(false)" class="w-7 h-7 bg-body rounded-md flex items-center justify-center">
                       <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -123,7 +123,7 @@
                   <table class="w-full text-xs font-semibold text-left">
                     <thead class="bg-body">
                       <tr class="text-sm font-bold">
-                        <td class="p-4 rounded-l-xl">Object</td>
+                        <td class="p-4 rounded-l-xl">Customer</td>
                         <td class="p-4 rounded-r-xl">Project Name</td>
                       </tr>
                     </thead>

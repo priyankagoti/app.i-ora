@@ -3,7 +3,7 @@
     class="body-space"
   >
     <SideBarComponent />
-    <HeaderComponent title="Object" />
+    <HeaderComponent title="Customer" />
     <ObjectStatistics/>
     <div class="flex items-center justify-between mb-30">
       <div class="flex">
@@ -46,7 +46,7 @@
           </button>
         </div>
       </div>
-      <RouterLink to="/new-object" class="btn btn-sky">
+      <RouterLink to="/new-customer" class="btn btn-sky">
         <svg
           class="mr-2"
           width="11"
@@ -66,11 +66,11 @@
             stroke="black"
           />
         </svg>
-        <span>Add New Object</span>
+        <span>Add New Customer</span>
       </RouterLink>
     </div>
     <div class="p-5 bg-white rounded-[20px] pb-0">
-      <h4 class="mb-5 text-base font-bold">Recent Objects</h4>
+      <h4 class="mb-5 text-base font-bold">Recent Customers</h4>
       <table class="w-full text-xs font-semibold">
         <thead class="bg-body">
           <tr class="text-sm font-bold">
@@ -155,7 +155,7 @@
                     />
                   </svg>
                 </button>
-                <RouterLink :to="{name:'EditObject',params:{id:object.id}}">
+                <RouterLink :to="{name:'EditCustomer',params:{id:object.id}}">
                   <button class="p-2">
                     <svg
                         width="16"
