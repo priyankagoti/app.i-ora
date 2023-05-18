@@ -26,6 +26,14 @@ const routes = [
     },
   },
   {
+    path: "/",
+    name: "Home",
+    redirect:"/dashboard",
+    meta: {
+      middleware: [auth],
+    },
+  },
+  {
     path: "/dashboard",
     name: "Dashboard",
     component: DashboardComponent,

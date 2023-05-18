@@ -72,8 +72,8 @@
     <div class="3xl:p-5 text-xs">
       <RouterLink to="/profile" class="flex items-center mb-10">
         <img
-            v-if="auth_user.profile"
-            :src="auth_user.profile"
+            v-if="authUser.profile"
+            :src="authUser.profile"
             alt="Michael Smith"
             width="40"
             height="40"
@@ -88,8 +88,8 @@
           class="shrink-0 border rounded-full mr-2 border-[#74BDCB]"
         />
         <div class="font-normal">
-          <span class="block mb-1 text-[#324054]">{{auth_user.first_name}} {{auth_user.last_name}}</span>
-          <span class="color-[#71839B]">{{auth_user.email}}</span>
+          <span class="block mb-1 text-[#324054]">{{authUser.first_name}} {{authUser.last_name}}</span>
+          <span class="color-[#71839B]">{{authUser.email}}</span>
         </div>
       </RouterLink>
       <span @click="$event => toggleLogoutModal(true)" class="flex items-center text-[#FF0000] cursor-pointer">
@@ -183,11 +183,23 @@ export default {
   data() {
     return {
       isLogoutModalOpen: false,
+      authUser:{},
     }
+  },
+  mounted() {
+    this.emitter.on('profile-edit',()=>this.fetchAuthUser())
+    this.fetchAuthUser()
   },
   methods: {
     toggleLogoutModal(s){
       this.isLogoutModalOpen = s;
+    },
+    fetchAuthUser(){
+      // eslint-disable-next-line no-undef
+      axios.get(`list-user/${this.auth_user_id}`)
+          .then(response => {
+            this.authUser = response.data.post
+          })
     },
     async logout() {
       await store.dispatch('auth/logOut')

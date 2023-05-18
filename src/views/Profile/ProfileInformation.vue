@@ -30,7 +30,7 @@
         <input type="file" class="choose-file-btn mr-2.5" />-->
 <!--        <input type="file" class="btn btn-sky appearance-none mr-2.5">-->
 <!--        <button class="btn btn-sky mr-2.5">Change</button>-->
-        <button class="btn btn-light-sky">Remove</button>
+        <button class="btn btn-light-sky" @click="removeProfile">Remove</button>
       </div>
 <!--      <button class="btn btn-sky mr-2.5">Change</button>-->
     </div>
@@ -132,6 +132,17 @@ export default {
       binaryData.push(this.$refs.profileImg.files.item(0))
       this.profileUrl = URL.createObjectURL(new Blob(binaryData, { type: 'application/zip' }))
     },
+    removeProfile(){
+      // eslint-disable-next-line no-undef
+      axios.post(`remove-profile`,{
+        user_id: this.auth_user_id,
+        profile:''
+      })
+          .then(() => {
+           this.fetchAuthUser()
+            this.emitter.emit('profile-edit')
+          })
+    },
     fetchAuthUser(){
       // eslint-disable-next-line no-undef
       axios.get(`list-user/${this.auth_user_id}`)
@@ -150,6 +161,7 @@ export default {
       formData.append('company_name',this.user.company_name )
       formData.append('first_name',this.user.first_name )
       formData.append('last_name',this.user.last_name )
+      formData.append('contact_number',this.user.contact_number )
       formData.append('salutation_id',this.user.salutation_id )
       formData.append('email',this.user.email )
       // formData.append('username',this.user.username )
@@ -164,6 +176,7 @@ export default {
       axios.post('edit-profile',formData)
           .then(() => {
             this.errors = {}
+            this.emitter.emit('profile-edit')
             this.fetchAuthUser()
           })
       .catch(error => {
