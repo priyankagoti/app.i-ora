@@ -198,7 +198,7 @@ export default {
       // eslint-disable-next-line no-undef
       axios.get(`list-user/${this.auth_user_id}`)
           .then(response => {
-            this.authUser = response.data.post
+            this.authUser = response.data.data
           })
     },
     async logout() {
