@@ -67,14 +67,26 @@
     <div class="">
       <label class="label" for="StreetHouseNumber">Street & House Number</label>
       <input type="text" v-model="company.business_street" id="StreetHouseNumber" placeholder="Enter Street & House Number" class="input" />
+      <small
+          v-if="errors && errors.business_street"
+          class="text-danger"
+      >{{ errors.business_street[0] }}</small>
     </div>
     <div class="">
       <label class="label" for="Zipcode">Zipcode</label>
       <input type="text" v-model="company.business_postcode" id="Zipcode" placeholder="Enter Zipcode" class="input" />
+      <small
+          v-if="errors && errors.business_postcode"
+          class="text-danger"
+      >{{ errors.business_postcode[0] }}</small>
     </div>
     <div class="">
       <label class="label" for="City">City</label>
       <input type="text" v-model="company.business_city" id="City" placeholder="Enter City" class="input" />
+      <small
+          v-if="errors && errors.business_city"
+          class="text-danger"
+      >{{ errors.business_city[0] }}</small>
     </div>
     <div class="">
       <label class="label" for="Country">Country</label>
@@ -83,6 +95,10 @@
         <option value="" selected disabled>Enter Country</option>
         <option v-for="country in countries" :key="country.id" :value="country.id">{{country.name}}</option>
       </select>
+      <small
+          v-if="errors && errors.business_country_id"
+          class="text-danger"
+      >{{ errors.business_country_id[0] }}</small>
     </div>
   </div>
   <h4 class="font-semibold text-base mb-5">Billing Address</h4>
@@ -90,14 +106,26 @@
     <div class="">
       <label class="label" for="BillingStreetHouseNumber">Street & House Number</label>
       <input type="text" v-model="company.billing_street" id="BillingStreetHouseNumber" placeholder="Enter Street & House Number" class="input" />
+      <small
+          v-if="errors && errors.billing_street"
+          class="text-danger"
+      >{{ errors.billing_street[0] }}</small>
     </div>
     <div class="">
       <label class="label" for="BillingZipcode">Zipcode</label>
       <input type="text" v-model="company.billing_postcode" id="BillingZipcode" placeholder="Enter Zipcode" class="input" />
+      <small
+          v-if="errors && errors.billing_postcode"
+          class="text-danger"
+      >{{ errors.billing_postcode[0] }}</small>
     </div>
     <div class="">
       <label class="label" for="BillingCity">City</label>
       <input type="text" v-model="company.billing_city" id="BillingCity" placeholder="Enter City" class="input" />
+      <small
+          v-if="errors && errors.billing_city"
+          class="text-danger"
+      >{{ errors.billing_city[0] }}</small>
     </div>
     <div class="">
       <label class="label" for="BillingCountry">Country</label>
@@ -106,6 +134,10 @@
         <option value="" selected disabled>Enter Country</option>
         <option v-for="country in countries" :key="country.id" :value="country.id">{{country.name}}</option>
       </select>
+      <small
+          v-if="errors && errors.billing_country_id"
+          class="text-danger"
+      >{{ errors.billing_country_id[0] }}</small>
     </div>
   </div>
 </template>
@@ -116,6 +148,7 @@ import _ from "lodash";
 
 export default {
   name: "CompanyMasterDate",
+  props:['companyId'],
   data() {
     return {
       company:{
@@ -148,20 +181,30 @@ export default {
       // eslint-disable-next-line no-undef
       axios.get('countries')
           .then(response =>{
-            console.log('countries',response)
             this.countries = response.data.object
           })
     },
     fetchCompany(){
-      axios.get(`companies/${this.auth_user_id}`)
+      axios.get(`companies/${this.companyId}`)
       .then(response => {
-        this.company = _.merge(this.company,response.data.post)
-        console.log(response)
+        this.company = _.merge(this.company,response.data.data)
+        this.company.billing_city = response.data.data.billing_address[0].city_name
+        this.company.billing_street = response.data.data.billing_address[0].address
+        this.company.billing_postcode = response.data.data.billing_address[0].zipcode
+        this.company.billing_country_id = response.data.data.billing_address[0].country_id
+        this.company.business_city = response.data.data.business_address[0].city_name
+        this.company.business_street = response.data.data.business_address[0].address
+        this.company.business_postcode = response.data.data.business_address[0].zipcode
+        this.company.business_country_id = response.data.data.business_address[0].country_id
+
       })
     },
     editCompany(){
-      axios.put(`companies/${this.auth_user_id}`,{
+      axios.put(`companies/${this.companyId}`,{
+        id: this.companyId,
         name: this.company.name,
+        billing_address_id: this.company.billing_address_id,
+        business_address_id: this.company.business_address_id,
         legal_name: this.company.legal_name,
         vatId: this.company.vatId,
         email: this.company.email,
@@ -178,6 +221,10 @@ export default {
       })
           .then(response => {
             console.log(response)
+            this.errors = {}
+            this.company= {}
+            this.fetchCompany()
+
           })
       .catch(error=>{
         this.errors = error.response.data.errors

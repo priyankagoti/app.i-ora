@@ -20,7 +20,7 @@
           <ProfileInformation />
         </TabPanel>
         <TabPanel :class="['rounded-3xl bg-white p-5']">
-          <CompanyMasterDate />
+          <CompanyMasterDate :companyId="companyId"/>
         </TabPanel>
       </TabPanels>
     </TabGroup>
@@ -46,6 +46,24 @@ export default {
     TabPanel,
     ProfileInformation,
     CompanyMasterDate,
+  },
+  data() {
+    return{
+      companyId: ''
+    }
+  },
+  mounted() {
+    this.fetchAuthUser()
+  },
+  methods: {
+    fetchAuthUser(){
+      // eslint-disable-next-line no-undef
+      axios.get(`list-user/${this.auth_user_id}`)
+          .then(response => {
+            // this.user = response.data.data
+            this.companyId = response.data.data.company_id
+          })
+    },
   }
 };
 </script>

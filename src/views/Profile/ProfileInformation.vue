@@ -116,9 +116,7 @@ export default {
     return {
       profileUrl: null,
       salutations: [],
-      user:{
-        // salutation_id:'',
-      },
+      user:{},
       errors: {}
     }
   },
@@ -147,22 +145,23 @@ export default {
       // eslint-disable-next-line no-undef
       axios.get(`list-user/${this.auth_user_id}`)
           .then(response => {
-            this.user = response.data.post
-            this.profileUrl = response.data.post.profile
+            this.user = response.data.data
+            this.profileUrl = response.data.data.profile
+            this.user.company_name = response.data.data.company[0].name
+            this.user.password=''
           })
     },
     editUser(){
       const formData = new FormData()
-      console.log('user--->',this.user)
-      console.log('profile--->',this.$refs.profileImg.files.item(0))
       if (this.$refs.profileImg.files.item(0)) {
         formData.append('profile', this.$refs.profileImg.files.item(0))
       }
       formData.append('company_name',this.user.company_name )
       formData.append('first_name',this.user.first_name )
       formData.append('last_name',this.user.last_name )
-      formData.append('contact_number',this.user.contact_number )
+      formData.append('contact_number',this.user.contact_number? this.user.contact_number: '')
       formData.append('salutation_id',this.user.salutation_id )
+      formData.append('company_id',this.user.company_id )
       formData.append('email',this.user.email )
       // formData.append('username',this.user.username )
       if(this.user.password){
@@ -181,7 +180,6 @@ export default {
             this.fetchAuthUser()
           })
       .catch(error => {
-        console.log(error.response)
         this.errors = error.response.data.errors
       })
     },
@@ -190,7 +188,6 @@ export default {
       axios.get('salutation')
           .then(response => {
             this.salutations = response.data
-            console.log(response)
           })
     },
   },
