@@ -334,7 +334,6 @@ export default {
       axios.get('object')
       .then(response => {
         this.objects = response.data.object
-        console.log('object',response)
       })
     }
   },

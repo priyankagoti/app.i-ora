@@ -13,14 +13,14 @@
              Please Sign in here to your Account,<br />
               Have your landing pages online in minutes.
             </p>
-<!--            <div class="relative mb-20">
-              <select v-model="$i18n.locale" @change="$store.dispatch('auth/changeLocale',$event.target.value)" class="lang-select">
+            <div class="relative mb-20">
+              <select @change="$store.dispatch('auth/fetchJsonFile',$event.target.value)" class="lang-select">
                 <option value="en" >
                   English
                 </option>
                 <option value="de">German</option>
               </select>
-            </div>-->
+            </div>
             <div class="mb-10">
               <div class="relative 3xl:mb-14 ">
                 <svg

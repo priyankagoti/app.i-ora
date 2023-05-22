@@ -219,8 +219,7 @@ export default {
         billing_city: this.company.billing_city,
         billing_country_id: this.company.billing_country_id,
       })
-          .then(response => {
-            console.log(response)
+          .then(() => {
             this.errors = {}
             this.company= {}
             this.fetchCompany()

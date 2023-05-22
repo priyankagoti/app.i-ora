@@ -1195,7 +1195,7 @@ export default {
     },
     changePDF(){
       this.pdfs=this.$refs.pdfFile.files
-      console.log(this.pdfs)
+      // console.log(this.pdfs)
       // this.form.pdf= this.$refs.pdfFile.files.item(0)
     },
     increment() {
@@ -1237,7 +1237,6 @@ export default {
       // eslint-disable-next-line no-undef
       axios.get('employee')
           .then(response => {
-            console.log(response)
             this.employees = response.data.object
           })
     },

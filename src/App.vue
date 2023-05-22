@@ -7,7 +7,12 @@
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
 
+import store from "@/store";
+
 export default {
-  name: "App"
+  name: "App",
+  mounted() {
+    store.dispatch('auth/fetchJsonFile','en')
+  },
 };
 </script>

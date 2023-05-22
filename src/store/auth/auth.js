@@ -2,6 +2,8 @@
 const state = {
   user: getState('auth.user'),
   token: getState('auth.token'),
+  language:getState('lang'),
+  jsonFile: {}
 }
 
 const mutations = {
@@ -13,6 +15,13 @@ const mutations = {
     state.token = token
     saveState('auth.token', token)
   },
+  SET_JSON_FILE(state, jsonFile) {
+    state.jsonFile = jsonFile
+  },
+  SET_LANGUAGE(state, language) {
+    state.language = language
+    saveState('lang', language)
+  }
 }
 
 const getters = {
@@ -25,6 +34,12 @@ const getters = {
   getToken(state) {
     return state.token
   },
+  getJsonFile(state) {
+    return state.jsonFile
+  },
+  getLanguage(state){
+    return state.language
+  }
 }
 
 const actions = {
@@ -63,6 +78,21 @@ const actions = {
       return Promise.resolve(null)
     }
     return getters.getUser
+  },
+  fetchJsonFile({ commit },language){
+    // eslint-disable-next-line no-undef
+    axios.get(`translations`,{
+      headers:{
+        'Accept-Language': language
+      }
+    }).then(response => {
+      commit('SET_JSON_FILE', response.data)
+      commit('SET_LANGUAGE', language)
+          // return response.data.text;
+        })
+        .catch(() => {
+          return ''; // Return an empty string or handle error as per your requirements
+        });
   },
 }
 function isJson(str) {

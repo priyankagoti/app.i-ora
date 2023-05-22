@@ -1,6 +1,9 @@
 import store from "@/store";
 
 export default {
+    mounted() {
+        // console.log(this.jsonFile)
+    },
     computed:{
         auth_user(){
            return  store.getters["auth/getUser"]
@@ -12,6 +15,23 @@ export default {
         }
     },
     methods: {
+        fetchTranslation(language) {
+            // eslint-disable-next-line no-undef
+           axios.get(`translations`,{
+               headers:{
+                   'Accept-Language': language
+               }
+           })
+                .then(response => {
+                    console.log(response)
+                    this.jsonFile = response.data
+                    // return response.data.text;
+                })
+                .catch(error => {
+                    console.error(error);
+                    return ''; // Return an empty string or handle error as per your requirements
+                });
+        },
         padNumber(value) {
             // if(value){
             return value.toString().padStart(2, '0');

@@ -215,15 +215,13 @@ export default {
       // eslint-disable-next-line no-undef
       axios.get('employee')
           .then(response => {
-            console.log(response)
             this.employees = response.data.object
           })
     },
     destroy() {
       // eslint-disable-next-line no-undef
       axios.delete(`employee/${this.deletingId}`)
-          .then(response => {
-            console.log(response)
+          .then(() => {
             this.emitter.emit("employee.refresh")
             this.toggleConfDelete(false)
           })
