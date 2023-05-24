@@ -5,7 +5,7 @@
     <div class="p-5 bg-white rounded-[20px]">
       <div class="flex items-cente justify-between mb-5">
         <h4 class="text-xl font-bold">Object Client Details</h4>
-        <button class="btn btn-sky">
+<!--        <button class="btn btn-sky">
           <svg
             class="mr-2"
             width="10"
@@ -20,7 +20,7 @@
             />
           </svg>
           <span>{{ isEditing ? 'Edit' : 'Add' }}</span>
-        </button>
+        </button>-->
       </div>
       <div class="grid grid-cols-6 gap-20">
         <div class="col-span-2">
@@ -86,12 +86,12 @@
               id="City"
               placeholder="Enter City"
               class="input"
-              v-model="form.city_id"
+              v-model="form.city_name"
           />
           <small
-              v-if="errors && errors.city_id"
+              v-if="errors && errors.city_name"
               class="text-danger"
-          >{{ errors.city_id[0] }}</small>
+          >{{ errors.city_name[0] }}</small>
 <!--          <select v-model="form.city_id" class="input" id="City">
             <option value="" selected disabled>Select city</option>
             <option v-for="city in cities" :key="city.id" :value="city.id">{{city.name}}</option>
@@ -185,8 +185,8 @@
                   <input v-model.number="hours"  type="number" class="time-input" />
                   <span>:</span>
                   <input v-model.number="minutes" type="number" class="time-input" />
-                  <span>:</span>
-                  <input v-model.number="seconds" type="number" class="time-input" />
+<!--                  <span>:</span>
+                  <input v-model.number="seconds" type="number" class="time-input" />-->
                 </div>
 <!--                <div class="flex">
                   <input type="text" class="time-input" :value="implementationTime" @input="changeTimeFormat($event.target.value)">
@@ -233,7 +233,12 @@
           </div>
         </div>
         <div class="col-span-2">
-          <label class="label">Rotation</label>
+          <label class="label">Rotation
+            <small
+                v-if="errors && errors.rotation_type"
+                class="text-danger text-sm"
+            >{{ errors.rotation_type[0] }}</small>
+          </label>
           <div class="flex gap-20">
             <div class="relative">
               <input
@@ -241,6 +246,8 @@
                 type="radio"
                 name="Rotation"
                 id="rotation"
+                value="1"
+                v-model="form.rotation_type"
               />
               <label for="rotation" class="rotation-check">
                 <span class="text-xs">Weekly</span>
@@ -269,6 +276,8 @@
                 type="radio"
                 name="Rotation"
                 id="rotation-weekly"
+                value="2"
+                v-model="form.rotation_type"
               />
               <label for="rotation-weekly" class="rotation-check">
                 <span class="text-xs">Every 2 weeks</span>
@@ -297,6 +306,8 @@
                 type="radio"
                 name="Rotation"
                 id="rotation-monthly"
+                value="3"
+                v-model="form.rotation_type"
               />
               <label for="rotation-monthly" class="rotation-check">
                 <span class="text-xs">Monthly</span>
@@ -324,7 +335,7 @@
         <div class="col-span-2">
           <label class="label">Day</label>
           <div class="flex justify-between items-center">
-            <div>
+<!--            <div>
               <input
                 class="hidden peer"
                 type="checkbox"
@@ -400,11 +411,17 @@
               <label for="Sunday" class="day-check">
                 <span class="text-xs">Sun</span>
               </label>
-            </div>
+            </div>-->
+            <MultiCheckbox v-model:value="form.days" :options="daysOptions" />
           </div>
         </div>
         <div class="col-span-3 flex flex-col">
-          <label class="label">Upload Pdf Document *</label>
+          <label class="label">Upload Pdf Document *
+            <small
+                v-if="errors && errors.pdf"
+                class="text-danger text-sm"
+            >{{ errors.pdf[0] }}</small>
+          </label>
           <input type="file" multiple ref="pdfFile" @change="changePDF" id="UploadPdf" class="h-0 w-0 hidden" />
           <label
             class="h-full cursor-pointer rounded-lg p-4 border-dashed border-2 border-[#74BDCB] bg-body flex items-center justify-center flex-col"
@@ -444,6 +461,47 @@
               </button>
             </div>
             <div
+                v-for="pdf in form.objectDocuments"
+                :key="pdf.pdf"
+                class="relative mb-2.5 rounded-full flex justify-between items-center bg-white p-1 pl-4"
+            >
+              <span class="text-xs">{{pdf.pdf.slice(pdf.pdf.lastIndexOf('/')+1)}}</span>
+              <div class="flex">
+                <button
+                    class="mr-1 w-[30px] h-[30px] bg-body rounded-full flex-center"
+                >
+                  <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 13 13"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                        d="M10.1111 13H2.8889C2.11729 13 1.39183 12.6995 0.846166 12.1538C0.300504 11.6082 0 10.8828 0 10.1111V9.38889C0 8.99001 0.323348 8.66666 0.722233 8.66666C1.12112 8.66666 1.44447 8.99003 1.44447 9.38889V10.1111C1.44447 10.4969 1.59472 10.8596 1.86754 11.1325C2.14038 11.4053 2.5031 11.5556 2.8889 11.5556H10.1111C10.4969 11.5556 10.8596 11.4053 11.1325 11.1325C11.4053 10.8596 11.5556 10.4969 11.5556 10.1111V9.38889C11.5556 8.99001 11.8789 8.66666 12.2778 8.66666C12.6767 8.66666 13 8.99003 13 9.38889V10.1111C13 10.8827 12.6995 11.6082 12.1538 12.1538C11.6081 12.6995 10.8827 13 10.1111 13ZM6.49999 10.1111C6.1011 10.1111 5.77775 9.78775 5.77775 9.38886V2.46584L4.12178 4.12181C3.83974 4.40387 3.38245 4.40387 3.10041 4.12181C2.81837 3.83974 2.81837 3.38248 3.10041 3.10044L5.98932 0.211535C5.98984 0.211008 5.99037 0.210488 5.9909 0.209976L5.99172 0.209155L5.99246 0.208416C5.99283 0.208038 5.99321 0.207673 5.99361 0.207322L5.99399 0.206912L5.99544 0.205516L5.9955 0.205462C6.13029 0.0735816 6.31141 -0.000185551 6.49999 3.50518e-07C6.59919 3.50518e-07 6.69371 0.0199993 6.77975 0.0561944L6.78055 0.0565227L6.78123 0.0568236C6.86431 0.0919436 6.94005 0.142365 7.0045 0.205462L7.00456 0.205516L7.00598 0.206912L7.00642 0.207322L7.00754 0.208416L7.00828 0.209155L7.0091 0.209976L7.01068 0.211535L9.89956 3.10041C10.1816 3.38245 10.1816 3.83974 9.89956 4.12178C9.61755 4.40382 9.1602 4.40382 8.87819 4.12178L7.22225 2.46581V9.38884C7.22225 9.78775 6.89887 10.1111 6.49999 10.1111Z"
+                        fill="#74BDCB"
+                    />
+                  </svg>
+                </button>
+                <button
+                    class="w-[30px] h-[30px] bg-body rounded-full flex-center"
+                >
+                  <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                        d="M11.4 1.8H0.6C0.44087 1.8 0.288258 1.86321 0.175736 1.97574C0.0632141 2.08826 0 2.24087 0 2.4C0 2.55913 0.0632141 2.71174 0.175736 2.82426C0.288258 2.93679 0.44087 3 0.6 3H1.8V10.2C1.8 10.6774 1.98964 11.1352 2.32721 11.4728C2.66477 11.8104 3.12261 12 3.6 12H8.4C8.87739 12 9.33523 11.8104 9.67279 11.4728C10.0104 11.1352 10.2 10.6774 10.2 10.2V3H11.4C11.5591 3 11.7117 2.93679 11.8243 2.82426C11.9368 2.71174 12 2.55913 12 2.4C12 2.24087 11.9368 2.08826 11.8243 1.97574C11.7117 1.86321 11.5591 1.8 11.4 1.8ZM5.4 8.4C5.4 8.55913 5.33679 8.71174 5.22426 8.82426C5.11174 8.93679 4.95913 9 4.8 9C4.64087 9 4.48826 8.93679 4.37574 8.82426C4.26321 8.71174 4.2 8.55913 4.2 8.4V5.4C4.2 5.24087 4.26321 5.08826 4.37574 4.97574C4.48826 4.86321 4.64087 4.8 4.8 4.8C4.95913 4.8 5.11174 4.86321 5.22426 4.97574C5.33679 5.08826 5.4 5.24087 5.4 5.4V8.4ZM7.8 8.4C7.8 8.55913 7.73679 8.71174 7.62426 8.82426C7.51174 8.93679 7.35913 9 7.2 9C7.04087 9 6.88826 8.93679 6.77574 8.82426C6.66321 8.71174 6.6 8.55913 6.6 8.4V5.4C6.6 5.24087 6.66321 5.08826 6.77574 4.97574C6.88826 4.86321 7.04087 4.8 7.2 4.8C7.35913 4.8 7.51174 4.86321 7.62426 4.97574C7.73679 5.08826 7.8 5.24087 7.8 5.4V8.4ZM4.8 1.2H7.2C7.35913 1.2 7.51174 1.13679 7.62426 1.02426C7.73679 0.911742 7.8 0.75913 7.8 0.6C7.8 0.44087 7.73679 0.288258 7.62426 0.175736C7.51174 0.0632141 7.35913 0 7.2 0H4.8C4.64087 0 4.48826 0.0632141 4.37574 0.175736C4.26321 0.288258 4.2 0.44087 4.2 0.6C4.2 0.75913 4.26321 0.911742 4.37574 1.02426C4.48826 1.13679 4.64087 1.2 4.8 1.2Z"
+                        fill="#FFA384"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+<!--            <div
               class="relative mb-2.5 rounded-full flex justify-between items-center bg-white p-1 pl-4"
             >
               <span class="text-xs">Tasks 1.PDF</span>
@@ -520,7 +578,7 @@
                   </svg>
                 </button>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
         <div class="col-span-3">
@@ -557,6 +615,24 @@
       <h4 class="text-xl font-bold mb-5">Employee Information</h4>
       <div class="">
         <label class="label" for="EmployeeName">Employee Name *</label>
+        <VueMultiselect
+            v-model="form.employee_id"
+            :options="employees"
+            :searchable="false"
+            :close-on-select="false"
+            :show-labels="false"
+            :multiple="true"
+            :max="2"
+            label="first_name"
+            track-by="first_name"
+            placeholder="Enter Employee"
+            class="multiselect-blue"
+        >
+        </VueMultiselect>
+        <small
+            v-if="errors && errors.employee_id"
+            class="text-danger text-sm"
+        >{{ errors.employee_id[0] }}</small>
 <!--        <select v-model="form.employee_id" class="input" multiple>
           <option value="" selected disabled>Select Employee</option>
           <option v-for="emp in employees" :key="emp.id" value=""> {{emp.first_name}} {{emp.last_name}}</option>
@@ -568,142 +644,17 @@
             label="first_name"
             @changed="onChange"
         ></MultiSelect>-->
-        <input
+<!--        <input
           type="text"
           id="EmployeeName"
           placeholder="Enter Employee Name"
           class="input"
-        />
+        />-->
       </div>
     </div>
     <div v-if="isEditing" class="grid grid-cols-2 gap-30">
-      <div class="p-5 bg-white rounded-[20px]">
-        <div class="flex items-center justify-between mb-5">
-          <h4 class="text-xl font-bold">All Tasks</h4>
-          <button class="btn btn-light-sky" @click="$event => toggleAddTaskModal(true)">
-            <svg
-              class="mr-3"
-              width="11"
-              height="12"
-              viewBox="0 0 11 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M9.875 5.375H6.125V1.625C6.125 1.27938 5.845 1 5.5 1C5.155 1 4.875 1.27938 4.875 1.625V5.375H1.125C0.78 5.375 0.5 5.65438 0.5 6C0.5 6.34562 0.78 6.625 1.125 6.625H4.875V10.375C4.875 10.7206 5.155 11 5.5 11C5.845 11 6.125 10.7206 6.125 10.375V6.625H9.875C10.22 6.625 10.5 6.34562 10.5 6C10.5 5.65438 10.22 5.375 9.875 5.375"
-                fill="black"
-              />
-              <path
-                d="M9.875 5.375H6.125V1.625C6.125 1.27938 5.845 1 5.5 1C5.155 1 4.875 1.27938 4.875 1.625V5.375H1.125C0.78 5.375 0.5 5.65438 0.5 6C0.5 6.34562 0.78 6.625 1.125 6.625H4.875V10.375C4.875 10.7206 5.155 11 5.5 11C5.845 11 6.125 10.7206 6.125 10.375V6.625H9.875C10.22 6.625 10.5 6.34562 10.5 6C10.5 5.65438 10.22 5.375 9.875 5.375"
-                stroke="black"
-              />
-            </svg>
-            <span>Add Tasks</span>
-          </button>
-        </div>
-        <div class="relative mb-5">
-          <input
-            type="text"
-            v-model="search_task"
-            placeholder="Task Search"
-            @input="fetchTask"
-            class="w-full text-xs py-4 pl-5 pr-20 bg-[#E7F2F8] rounded-full"
-          />
-          <button
-            class="w-10 h-10 flex items-center justify-center absolute top-1 right-1 bg-white rounded-full"
-          >
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M11.161 12.622C9.99752 13.4847 8.55708 13.9949 6.99747 13.9949C3.13289 13.9949 0 10.8621 0 6.99747C0 3.13286 3.13286 0 6.99747 0C10.8621 0 13.9949 3.13282 13.9949 6.99743C13.9949 8.56773 13.4777 10.0172 12.6043 11.1848L15.7043 14.2848L15.7101 14.2906C16.0989 14.6826 16.0963 15.3155 15.7043 15.7043C15.6109 15.7969 15.5001 15.8702 15.3783 15.92C15.2565 15.9697 15.1261 15.995 14.9946 15.9942C14.863 15.995 14.7326 15.9697 14.6108 15.92C14.489 15.8702 14.3782 15.7969 14.2848 15.7043L11.161 12.622ZM10.4376 10.6234C9.5415 11.4739 8.33042 11.9956 6.99747 11.9956C4.23703 11.9956 1.99929 9.7579 1.99929 6.99747C1.99929 4.23703 4.23707 1.99929 6.99747 1.99929C9.7579 1.99929 11.9956 4.23703 11.9956 6.99747C11.9956 8.34088 11.4656 9.56049 10.6033 10.4586C10.5677 10.4868 10.5336 10.5176 10.5012 10.5512C10.4787 10.5745 10.4575 10.5986 10.4376 10.6234Z"
-                fill="#74BDCB"
-              />
-            </svg>
-          </button>
-        </div>
-        <div
-            v-for="(task,index) in tasks"
-            :key="task.id"
-          class="flex items-center py-2 justify-between border-[body]"
-            :class="tasks.length-1!==index && 'border-b-2'"
-        >
-          <p class="text-sm">{{index+1}}. {{task.name}}</p>
-          <div class="flex">
-            <button class="p-2 mr-2" @click="fetchSingleTask(task)">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.35674 2.32816L0.613909 8.07099C0.402294 8.283 0.268554 8.56031 0.234403 8.85791L0.00558271 10.8671C-0.0093331 11.0083 0.00572183 11.1512 0.0497644 11.2863C0.0938069 11.4213 0.165846 11.5456 0.261178 11.6509C0.35651 11.7563 0.47299 11.8403 0.603011 11.8976C0.733032 11.9548 0.87367 11.984 1.01574 11.9833H1.13294L3.14209 11.7544C3.4385 11.7201 3.71521 11.5887 3.92901 11.3805L9.67184 5.6321L6.35674 2.32816ZM11.614 1.84262L10.1574 0.385983C10.0355 0.263644 9.89071 0.16657 9.73125 0.100334C9.57179 0.0340967 9.40082 0 9.22815 0C9.05548 0 8.88451 0.0340967 8.72504 0.100334C8.56558 0.16657 8.42077 0.263644 8.29892 0.385983L6.94832 1.73658L10.2634 5.05168L11.614 3.70108C11.7364 3.57923 11.8334 3.43442 11.8997 3.27496C11.9659 3.11549 12 2.94452 12 2.77185C12 2.59918 11.9659 2.42821 11.8997 2.26875C11.8334 2.10928 11.7364 1.96447 11.614 1.84262Z"
-                  fill="#15C787"
-                />
-              </svg>
-            </button>
-            <button class="p-2" @click="$event => {toggleConfDeleteTask(true),this.taskDeletingID=task.id}">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.4 1.8H0.6C0.44087 1.8 0.288258 1.86321 0.175736 1.97574C0.0632141 2.08826 0 2.24087 0 2.4C0 2.55913 0.0632141 2.71174 0.175736 2.82426C0.288258 2.93679 0.44087 3 0.6 3H1.8V10.2C1.8 10.6774 1.98964 11.1352 2.32721 11.4728C2.66477 11.8104 3.12261 12 3.6 12H8.4C8.87739 12 9.33523 11.8104 9.67279 11.4728C10.0104 11.1352 10.2 10.6774 10.2 10.2V3H11.4C11.5591 3 11.7117 2.93679 11.8243 2.82426C11.9368 2.71174 12 2.55913 12 2.4C12 2.24087 11.9368 2.08826 11.8243 1.97574C11.7117 1.86321 11.5591 1.8 11.4 1.8ZM5.4 8.4C5.4 8.55913 5.33679 8.71174 5.22426 8.82426C5.11174 8.93679 4.95913 9 4.8 9C4.64087 9 4.48826 8.93679 4.37574 8.82426C4.26321 8.71174 4.2 8.55913 4.2 8.4V5.4C4.2 5.24087 4.26321 5.08826 4.37574 4.97574C4.48826 4.86321 4.64087 4.8 4.8 4.8C4.95913 4.8 5.11174 4.86321 5.22426 4.97574C5.33679 5.08826 5.4 5.24087 5.4 5.4V8.4ZM7.8 8.4C7.8 8.55913 7.73679 8.71174 7.62426 8.82426C7.51174 8.93679 7.35913 9 7.2 9C7.04087 9 6.88826 8.93679 6.77574 8.82426C6.66321 8.71174 6.6 8.55913 6.6 8.4V5.4C6.6 5.24087 6.66321 5.08826 6.77574 4.97574C6.88826 4.86321 7.04087 4.8 7.2 4.8C7.35913 4.8 7.51174 4.86321 7.62426 4.97574C7.73679 5.08826 7.8 5.24087 7.8 5.4V8.4ZM4.8 1.2H7.2C7.35913 1.2 7.51174 1.13679 7.62426 1.02426C7.73679 0.911742 7.8 0.75913 7.8 0.6C7.8 0.44087 7.73679 0.288258 7.62426 0.175736C7.51174 0.0632141 7.35913 0 7.2 0H4.8C4.64087 0 4.48826 0.0632141 4.37574 0.175736C4.26321 0.288258 4.2 0.44087 4.2 0.6C4.2 0.75913 4.26321 0.911742 4.37574 1.02426C4.48826 1.13679 4.64087 1.2 4.8 1.2Z"
-                  fill="#FFA384"
-                />
-              </svg>
-            </button>
-          </div>
-          <ConfirmationModal
-              :isOpenModal="isConfDeleteTask"
-              title="Do you really want to delete the Task?"
-              text="Please enter “Delete”"
-              :closeModal="$event => toggleConfDeleteTask(false)"
-              btnText="Delete"
-              :SubmitModal="deleteTask"
-          />
-        </div>
-<!--        <div class="flex items-center py-2 justify-between">
-          <p class="text-sm">Task 1 @@</p>
-          <div class="flex">
-            <button class="p-2 mr-2">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.35674 2.32816L0.613909 8.07099C0.402294 8.283 0.268554 8.56031 0.234403 8.85791L0.00558271 10.8671C-0.0093331 11.0083 0.00572183 11.1512 0.0497644 11.2863C0.0938069 11.4213 0.165846 11.5456 0.261178 11.6509C0.35651 11.7563 0.47299 11.8403 0.603011 11.8976C0.733032 11.9548 0.87367 11.984 1.01574 11.9833H1.13294L3.14209 11.7544C3.4385 11.7201 3.71521 11.5887 3.92901 11.3805L9.67184 5.6321L6.35674 2.32816ZM11.614 1.84262L10.1574 0.385983C10.0355 0.263644 9.89071 0.16657 9.73125 0.100334C9.57179 0.0340967 9.40082 0 9.22815 0C9.05548 0 8.88451 0.0340967 8.72504 0.100334C8.56558 0.16657 8.42077 0.263644 8.29892 0.385983L6.94832 1.73658L10.2634 5.05168L11.614 3.70108C11.7364 3.57923 11.8334 3.43442 11.8997 3.27496C11.9659 3.11549 12 2.94452 12 2.77185C12 2.59918 11.9659 2.42821 11.8997 2.26875C11.8334 2.10928 11.7364 1.96447 11.614 1.84262Z"
-                  fill="#15C787"
-                />
-              </svg>
-            </button>
-            <button class="p-2">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.4 1.8H0.6C0.44087 1.8 0.288258 1.86321 0.175736 1.97574C0.0632141 2.08826 0 2.24087 0 2.4C0 2.55913 0.0632141 2.71174 0.175736 2.82426C0.288258 2.93679 0.44087 3 0.6 3H1.8V10.2C1.8 10.6774 1.98964 11.1352 2.32721 11.4728C2.66477 11.8104 3.12261 12 3.6 12H8.4C8.87739 12 9.33523 11.8104 9.67279 11.4728C10.0104 11.1352 10.2 10.6774 10.2 10.2V3H11.4C11.5591 3 11.7117 2.93679 11.8243 2.82426C11.9368 2.71174 12 2.55913 12 2.4C12 2.24087 11.9368 2.08826 11.8243 1.97574C11.7117 1.86321 11.5591 1.8 11.4 1.8ZM5.4 8.4C5.4 8.55913 5.33679 8.71174 5.22426 8.82426C5.11174 8.93679 4.95913 9 4.8 9C4.64087 9 4.48826 8.93679 4.37574 8.82426C4.26321 8.71174 4.2 8.55913 4.2 8.4V5.4C4.2 5.24087 4.26321 5.08826 4.37574 4.97574C4.48826 4.86321 4.64087 4.8 4.8 4.8C4.95913 4.8 5.11174 4.86321 5.22426 4.97574C5.33679 5.08826 5.4 5.24087 5.4 5.4V8.4ZM7.8 8.4C7.8 8.55913 7.73679 8.71174 7.62426 8.82426C7.51174 8.93679 7.35913 9 7.2 9C7.04087 9 6.88826 8.93679 6.77574 8.82426C6.66321 8.71174 6.6 8.55913 6.6 8.4V5.4C6.6 5.24087 6.66321 5.08826 6.77574 4.97574C6.88826 4.86321 7.04087 4.8 7.2 4.8C7.35913 4.8 7.51174 4.86321 7.62426 4.97574C7.73679 5.08826 7.8 5.24087 7.8 5.4V8.4ZM4.8 1.2H7.2C7.35913 1.2 7.51174 1.13679 7.62426 1.02426C7.73679 0.911742 7.8 0.75913 7.8 0.6C7.8 0.44087 7.73679 0.288258 7.62426 0.175736C7.51174 0.0632141 7.35913 0 7.2 0H4.8C4.64087 0 4.48826 0.0632141 4.37574 0.175736C4.26321 0.288258 4.2 0.44087 4.2 0.6C4.2 0.75913 4.26321 0.911742 4.37574 1.02426C4.48826 1.13679 4.64087 1.2 4.8 1.2Z"
-                  fill="#FFA384"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>-->
-      </div>
+<!--              All Task                  -->
+      <TaskComponent :objectID="objectID"/>
       <div class="p-5 bg-white rounded-[20px] pb-0">
         <h4 class="text-xl font-bold mb-5">Object History</h4>
         <table class="w-full text-xs font-semibold">
@@ -797,7 +748,7 @@
     </div>
     <div class="mt-5 flex justify-end">
       <button type="button" class="btn btn-light-sky mr-5">Cancel</button>
-      <button type="button" class="btn btn-sky" @click="$event => toggleConf(true)">Update</button>
+      <button type="button" class="btn btn-sky" @click="confirmSave">Update</button>
     </div>
   </div>
   <ConfirmationModal 
@@ -806,73 +757,15 @@
     text="You didn't add an Employee to this Object, are you sure you want to save?"
     :closeModal="$event => toggleConf(false)"
     btnText="Yes, save without Employee"
-    :SubmitModal="$event => {toggleConf(false); toggleConfSuccess(true)}"
+    :SubmitModal="$event => {isEditing ? update() :store()}"
   />
   <ConfirmationModal 
     :isOpenModal="isConfSuccessOpen" 
     title="Update Successful"
     :closeModal="$event => toggleConfSuccess(false)"
     btnText="Back to Objects"
-    :SubmitModal="$event => {toggleConfSuccess(false);}"
+    :SubmitModal="$event => {toggleConfSuccess(false); closeModal()}"
   />
-  <TransitionRoot appear :show="isAddTaskModalOpen" as="template">
-    <Dialog as="div" @close="$event => toggleAddTaskModal(false)" class="relative z-30">
-      <TransitionChild
-        as="template"
-        enter="duration-300 ease-out"
-        enter-from="opacity-0"
-        enter-to="opacity-100"
-        leave="duration-200 ease-in"
-        leave-from="opacity-100"
-        leave-to="opacity-0"
-      >
-        <div class="fixed inset-0 bg-black bg-opacity-25"></div>
-      </TransitionChild>
-      <div class="fixed inset-0 overflow-y-auto">
-        <div class="flex min-h-full items-center justify-center p-4 text-center">
-          <TransitionChild
-            as="template"
-            enter="duration-300 ease-out"
-            enter-from="opacity-0 scale-95"
-            enter-to="opacity-100 scale-100"
-            leave="duration-200 ease-in"
-            leave-from="opacity-100 scale-100"
-            leave-to="opacity-0 scale-95"
-          >
-            <DialogPanel class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-              <div class="flex items-center justify-between mb-5 pb-5 border-b border-body">
-                <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? 'Edit' : 'Add' }} Tasks</DialogTitle>
-                <button @click="$event => toggleAddTaskModal(false)" class="w-7 h-7 bg-body rounded-md flex items-center justify-center">
-                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M7.42079 6.08931L11.7176 1.73259C12.1089 1.33579 12.1089 0.694406 11.7176 0.297603C11.3262 -0.0992008 10.6937 -0.0992008 10.3023 0.297603L6.00555 4.65432L1.70876 0.297603C1.31741 -0.0992008 0.684854 -0.0992008 0.293509 0.297603C-0.0978363 0.694406 -0.0978363 1.33579 0.293509 1.73259L4.5903 6.08931L0.293509 10.446C-0.0978363 10.8428 -0.0978363 11.4842 0.293509 11.881C0.488681 12.0789 0.744907 12.1784 1.00113 12.1784C1.25736 12.1784 1.51358 12.0789 1.70876 11.881L6.00555 7.52429L10.3023 11.881C10.4975 12.0789 10.7537 12.1784 11.01 12.1784C11.2662 12.1784 11.5224 12.0789 11.7176 11.881C12.1089 11.4842 12.1089 10.8428 11.7176 10.446L7.42079 6.08931Z"
-                      fill="#18203A"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div>
-                  <label class="label" for="Address">Task </label>
-                  <input
-                    type="text"
-                    id="Task"
-                    v-model="task.name"
-                    placeholder="Enter your task"
-                    class="input"
-                  />
-                </div>
-              <div class="mt-5 flex justify-end">
-                <button type="button" class="btn btn-light-sky mr-5" @click="$event => {toggleAddTaskModal(false), this.task={}}">Cancel</button>
-                <button type="button" class="btn btn-sky" @click="isTaskEditing?editTask():addTask()">Save</button>
-              </div>
-            </DialogPanel>
-          </TransitionChild>
-        </div>
-      </div>
-    </Dialog>
-  </TransitionRoot>
   <TransitionRoot appear :show="isCompleteTaskModalOpen" as="template">
     <Dialog as="div" @close="$event => toggleCompleteTaskModal(false)" class="relative z-30">
       <TransitionChild
@@ -1010,11 +903,17 @@
     
 <script>
 import {ref} from "vue";
-import {TabGroup, TabList, Tab, TabPanels, TabPanel, TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle} from "@headlessui/vue";
+import {TabGroup, TabList, Tab, TabPanels, TabPanel, TransitionRoot, TransitionChild, Dialog, DialogPanel,} from "@headlessui/vue";
 import SideBarComponent from "../../components/SideBar.vue";
 import HeaderComponent from "../../components/Header.vue";
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
+import MultiCheckbox from "@/components/MultiCheckbox";
 // import MultiSelect from "../../components/MultiSelect";
+import TaskComponent from "@/views/Object/Task";
+import VueMultiselect from 'vue-multiselect'
+import "vue-multiselect/dist/vue-multiselect.css"
+import axios from "axios";
+import _ from "lodash";
 export default {
   name: "NewObject",
 
@@ -1022,36 +921,47 @@ export default {
     SideBarComponent,
     HeaderComponent,
     ConfirmationModal,
-    // MultiSelect,
+    MultiCheckbox,
+    VueMultiselect,
     TransitionRoot,
     TransitionChild,
     Dialog,
     DialogPanel,
-    DialogTitle,
     TabGroup,
     TabList,
     Tab,
     TabPanels,
     TabPanel,
+    TaskComponent,
   },
   data() {
     return {
+      daysOptions: [
+        { name: "Mon", id: 'mon' },
+        { name: "Tue", id: 'tue' },
+        { name: "Wed", id: 'wed' },
+        { name: "Thus", id: 'thus' },
+        { name: "Fri", id: 'fri' },
+        { name: "Sat", id: 'sat' },
+        { name: "Sun", id: 'sun' },
+      ],
       objectID: this.$route.params.id,
+      selected: null,
       form: {
-        employee_id: [],
+        employee_id: null,
         client_name: '',
         client_number: '',
         address: '',
         postcode: '',
-        city_id: '',
+        city_name: '',
         key_number: '',
         start_date: '',
         phone_number: '',
         google_map_url: '',
         implementation_time: '',
         from_time: '',
-        rotation_type: '',
-        pdf: '',
+        rotation_type: '1',
+        days:[],
         contact_person_name: '',
         contact_person_phone_number: '',
       },
@@ -1170,9 +1080,9 @@ export default {
     minutes(newValue) {
       this.minutes = this.padNumber(this.validateTime(newValue));
     },
-    seconds(newValue) {
+    /*seconds(newValue) {
       this.seconds = this.padNumber(this.validateTime(newValue));
-    },
+    },*/
     fromHours(newValue) {
       this.fromHours = this.padNumber(this.validateHours(newValue));
     },
@@ -1183,11 +1093,14 @@ export default {
   mounted() {
     this.hours = this.padNumber(this.hours);
     this.minutes = this.padNumber(this.minutes);
-    this.seconds = this.padNumber(this.seconds);
+    // this.seconds = this.padNumber(this.seconds);
     this.fromHours = this.padNumber(this.fromHours);
     this.fromMinutes = this.padNumber(this.fromMinutes);
     this.fetchEmployee()
-    this.fetchTask()
+    // this.fetchTask()
+    if(this.isEditing){
+      this.fetchObject()
+    }
   },
   methods: {
     onChange(value) {
@@ -1195,14 +1108,12 @@ export default {
     },
     changePDF(){
       this.pdfs=this.$refs.pdfFile.files
-      // console.log(this.pdfs)
-      // this.form.pdf= this.$refs.pdfFile.files.item(0)
     },
     increment() {
       this.seconds++;
 
-      if (this.seconds >= 60) {
-        this.seconds = 0;
+      // if (this.seconds >= 60) {
+      //   this.seconds = 0;
         this.minutes++;
 
         if (this.minutes >= 60) {
@@ -1213,13 +1124,13 @@ export default {
             this.hours = 0;
           }*/
         }
-      }
+      // }
     },
     decrement() {
-      this.seconds--;
-
-      if (this.seconds < 0) {
-        this.seconds = 59;
+      // this.seconds--;
+      //
+      // if (this.seconds < 0) {
+      //   this.seconds = 59;
         this.minutes--;
 
         if (this.minutes < 0) {
@@ -1230,7 +1141,7 @@ export default {
             this.hours = 0;
           }
         }
-      }
+      // }
     },
 
     fetchEmployee(){
@@ -1240,89 +1151,153 @@ export default {
             this.employees = response.data.object
           })
     },
-    addTask(){
-      // eslint-disable-next-line no-undef
-      axios.post('tasks',{
-        name: this.task.name,
-        object_id: this.objectID
-      })
-          .then(() => {
-            this.task={}
-            this.toggleAddTaskModal(false)
-            this.fetchTask()
-          })
+    refreshForm(){
+      this.form = {}
+      this.errors = {}
+      this.hours = 0
+      this.minutes = 0
+      this.seconds = 0
+      this.fromHours = 0
+      this.fromMinutes = 0
     },
-    fetchTask(){
-      // eslint-disable-next-line no-undef
-      axios.get('tasks',{
-        params:{
-          name: this.search_task,
-          object_id: this.objectID
+    fetchObject(){
+      axios.get(`object/${this.objectID}`)
+          .then(response=>{
+            this.form = _.merge(this.form,response.data.data)
+            this.form.days = response.data.data.days.split(',')
+            this.form.employee_id = response.data.data.employeeObjects
+            let implementation_time = response.data.data.implementation_time.split(':')
+            this.hours = implementation_time[0]
+            this.minutes = implementation_time[1]
+            let from_time = response.data.data.from_time.split(':')
+            this.fromHours = from_time[0]
+            this.fromMinutes = from_time[0]
+          })
+          .catch(()=>{})
+    },
+    confirmSave(){
+      if(!this.form.employee_id) {
+        this.toggleConf(true)
+      } else {
+        if(this.isEditing){
+          this.update()
+        } else {
+          this.store()
         }
+      }
+    },
+    store(){
+      this.toggleConf(false)
+      this.form.implementation_time = `${this.hours}:${this.minutes}`
+      this.form.from_time = `${this.fromHours}:${this.fromMinutes}`
+      const formData = new FormData()
+      formData.append('user_id',this.auth_user_id)
+      formData.append('client_name',this.form.client_name)
+      formData.append('client_number',this.form.client_number)
+      formData.append('address',this.form.address)
+      formData.append('postcode',this.form.postcode)
+      formData.append('city_name',this.form.city_name)
+      formData.append('key_number',this.form.key_number)
+      formData.append('start_date',this.form.start_date)
+      formData.append('phone_number',this.form.phone_number)
+      formData.append('google_map_url',this.form.google_map_url)
+      formData.append('implementation_time',this.form.implementation_time)
+      formData.append('from_time',this.form.from_time)
+      formData.append('rotation_type',this.form.rotation_type)
+      formData.append('contact_person_name',this.form.contact_person_name)
+      formData.append('contact_person_phone_number',this.form.contact_person_phone_number)
+      if(this.form.employee_id){
+        for(let i=0; i<this.form.employee_id.length; i++){
+          formData.append(`employee_id[${i}]`,this.form.employee_id[i].id)
+        }
+      }
+      if(this.pdfs.length>0){
+        for(let i=0; i<this.pdfs.length; i++){
+          formData.append(`pdf[${i}]`,this.pdfs[i])
+        }
+      }
+      if(this.form.days.length>0){
+        for(let i=0; i<this.form.days.length; i++){
+          formData.append(`days[${i}]`,this.form.days[i])
+        }
+      }
+
+      axios.post('object',formData)
+      .then(()=>{
+        this.toggleConfSuccess(true)
       })
-          .then(response => {
-            console.log(response)
-            this.tasks = response.data.data
-          })
-    },
-    fetchSingleTask(task){
-      // this.task = task
-      this.toggleAddTaskModal(true)
-      // eslint-disable-next-line no-undef
-      axios.get(`tasks/${task.id}`)
-          .then((response) => {
-            console.log(response)
-            this.task = response.data.task
-          })
-    },
-    editTask(){
-      // eslint-disable-next-line no-undef
-      axios.put(`tasks/${this.task.id}`,{
-        name: this.task.name,
-        object_id: this.objectID
+      .catch(error=>{
+        this.errors = error.response.data.errors
       })
-          .then(() => {
-            this.toggleAddTaskModal(false)
-            this.task={}
-            this.fetchTask()
+    },
+    update(){
+      console.log('update')
+      this.toggleConf(false)
+      this.form.implementation_time = `${this.hours}:${this.minutes}`
+      this.form.from_time = `${this.fromHours}:${this.fromMinutes}`
+      const formData = new FormData()
+      formData.append('id',this.objectID)
+      formData.append('user_id',this.auth_user_id)
+      formData.append('client_name',this.form.client_name)
+      formData.append('client_number',this.form.client_number)
+      formData.append('address',this.form.address)
+      formData.append('postcode',this.form.postcode)
+      formData.append('city_name',this.form.city_name)
+      formData.append('key_number',this.form.key_number)
+      formData.append('start_date',this.form.start_date)
+      formData.append('phone_number',this.form.phone_number)
+      formData.append('google_map_url',this.form.google_map_url)
+      formData.append('implementation_time',this.form.implementation_time)
+      formData.append('from_time',this.form.from_time)
+      formData.append('rotation_type',this.form.rotation_type)
+      formData.append('contact_person_name',this.form.contact_person_name)
+      formData.append('contact_person_phone_number',this.form.contact_person_phone_number)
+      if(this.form.employee_id){
+        for(let i=0; i<this.form.employee_id.length; i++){
+          formData.append(`employee_id[${i}]`,this.form.employee_id[i].id)
+        }
+      }
+      if(this.pdfs.length>0){
+        for(let i=0; i<this.pdfs.length; i++){
+          formData.append(`pdf[${i}]`,this.pdfs[i])
+        }
+      }
+      if(this.form.days.length>0){
+        for(let i=0; i<this.form.days.length; i++){
+          formData.append(`days[${i}]`,this.form.days[i])
+        }
+      }
+      formData.append('_method','put')
+      axios.post(`object/${this.objectID}`,formData)
+          .then(()=>{
+            this.toggleConfSuccess(true)
+          })
+          .catch(error=>{
+            this.errors = error.response.data.errors
           })
     },
-    deleteTask(){
-      // eslint-disable-next-line no-undef
-      axios.delete(`tasks/${this.taskDeletingID}`)
-          .then(() => {
-            this.toggleConfDeleteTask(false)
-            this.fetchTask()
-          })
-    }
+    closeModal() {
+      this.$router.push('/customer')
+      this.refreshForm()
+    },
   },
   setup() {
-    let isConfDeleteTask= ref(false);
     let isConfOpen = ref(false);
     let isConfSuccessOpen = ref(false);
-    let isAddTaskModalOpen = ref(false);
     let isCompleteTaskModalOpen = ref(false);
-    let toggleConfDeleteTask = (s) => {
-      isConfDeleteTask.value = s;
-    }
     let toggleConf = (s) => {
       isConfOpen.value = s;
     }
     let toggleConfSuccess = (s) => {
       isConfSuccessOpen.value = s;
     }
-    let toggleAddTaskModal = (s) => {
-      isAddTaskModalOpen.value = s;
-    }
     let toggleCompleteTaskModal = (s) => {
       isCompleteTaskModalOpen.value = s;
     }
     return {
       isConfOpen, toggleConf,
-      isConfSuccessOpen, toggleConfSuccess, 
-      isAddTaskModalOpen, toggleAddTaskModal,
+      isConfSuccessOpen, toggleConfSuccess,
       isCompleteTaskModalOpen, toggleCompleteTaskModal,
-      isConfDeleteTask,toggleConfDeleteTask,
     }
   }
 };
@@ -1335,6 +1310,11 @@ export default {
 }
 .time-input[type="number"] {
   -moz-appearance: textfield;
+}
+.multiselect-blue {
+  --ms-tag-bg: #DBEAFE;
+  --ms-tag-color: #2563EB;
+  --ms-tag-bg: #96051b;
 }
 </style>
     

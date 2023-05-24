@@ -51,7 +51,7 @@
   @apply bg-body w-full text-xs p-3.5 rounded-lg border border-transparent focus:outline-0 focus:border-sky;
 }
 .time-input {
-  @apply bg-body text-xs w-4 px-0 py-0 text-center rounded-lg border border-transparent focus:outline-0 focus:border-transparent appearance-none;
+  @apply bg-body text-xs w-5 px-0 py-0 text-center rounded-lg border border-transparent focus:outline-0 focus:border-transparent appearance-none;
 }
 .btn-pager {
   @apply w-6 h-6 bg-body rounded-md flex items-center justify-center text-xs;
@@ -114,6 +114,9 @@
 .day-check {
   @apply w-12 h-12 flex items-center justify-center text-xs text-black bg-body cursor-pointer rounded-full
   peer-checked:bg-sky peer-checked:font-bold
+}
+.day-uncheck{
+  @apply w-12 h-12 flex items-center justify-center text-xs text-black bg-body cursor-pointer rounded-full
 }
 .text-danger {
   @apply text-red-500
