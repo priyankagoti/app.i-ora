@@ -2,9 +2,13 @@
   <div class="body-space">
     <SideBarComponent />
     <HeaderComponent :title="isEditing? 'Edit Customer':'Add New Customer'" />
-    <div class="p-5 bg-white rounded-[20px]">
+    <div class="p-5 bg-white rounded-[20px]" ref="scrollToTop">
       <div class="flex items-cente justify-between mb-5">
-        <h4 class="text-xl font-bold">Object Client Details</h4>
+        <div>
+          <h4 class="text-xl font-bold">Object Client Details</h4>
+          <p class="text-danger">{{errorMessage}}</p>
+        </div>
+
 <!--        <button class="btn btn-sky">
           <svg
             class="mr-2"
@@ -462,14 +466,16 @@
             </div>
             <div
                 v-for="pdf in form.objectDocuments"
-                :key="pdf.pdf"
+                :key="pdf.id"
                 class="relative mb-2.5 rounded-full flex justify-between items-center bg-white p-1 pl-4"
             >
               <span class="text-xs">{{pdf.pdf.slice(pdf.pdf.lastIndexOf('/')+1)}}</span>
               <div class="flex">
+                <a :href="pdf.pdf" download>
                 <button
                     class="mr-1 w-[30px] h-[30px] bg-body rounded-full flex-center"
                 >
+
                   <svg
                       width="13"
                       height="13"
@@ -482,9 +488,12 @@
                         fill="#74BDCB"
                     />
                   </svg>
+
                 </button>
+                </a>
                 <button
                     class="w-[30px] h-[30px] bg-body rounded-full flex-center"
+                    @click="$event => toggleConfDeletePdf(true)"
                 >
                   <svg
                       width="12"
@@ -499,6 +508,14 @@
                     />
                   </svg>
                 </button>
+                <ConfirmationModal
+                    :isOpenModal="isConfDeletePdfOpen"
+                    title="Do you really want to delete this pdf?"
+                    text="Please enter “Delete”"
+                    :closeModal="$event => toggleConfDeletePdf(false)"
+                    btnText="Delete Pdf"
+                    :SubmitModal="$event => {deletePdf(pdf.id);}"
+                />
               </div>
             </div>
 <!--            <div
@@ -626,7 +643,6 @@
             label="first_name"
             track-by="first_name"
             placeholder="Enter Employee"
-            class="multiselect-blue"
         >
         </VueMultiselect>
         <small
@@ -979,6 +995,7 @@ export default {
       fromMinutes:0,
       cities: [],
       errors: {},
+      errorMessage:'',
       implementationTime: 0,
       Employees: [
         {
@@ -1154,6 +1171,7 @@ export default {
     refreshForm(){
       this.form = {}
       this.errors = {}
+      this.errorMessage = ''
       this.hours = 0
       this.minutes = 0
       this.seconds = 0
@@ -1166,6 +1184,7 @@ export default {
             this.form = _.merge(this.form,response.data.data)
             this.form.days = response.data.data.days.split(',')
             this.form.employee_id = response.data.data.employeeObjects
+            this.form.objectDocuments = response.data.data.objectDocuments
             let implementation_time = response.data.data.implementation_time.split(':')
             this.hours = implementation_time[0]
             this.minutes = implementation_time[1]
@@ -1231,7 +1250,6 @@ export default {
       })
     },
     update(){
-      console.log('update')
       this.toggleConf(false)
       this.form.implementation_time = `${this.hours}:${this.minutes}`
       this.form.from_time = `${this.fromHours}:${this.fromMinutes}`
@@ -1273,8 +1291,25 @@ export default {
             this.toggleConfSuccess(true)
           })
           .catch(error=>{
+            this.errorMessage=error.response.data.message
+            // window. scrollTo(0,0)
+            // window.scrollTo({
+            //   top: 0,
+            //   behavior: 'smooth' // Optional: Add smooth scrolling behavior
+            // });
+            this.$nextTick(() => {
+              this.$refs.scrollToTop.scrollTop = 0;
+            });
+            console.log(error.response)
             this.errors = error.response.data.errors
           })
+    },
+    deletePdf(id){
+      axios.delete(`object-documents/${id}`)
+      .then(()=>{
+        this.fetchObject()
+        this.toggleConfDeletePdf(false)
+      })
     },
     closeModal() {
       this.$router.push('/customer')
@@ -1285,6 +1320,7 @@ export default {
     let isConfOpen = ref(false);
     let isConfSuccessOpen = ref(false);
     let isCompleteTaskModalOpen = ref(false);
+    let isConfDeletePdfOpen = ref(false);
     let toggleConf = (s) => {
       isConfOpen.value = s;
     }
@@ -1294,15 +1330,19 @@ export default {
     let toggleCompleteTaskModal = (s) => {
       isCompleteTaskModalOpen.value = s;
     }
+    let toggleConfDeletePdf = (s) => {
+      isConfDeletePdfOpen.value = s;
+    }
     return {
       isConfOpen, toggleConf,
       isConfSuccessOpen, toggleConfSuccess,
       isCompleteTaskModalOpen, toggleCompleteTaskModal,
+      isConfDeletePdfOpen, toggleConfDeletePdf,
     }
   }
 };
 </script>
-<style>
+<style lang="scss">
 .time-input::-webkit-outer-spin-button,
 .time-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -1311,10 +1351,23 @@ export default {
 .time-input[type="number"] {
   -moz-appearance: textfield;
 }
-.multiselect-blue {
-  --ms-tag-bg: #DBEAFE;
-  --ms-tag-color: #2563EB;
-  --ms-tag-bg: #96051b;
+.multiselect__option--highlight {
+  background: #74bdcb;
+}
+.multiselect__option--selected.multiselect__option--highlight {
+  background: #0971b8;
+}
+
+.multiselect__option--selected.multiselect__option--highlight::after {
+  background: #0971b8;
+}
+
+.multiselect__option--highlight::after {
+  background: #74bdcb;
+}
+
+.multiselect__tag {
+  background: #74bdcb;
 }
 </style>
     

@@ -171,7 +171,7 @@
                     </svg>
                   </button>
                 </RouterLink>
-                <button class="p-2" @click="$event => toggleConfDelete(true)">
+                <button class="p-2" @click="$event => {toggleConfDelete(true);setId(object.id)}">
                   <svg
                     width="16"
                     height="16"
@@ -192,13 +192,13 @@
       </table>
     </div>
   </div>
-  <ConfirmationModal 
-    :isOpenModal="isConfDeleteOpen" 
+  <ConfirmationModal
+    :isOpenModal="isConfDeleteOpen"
     title="Do you really want to delete the Object?"
     text="Please enter “Delete”"
-    :closeModal="$event => toggleConfDelete(false)"
+    :closeModal="$event => {toggleConfDelete(false)}"
     btnText="Delete Object"
-    :SubmitModal="$event => {toggleConfDelete(false);}"
+    :SubmitModal="deleteObject"
   />
 </template>
   
@@ -324,6 +324,7 @@ export default {
         },
       ],
       objects: [],
+      deletingId: '',
     };
   },
   mounted() {
@@ -335,7 +336,17 @@ export default {
       .then(response => {
         this.objects = response.data.object
       })
-    }
+    },
+    setId(id){
+      this.deletingId=id
+    },
+    deleteObject(){
+      axios.delete(`object/${this.deletingId}`)
+          .then(()=>{
+            this.fetch()
+            this.toggleConfDelete(false)
+          })
+    },
   },
   setup() {
     let isConfDeleteOpen = ref(false);
