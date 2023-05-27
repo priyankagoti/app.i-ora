@@ -122,9 +122,9 @@
         <div class="col-span-2">
           <label class="label" for="StartDate">Start Date *</label>
           <input
-            type="text"
+            type="date"
             id="StartDate"
-            placeholder="dd/mm/yyyy"
+            :min="minDate"
             class="input"
             v-model="form.start_date"
           />
@@ -671,7 +671,8 @@
     <div v-if="isEditing" class="grid grid-cols-2 gap-30">
 <!--              All Task                  -->
       <TaskComponent :objectID="objectID"/>
-      <div class="p-5 bg-white rounded-[20px] pb-0">
+      <ObjectHistory :object-history="form.objectHistory" :objectID="objectID"/>
+<!--      <div class="p-5 bg-white rounded-[20px] pb-0">
         <h4 class="text-xl font-bold mb-5">Object History</h4>
         <table class="w-full text-xs font-semibold">
           <thead class="bg-body font-bold">
@@ -686,31 +687,31 @@
           </thead>
           <tbody>
             <tr
-              v-for="employee in Employees"
-              :key="employee.ID"
+              v-for="object in form.objectHistory"
+              :key="object.id"
               class="border-b border-body"
             >
               <td class="p-4">
                 <div class="flex items-center">
                   <img
                     class="mr-2"
-                    :src="employee.img"
+                    :src="object.employee[0].profile"
                     alt=""
                     width="32"
                     height="32"
                   />
-                  <span>{{ employee.name }}</span>
+                  <span>{{ object.employee[0].first_name }}</span>
                 </div>
               </td>
               <td class="text-xs font-normal p-4">
-                <span>{{ employee.date }}</span>
+                <span>{{ object.start_date }}</span>
               </td>
               <td class="p-4">
-                <span>{{ employee.time }}</span>
+                <span>{{ object.implementation_time }}</span>
               </td>
               <td class="p-4">
                 <svg
-                  v-if="employee.isActive"
+                  v-if="object.status==='1'"
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
@@ -741,7 +742,7 @@
                 </svg>
               </td>
               <td class="p-4">
-                <span class="whitespace-pre">{{ employee.deadline }}</span>
+                <span class="whitespace-pre">{{ object.deadline }}</span>
               </td>
               <td class="text-center p-4">
                 <button class="p-2" @click="$event => toggleCompleteTaskModal(true)">
@@ -760,7 +761,7 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </div>-->
     </div>
     <div class="mt-5 flex justify-end">
       <button type="button" class="btn btn-light-sky mr-5">Cancel</button>
@@ -926,6 +927,7 @@ import ConfirmationModal from "../../components/ConfirmationModal.vue";
 import MultiCheckbox from "@/components/MultiCheckbox";
 // import MultiSelect from "../../components/MultiSelect";
 import TaskComponent from "@/views/Object/Task";
+import ObjectHistory from "@/views/Object/ObjectHistory";
 import VueMultiselect from 'vue-multiselect'
 import "vue-multiselect/dist/vue-multiselect.css"
 import axios from "axios";
@@ -949,6 +951,7 @@ export default {
     TabPanels,
     TabPanel,
     TaskComponent,
+    ObjectHistory,
   },
   data() {
     return {
@@ -997,89 +1000,8 @@ export default {
       errors: {},
       errorMessage:'',
       implementationTime: 0,
-      Employees: [
-        {
-          ID: "1",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Berry Cuda",
-          date: "20/05/2023",
-          isActive: true,
-          time: "01:00 hrs",
-          deadline: "20/05/2023 \n 15:30",
-        },
-        {
-          ID: "2",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Tressa Wexler",
-          date: "20/05/2023",
-          isActive: false,
-          time: "01:00 hrs",
-          deadline: "20/05/2023 \n 15:30",
-        },
-      ],
       employees: [],
-      CompleteTask: [
-        {
-          ID: "1",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Clean the windows",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "2",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Clean the Floor",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "3",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Dry Clean Sheets",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "4",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Clean Desk",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "5",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Paper work",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "6",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Lunch Break",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-      ],
-      PendingTask: [
-        {
-          ID: "1",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Cleaning Entrance",
-          date: "20/05/2023",
-          time: "15:30",
-          comment: "Could not clean the wondow, because nowindows"
-        },
-        {
-          ID: "2",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Watering All Plants",
-          date: "20/05/2023",
-          time: "15:30",
-          comment: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-        },
-      ]
+
     };
   },
   computed:{
@@ -1088,7 +1010,12 @@ export default {
     },
     isTaskEditing() {
       return !!this.task.id
-    }
+    },
+    minDate() {
+      let minDate = new Date();
+      minDate = minDate.toISOString();
+      return minDate.split("T")[0]
+    },
   },
   watch: {
     hours(newValue) {
@@ -1120,6 +1047,7 @@ export default {
     }
   },
   methods: {
+
     onChange(value) {
       this.emitter.emit('change', value);
     },
@@ -1185,6 +1113,7 @@ export default {
             this.form.days = response.data.data.days.split(',')
             this.form.employee_id = response.data.data.employeeObjects
             this.form.objectDocuments = response.data.data.objectDocuments
+            this.form.objectHistory = response.data.data.objectHistory
             let implementation_time = response.data.data.implementation_time.split(':')
             this.hours = implementation_time[0]
             this.minutes = implementation_time[1]
