@@ -315,7 +315,7 @@
                 <div class="col-span-2">
                   <label class="label" for="JoinDate">Join Date</label>
                   <input
-                    type="email"
+                    type="date"
                     id="JoinDate"
                     placeholder="Enter Join Date"
                     class="input"
