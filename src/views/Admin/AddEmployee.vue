@@ -565,7 +565,7 @@ export default {
       formData.append('status',1)
       // eslint-disable-next-line no-undef
       axios.post('employee',formData)
-      .then(response=>{
+      .then(()=>{
         // console.log(response)
         this.loading = false
         this.toggleConfSuccess(true)
@@ -604,7 +604,7 @@ export default {
       formData.append('_method','put')
       // eslint-disable-next-line no-undef
       axios.post(`employee/${this.employee.id}`,formData)
-          .then(response=>{
+          .then(()=>{
             // console.log(response)
             this.toggleConfSuccess(true)
             this.emitter.emit("employee.refresh");
