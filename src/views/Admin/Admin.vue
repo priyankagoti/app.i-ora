@@ -154,8 +154,8 @@
         </tbody>
       </table>
       <div class="p-4 pt-0 flex justify-between items-center">
-        <p class="text-[10px]">Showing data {{from }} to {{to}} of {{total}} entries</p>
-        <PagerComponent :info="employees" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
+        <p class="text-[10px]">Showing data {{from +1}} to {{to}} of {{employees.length}} entries</p>
+        <PagerComponent :totalLength="employees.length" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
       </div>
     </div>
   </div>
@@ -188,6 +188,8 @@ export default {
   data() {
     return {
      employees: [],
+      from:'',
+      to:'',
       currentPage:1,
       perPage:5,
       deletingId:'',
@@ -202,19 +204,6 @@ export default {
     displayedPosts () {
       return this.paginate(this.employees);
     },
-    from() {
-      return this.perPage * (this.currentPage - 1) + (this.employees.length > 0 ? 1 : 0)
-    },
-    to() {
-      let highBound = this.from + this.perPage - 1
-      if (this.total < highBound) {
-        highBound = this.total
-      }
-      return highBound
-    },
-    total() {
-      return this.employees ? this.employees.length : 0
-    },
   },
   methods: {
     updatePage(page) {
@@ -225,7 +214,9 @@ export default {
       let page = this.currentPage;
       let perPage = this.perPage;
       let from = (page * perPage) - perPage;
+      this.from = from
       let to = (page * perPage);
+      this.to = to
       return  info.slice(from, to);
     },
     toggleConfDelete(s) {
