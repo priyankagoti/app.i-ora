@@ -1,6 +1,5 @@
 <template>
   <div class="flex gap-3">
-    {{pages}}
     <button v-if="currentPage !== 1" @click="previousPage" class="btn-pager">
       <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -50,7 +49,7 @@ export default {
       }
     },
     nextPage() {
-      if (this.currentPage < this.info.length) {
+      if (this.currentPage < this.totalLength) {
         this.$emit('pageChange', this.currentPage + 1);
       }
     },

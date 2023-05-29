@@ -192,7 +192,7 @@
       </table>
       <div class="p-4 pt-0 flex justify-between items-center">
         <p class="text-[10px]">Showing data {{from}} to {{to}} of {{total}} entries</p>
-        <PagerComponent :info="objects" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
+        <PagerComponent :totalLength="objects.length" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
       </div>
     </div>
   </div>
