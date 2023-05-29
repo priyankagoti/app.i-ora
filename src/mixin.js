@@ -23,7 +23,7 @@ export default {
                }
            })
                 .then(response => {
-                    console.log(response)
+                    // console.log(response)
                     this.jsonFile = response.data
                     // return response.data.text;
                 })

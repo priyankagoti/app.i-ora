@@ -515,13 +515,13 @@ export default {
       // eslint-disable-next-line no-undef
       axios.get('countries')
           .then(response =>{
-            console.log('countries',response)
+            // console.log('countries',response)
             this.countries = response.data.object
           })
     },
     fetch(employee) {
       this.employee = employee
-      console.log('in fetch',this.employee)
+      // console.log('in fetch',this.employee)
       // eslint-disable-next-line no-undef
       axios.get(`employee/${employee.id}`)
           .then(response => {
@@ -566,13 +566,13 @@ export default {
       // eslint-disable-next-line no-undef
       axios.post('employee',formData)
       .then(response=>{
-        console.log(response)
+        // console.log(response)
         this.loading = false
         this.toggleConfSuccess(true)
         this.emitter.emit("employee.refresh");
       })
       .catch(error => {
-        console.log(error.response)
+        // console.log(error.response)
         this.errors = error.response.data.errors
         this.loading = false
       })
@@ -605,13 +605,13 @@ export default {
       // eslint-disable-next-line no-undef
       axios.post(`employee/${this.employee.id}`,formData)
           .then(response=>{
-            console.log(response)
+            // console.log(response)
             this.toggleConfSuccess(true)
             this.emitter.emit("employee.refresh");
             this.loading = false
           })
           .catch(error => {
-            console.log(error.response)
+            // console.log(error.response)
             this.errors = error.response.data.errors
             this.loading = false
           })

@@ -967,7 +967,7 @@ export default {
             this.$nextTick(() => {
               this.$refs.scrollToTop.scrollTop = 0;
             });
-            console.log(error.response)
+            // console.log(error.response)
             this.errors = error.response.data.errors
             this.loading = false
           })

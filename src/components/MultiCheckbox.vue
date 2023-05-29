@@ -41,7 +41,7 @@ export default {
   },
   methods:{
     check(optionId, checked){
-      console.log(optionId,checked)
+      // console.log(optionId,checked)
       let updatedValue = this.value;
 
       if (checked) {
@@ -50,7 +50,7 @@ export default {
         updatedValue.splice(updatedValue.indexOf(optionId), 1);
       }
       this.emitter.emit("update:value", updatedValue);
-      console.log(updatedValue)
+      // console.log(updatedValue)
     }
   },
   /*setup(props, context) {
