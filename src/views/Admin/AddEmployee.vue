@@ -383,9 +383,8 @@
                 >
                   Cancel
                 </button>
-<!--                <button type="button" class="btn btn-sky" @click="$event => toggleConf(true)">Add User</button>-->
-                <button v-if="isEditing" type="button" class="btn btn-sky" @click="update">Edit User</button>
-                <button v-else type="button" class="btn btn-sky" @click="confirmSave">Add User</button>
+                <button v-if="isEditing" type="button" class="btn btn-sky" @click="update" :disabled="loading">Edit User</button>
+               <button v-else type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">Add User</button>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -450,6 +449,7 @@ export default {
         amount_of_hours_work: '',
         profile: null,
       },
+      loading: false,
       employee: {},
       cities: [],
       countries: [],
@@ -533,6 +533,7 @@ export default {
           })
     },
     confirmSave(){
+      this.loading = true
       if(!this.object) {
        this.toggleConf(true)
       }
@@ -566,19 +567,21 @@ export default {
       axios.post('employee',formData)
       .then(response=>{
         console.log(response)
+        this.loading = false
         this.toggleConfSuccess(true)
-        this.refreshForm()
         this.emitter.emit("employee.refresh");
       })
       .catch(error => {
         console.log(error.response)
         this.errors = error.response.data.errors
+        this.loading = false
       })
     },
     update(){
+      this.loading = true
       const formData = new FormData();
       if(this.$refs.empProfileImg.files.item(0)) {
-        formData.append('profile',this.form.profile)
+        formData.append('profile',this.$refs.empProfileImg.files.item(0))
       }
       formData.append('user_id',this.auth_user_id)
       formData.append('first_name',this.form.first_name)
@@ -605,11 +608,12 @@ export default {
             console.log(response)
             this.toggleConfSuccess(true)
             this.emitter.emit("employee.refresh");
-            this.refreshForm()
+            this.loading = false
           })
           .catch(error => {
             console.log(error.response)
             this.errors = error.response.data.errors
+            this.loading = false
           })
     }
   },

@@ -99,7 +99,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="employee in employees" :key="employee.id" class="border-b border-body">
+          <tr v-for="employee in displayedPosts" :key="employee.id" class="border-b border-body">
             <td class="p-4">
               <div class="flex items-center">
 <!--                <img class="mr-2" :src="employee.img" alt="" width="32" height="32" />-->
@@ -154,8 +154,8 @@
         </tbody>
       </table>
       <div class="p-4 pt-0 flex justify-between items-center">
-        <p class="text-[10px]">Showing data 1 to 8 of 256K entries</p>
-        <PagerComponent />
+        <p class="text-[10px]">Showing data {{from +1}} to {{to}} of {{employees.length}} entries</p>
+        <PagerComponent :info="employees" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
       </div>
     </div>
   </div>
@@ -188,6 +188,10 @@ export default {
   data() {
     return {
      employees: [],
+      from:'',
+      to:'',
+      currentPage:1,
+      perPage:5,
       deletingId:'',
      isConfDeleteOpen: false,
     };
@@ -196,8 +200,25 @@ export default {
     this.emitter.on("employee.refresh",()=>this.fetch());
     this.fetch()
   },
+  computed: {
+    displayedPosts () {
+      return this.paginate(this.employees);
+    },
+  },
   methods: {
-
+    updatePage(page) {
+      this.currentPage = page;
+      // Implement logic to update your data based on the new page
+    },
+    paginate (info) {
+      let page = this.currentPage;
+      let perPage = this.perPage;
+      let from = (page * perPage) - perPage;
+      this.from = from
+      let to = (page * perPage);
+      this.to = to
+      return  info.slice(from, to);
+    },
     toggleConfDelete(s) {
       this.isConfDeleteOpen = s
     },
