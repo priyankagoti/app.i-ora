@@ -1,5 +1,6 @@
 <template>
   <div class="flex gap-3">
+    {{pages}}
     <button v-if="currentPage !== 1" @click="previousPage" class="btn-pager">
       <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -30,7 +31,7 @@
 export default {
   name: "PagerComponent",
   components: {},
-  props:['info','currentPage','perPage'],
+  props:['totalLength','currentPage','perPage'],
   emits: ['pageChange'],
   data(){
     return {
@@ -38,14 +39,9 @@ export default {
     }
   },
   watch: {
-    info () {
+    totalLength () {
       this.setPages();
     }
-  },
-  computed: {
-    displayedPosts () {
-      return this.paginate(this.info);
-    },
   },
   methods:{
     previousPage() {
@@ -70,7 +66,7 @@ export default {
       return  info.slice(from, to);
     },
     setPages () {
-      let numberOfPages = Math.ceil(this.info.length / this.perPage);
+      let numberOfPages = Math.ceil(this.totalLength / this.perPage);
 
       for (let index = 1; index <= numberOfPages; index++) {
         this.pages.push(index);

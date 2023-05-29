@@ -155,7 +155,7 @@
       </table>
       <div class="p-4 pt-0 flex justify-between items-center">
         <p class="text-[10px]">Showing data {{from +1}} to {{to}} of {{employees.length}} entries</p>
-        <PagerComponent :info="employees" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
+        <PagerComponent :totalLength="employees.length" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
       </div>
     </div>
   </div>
