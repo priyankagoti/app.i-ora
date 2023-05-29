@@ -279,68 +279,6 @@ export default {
   components:{TabGroup, TabList, Tab, TabPanels, TabPanel, TransitionRoot, TransitionChild, Dialog, DialogPanel,},
   data(){
     return {
-      CompleteTask: [
-        {
-          ID: "1",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Clean the windows",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "2",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Clean the Floor",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "3",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Dry Clean Sheets",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "4",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Clean Desk",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "5",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Paper work",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-        {
-          ID: "6",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Lunch Break",
-          date: "20/05/2023",
-          time: "15:30"
-        },
-      ],
-      PendingTask: [
-        {
-          ID: "1",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Cleaning Entrance",
-          date: "20/05/2023",
-          time: "15:30",
-          comment: "Could not clean the wondow, because nowindows"
-        },
-        {
-          ID: "2",
-          img: require("../../assets/images/cover/object.png"),
-          name: "Watering All Plants",
-          date: "20/05/2023",
-          time: "15:30",
-          comment: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-        },
-      ],
       tasks:[],
       selectedTab:0,
     }
@@ -350,8 +288,7 @@ export default {
   },
   methods:{
     fetch(e){
-      console.log(e)
-      this.selectedTab= e ? e : this.selectedTab
+      this.selectedTab= e!=='undefined' ? e : this.selectedTab
       let status = this.selectedTab===0?2:this.selectedTab===1?0:1
       // eslint-disable-next-line no-undef
       axios.get('list-tasks',{
@@ -362,7 +299,6 @@ export default {
       })
       .then(response => {
         this.tasks = response.data.data
-        console.log(response)
       })
     }
   },

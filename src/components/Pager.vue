@@ -42,11 +42,6 @@ export default {
       this.setPages();
     }
   },
-  computed: {
-    displayedPosts () {
-      return this.paginate(this.info);
-    },
-  },
   methods:{
     previousPage() {
       if (this.currentPage > 1) {
@@ -54,20 +49,12 @@ export default {
       }
     },
     nextPage() {
-      // this.currentPage +=1
       if (this.currentPage < this.info.length) {
         this.$emit('pageChange', this.currentPage + 1);
       }
     },
     pageChange(page){
       this.$emit('pageChange', page);
-    },
-    paginate (info) {
-      let page = this.currentPage;
-      let perPage = this.perPage;
-      let from = (page * perPage) - perPage;
-      let to = (page * perPage);
-      return  info.slice(from, to);
     },
     setPages () {
       let numberOfPages = Math.ceil(this.info.length / this.perPage);

@@ -3,7 +3,7 @@
     class="body-space"
   >
     <SideBarComponent />
-    <HeaderComponent title="Customer" />
+    <HeaderComponent title="Customers" />
     <ObjectStatistics/>
     <div class="flex items-center justify-between mb-30">
       <div class="flex">
@@ -71,7 +71,7 @@
     </div>
     <div class="p-5 bg-white rounded-[20px] pb-0">
       <h4 class="mb-5 text-base font-bold">Recent Customers</h4>
-      <table class="w-full text-xs font-semibold">
+      <table class="w-full text-xs font-semibold mb-4">
         <thead class="bg-body">
           <tr class="text-sm font-bold">
             <td class="p-4 rounded-l-xl">Name</td>
@@ -99,7 +99,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="object in objects"
+            v-for="object in displayedPosts"
             :key="object.id"
             class="border-b border-body"
           >
@@ -190,6 +190,10 @@
           </tr>
         </tbody>
       </table>
+      <div class="p-4 pt-0 flex justify-between items-center">
+        <p class="text-[10px]">Showing data {{from}} to {{to}} of {{total}} entries</p>
+        <PagerComponent :info="objects" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
+      </div>
     </div>
   </div>
   <ConfirmationModal
@@ -202,12 +206,13 @@
   />
 </template>
   
-  <script>
-  import {ref} from "vue";
+<script>
+import {ref} from "vue";
 import SideBarComponent from "../../components/SideBar.vue";
 import HeaderComponent from "../../components/Header.vue";
 import ObjectStatistics from "./ObjectStatistics.vue";
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
+import PagerComponent from "../../components/Pager.vue";
 import { RouterLink } from "vue-router";
   import axios from "axios";
 export default {
@@ -218,9 +223,12 @@ export default {
     ObjectStatistics,
     RouterLink,
     ConfirmationModal,
+    PagerComponent,
   },
   data() {
     return {
+      currentPage:1,
+      perPage:5,
       Projects: [
         {
           ID: "1",
@@ -330,7 +338,36 @@ export default {
   mounted() {
     this.fetch()
   },
+  computed: {
+    displayedPosts () {
+      return this.paginate(this.objects);
+    },
+      from() {
+        return this.perPage * (this.currentPage - 1) + (this.objects.length > 0 ? 1 : 0)
+      },
+      to() {
+        let highBound = this.from + this.perPage - 1
+        if (this.total < highBound) {
+          highBound = this.total
+        }
+        return highBound
+      },
+      total() {
+        return this.objects ? this.objects.length : 0
+      },
+  },
   methods:{
+    updatePage(page) {
+      this.currentPage = page;
+      // Implement logic to update your data based on the new page
+    },
+    paginate (info) {
+      let page = this.currentPage;
+      let perPage = this.perPage;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  info.slice(from, to);
+    },
     fetch() {
       axios.get('object')
       .then(response => {

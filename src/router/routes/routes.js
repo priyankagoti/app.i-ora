@@ -58,7 +58,7 @@ const routes = [
     },
   },
   {
-    path: "/customer",
+    path: "/customers",
     name: "Customer",
     component: ObjectComponent,
     meta: {
