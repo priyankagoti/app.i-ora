@@ -187,7 +187,9 @@ export default {
     }
   },
   mounted() {
-    this.emitter.on('profile-edit',()=>this.fetchAuthUser())
+    this.emitter.on('profile-edit',()=> {
+      this.fetchAuthUser()
+    })
     this.fetchAuthUser()
   },
   methods: {

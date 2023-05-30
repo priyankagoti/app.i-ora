@@ -383,8 +383,14 @@
                 >
                   Cancel
                 </button>
-                <button v-if="isEditing" type="button" class="btn btn-sky" @click="update" :disabled="loading">Edit User</button>
-               <button v-else type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">Add User</button>
+                <button v-if="isEditing" type="button" class="btn btn-sky" @click="update" :disabled="loading">
+                  <SpinnerComponent v-if="loading"/>
+                  Edit User
+                </button>
+               <button v-else type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
+                 <SpinnerComponent v-if="loading"/>
+                 Add User
+               </button>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -419,6 +425,7 @@ import {
   DialogTitle,
 } from "@headlessui/vue";
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
+import SpinnerComponent from "../../components/Spinner.vue";
 
 export default {
   name: "AddEmployeeComponent",
@@ -429,6 +436,7 @@ export default {
     DialogPanel,
     DialogTitle,
     ConfirmationModal,
+    SpinnerComponent,
   },
   data() {
     return {

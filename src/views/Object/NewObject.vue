@@ -658,7 +658,9 @@
     </div>
     <div class="mt-5 flex justify-end">
       <button type="button" class="btn btn-light-sky mr-5">Cancel</button>
-      <button type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">Update</button>
+      <button type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
+        <SpinnerComponent v-if="loading"/>
+        Update</button>
     </div>
   </div>
   <ConfirmationModal 
@@ -683,6 +685,7 @@ import {ref} from "vue";
 import SideBarComponent from "../../components/SideBar.vue";
 import HeaderComponent from "../../components/Header.vue";
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
+import SpinnerComponent from "../../components/Spinner.vue";
 import MultiCheckbox from "@/components/MultiCheckbox";
 import TaskComponent from "@/views/Object/Task";
 import ObjectHistory from "@/views/Object/ObjectHistory";
@@ -697,6 +700,7 @@ export default {
     SideBarComponent,
     HeaderComponent,
     ConfirmationModal,
+    SpinnerComponent,
     MultiCheckbox,
     VueMultiselect,
     TaskComponent,

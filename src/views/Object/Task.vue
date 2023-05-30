@@ -142,7 +142,9 @@
                 </div>
                 <div class="mt-5 flex justify-end">
                   <button type="button" class="btn btn-light-sky mr-5" @click="$event => {toggleAddTaskModal(false), this.task={}}">Cancel</button>
-                  <button type="button" class="btn btn-sky" @click="isTaskEditing?editTask():addTask()">Save</button>
+                  <button type="button" class="btn btn-sky" @click="isTaskEditing?editTask():addTask()">
+                    <SpinnerComponent v-if="loading"/>
+                    Save</button>
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -157,6 +159,7 @@ import axios from "axios";
 import {ref} from "vue";
 import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle} from "@headlessui/vue";
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
+import SpinnerComponent from "../../components/Spinner.vue";
 
 
 export default {
@@ -168,11 +171,7 @@ export default {
     DialogPanel,
     DialogTitle,
     ConfirmationModal,
-    // TabGroup,
-    // TabList,
-    // Tab,
-    // TabPanels,
-    // TabPanel,
+    SpinnerComponent,
   },
   props:['objectID'],
   data(){
@@ -183,6 +182,7 @@ export default {
       tasks: [],
       search_task:'',
       taskDeletingID: '',
+      loading: false,
     }
   },
   computed:{
@@ -196,6 +196,7 @@ export default {
   methods:{
     addTask(){
       // eslint-disable-next-line no-undef
+      this.loading = true
       axios.post('tasks',{
         name: this.task.name,
         object_id: this.objectID
@@ -203,8 +204,9 @@ export default {
           .then(() => {
             this.task={}
             this.toggleAddTaskModal(false)
+            this.loading = false
             this.fetchTask()
-          })
+          }).catch(()=>this.loading = false)
     },
     fetchTask(){
       // eslint-disable-next-line no-undef
@@ -229,6 +231,7 @@ export default {
     },
     editTask(){
       // eslint-disable-next-line no-undef
+      this.loading = true
       axios.put(`tasks/${this.task.id}`,{
         name: this.task.name,
         object_id: this.objectID
@@ -236,8 +239,9 @@ export default {
           .then(() => {
             this.toggleAddTaskModal(false)
             this.task={}
+            this.loading = false
             this.fetchTask()
-          })
+          }).catch(()=>this.loading = false)
     },
     deleteTask(){
       // eslint-disable-next-line no-undef
