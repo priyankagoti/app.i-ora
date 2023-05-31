@@ -449,6 +449,8 @@
               <input
                 type="text"
                 placeholder="Employee Id"
+                v-model="searchPdf"
+                @input="fetchObject"
                 class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full border-2 border-white"
               />
               <button
@@ -469,7 +471,7 @@
                 :key="pdf.id"
                 class="relative mb-2.5 rounded-full flex justify-between items-center bg-white p-1 pl-4"
             >
-              <span class="text-xs">{{pdf.pdf.slice(pdf.pdf.lastIndexOf('/')+1)}}</span>
+              <span class="text-xs">{{pdf.name}}</span>
               <div class="flex">
                 <a :href="pdf.pdf" download>
                 <button
@@ -736,6 +738,7 @@ export default {
         contact_person_name: '',
         contact_person_phone_number: '',
       },
+      searchPdf: '',
       pdfs: [],
       hours:0,
       minutes:0,
@@ -850,7 +853,11 @@ export default {
       this.fromMinutes = 0
     },
     fetchObject(){
-      axios.get(`object/${this.objectID}`)
+      axios.get(`object/${this.objectID}`,{
+        params:{
+          search:this.searchPdf
+        }
+      })
           .then(response=>{
             this.form = _.merge(this.form,response.data.data)
             this.form.days = response.data.data.days.split(',')
