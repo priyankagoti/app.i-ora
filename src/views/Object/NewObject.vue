@@ -448,7 +448,7 @@
             <div class="relative mb-5">
               <input
                 type="text"
-                placeholder="Employee Id"
+                placeholder="Search"
                 v-model="searchPdf"
                 @input="fetchObject"
                 class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full border-2 border-white"
