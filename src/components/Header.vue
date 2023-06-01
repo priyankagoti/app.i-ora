@@ -3,7 +3,7 @@
     class="bg-white 2xl:p-5 p-4 fixed top-0 left-0 w-full flex justify-between 2xl:h-[88px] h-[70px] 3xl:pl-[330px] 2xl:pl-[280px] pl-[250px] items-center z-10"
   >
     <h2 class="text-black font-bold text-xl">{{title}}</h2>
-    <div class="relative w-1/2">
+<!--    <div class="relative w-1/2">
       <input
         type="text"
         placeholder="Search"
@@ -25,10 +25,9 @@
           />
         </svg>
       </button>
-    </div>
+    </div>-->
     <div class="flex">
       <button
-        @click="$event => toggleAlertModal(true)"
         class="w-12 h-12 bg-[#E7F2F8] rounded-full flex items-center justify-center mr-5"
       >
         <svg
@@ -68,7 +67,7 @@
     </div>
   </div>
   
-  <TransitionRoot appear :show="isAlertModalOpen" as="template">
+<!--  <TransitionRoot appear :show="isAlertModalOpen" as="template">
     <Dialog as="div" @close="$event => toggleAlertModal(false)" class="relative z-30">
       <TransitionChild
         as="template"
@@ -157,29 +156,29 @@
         </div>
       </div>
     </Dialog>
-  </TransitionRoot>
+  </TransitionRoot>-->
 </template>
     
 <script>
 // import { RouterLink } from "vue-router";
-import {ref} from "vue";
-import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle} from "@headlessui/vue";
+// import {ref} from "vue";
+// import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle} from "@headlessui/vue";
 export default {
   name: "HeaderComponent",
   components: {
-    TransitionRoot,
-    TransitionChild,
-    Dialog,
-    DialogPanel,
-    DialogTitle 
+    // TransitionRoot,
+    // TransitionChild,
+    // Dialog,
+    // DialogPanel,
+    // DialogTitle
   },
-  setup() {
-    let isAlertModalOpen = ref(false);
-    let toggleAlertModal = (s) => {
-      isAlertModalOpen.value = s;
-    }
-    return {isAlertModalOpen, toggleAlertModal}
-  },
+  // setup() {
+  //   let isAlertModalOpen = ref(false);
+  //   let toggleAlertModal = (s) => {
+  //     isAlertModalOpen.value = s;
+  //   }
+  //   return {isAlertModalOpen, toggleAlertModal}
+  // },
   data() {
     return {
       Projects: [

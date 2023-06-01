@@ -2,8 +2,8 @@
   <div class="body-space">
     <SideBarComponent />
     <HeaderComponent title="Employees" />
-    <div class="flex items-center justify-between mb-30">
-      <button class="btn btn-sky">
+    <div class="flex items-center justify-end mb-30">
+<!--      <button class="btn btn-sky">
         <svg class="mr-2" width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fill-rule="evenodd"
@@ -13,7 +13,7 @@
           />
         </svg>
         <span>Export</span>
-      </button>
+      </button>-->
       <button @click="openAddEmpModal" class="btn btn-sky">
         <svg
             class="mr-2"
