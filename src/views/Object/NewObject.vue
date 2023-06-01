@@ -659,7 +659,7 @@
       <ObjectHistory :object-history="form.objectHistory" :objectID="objectID"/>
     </div>
     <div class="mt-5 flex justify-end">
-      <button type="button" class="btn btn-light-sky mr-5">Cancel</button>
+      <button type="button" class="btn btn-light-sky mr-5" @click="$router.push('/customers')">Cancel</button>
       <button type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
         <SpinnerComponent v-if="loading"/>
         Update</button>
