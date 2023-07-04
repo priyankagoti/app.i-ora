@@ -10,11 +10,11 @@
         </svg>
       </div>
       <h3 class="statistics-text">
-        Running
+        Total
         <br />
-        Project
+        Customer
       </h3>
-      <span class="statistics-number">98</span>
+      <span class="statistics-number">{{totalCustomer}}</span>
     </div>
     <div class="statistics-card">
       <div class="statistics-icon">
@@ -26,13 +26,13 @@
         </svg>
       </div>
       <h3 class="statistics-text">
-        Our
+        Total
         <br />
-        Client
+        Employees
       </h3>
-      <span class="statistics-number">52</span>
+      <span class="statistics-number">{{totalEmployees}}</span>
     </div>
-    <div class="statistics-card">
+<!--    <div class="statistics-card">
       <div class="statistics-icon">
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" class="statistics-svg">
           <path
@@ -65,7 +65,7 @@
         List
       </h3>
       <span class="statistics-number">250</span>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -73,5 +73,25 @@
 export default {
   name: "DashboardStatistics",
   components: {},
+  data(){
+    return {
+      totalCustomer: '',
+      totalEmployees: '',
+    }
+  },
+  mounted() {
+    this.fetch()
+  },
+  methods:{
+    fetch(){
+      // eslint-disable-next-line no-undef
+      axios.get('dashboard/count')
+      .then(response => {
+        this.totalCustomer = response.data['total customer']
+        this.totalEmployees = response.data['total employees']
+        console.log(response)
+      })
+    }
+  }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 bg-white rounded-[20px] pb-0 shadow-lg shadow-black/5">
+  <div class="p-5 w-full bg-white rounded-[20px] pb-0 shadow-lg shadow-black/5">
     <h4 class="mb-5 text-base font-bold">Employees</h4>
     <table class="w-full text-xs font-semibold">
       <thead class="bg-body font-bold">
@@ -11,18 +11,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="employee in Employees" :key="employee.ID" class="border-b border-body">
+        <tr v-for="employee in employees" :key="employee.id" class="border-b border-body">
           <td class="p-4">
             <div class="flex items-center">
               <img class="mr-2" :src="employee.img" alt="" width="32" height="32" />
-              <span>{{employee.name}}</span>
+              <span>{{employee.first_name}}</span>
             </div>
           </td>
-          <td class="text-xs font-normal p-4">
+          <td class="text-xs font-normal p-4 ">
             <span>{{employee.email}}</span>
           </td>
           <td class="p-4">
-            <span v-if="employee.isActive" class="py-2 px-3 rounded-full bg-[#BFFFE8] text-[#15C787]">Active</span>
+            <span v-if="employee.status==='1'" class="py-2 px-3 rounded-full bg-[#BFFFE8] text-[#15C787]">Active</span>
             <span v-else class="py-2 px-3 rounded-full bg-[#FFF0F0] text-[#FF0000]">Deactive</span>
           </td>
           <td class="text-center p-4">
@@ -46,11 +46,14 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "DashboardEmployees",
   components: {},
   data() {
     return {
+      employees:[],
       Employees: [
         {
           ID: "1",
@@ -124,6 +127,18 @@ export default {
         }
       ]
     };
+  },
+  mounted() {
+    this.fetch()
+  },
+  methods:{
+    fetch(){
+      axios.get('dashboard/employees')
+      .then(response=>{
+        this.employees = response.data.object
+        console.log(response)
+      })
+    }
   }
 };
 </script>
