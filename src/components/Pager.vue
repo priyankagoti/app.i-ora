@@ -39,6 +39,7 @@ export default {
   },
   watch: {
     totalLength () {
+      this.pages=[]
       this.setPages();
     }
   },

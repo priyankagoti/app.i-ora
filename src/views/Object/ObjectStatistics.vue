@@ -18,9 +18,9 @@
       <h3 class="statistics-text">
         Total
         <br />
-        Object
+        Customer
       </h3>
-      <span class="statistics-number">216/250</span>
+      <span class="statistics-number">{{totalCustomer}}</span>
     </div>
     <div class="statistics-card">
       <div class="statistics-icon">
@@ -40,16 +40,16 @@
         </svg>
       </div>
       <h3 class="statistics-text">
-        Running
+        Total
         <br />
-        Object
+        Employees
       </h3>
       <div class="text-right ml-auto">
-        <h3 class="statistics-number">50</h3>
-        <span class="statistics-number-text">Today</span>
+        <span class="statistics-number">{{totalEmployees}}</span>
+<!--        <span class="statistics-number-text">Today</span>-->
       </div>
     </div>
-    <div class="statistics-card">
+<!--    <div class="statistics-card">
       <div class="statistics-icon">
         <svg
           width="40"
@@ -95,7 +95,7 @@
         Object
       </h3>
       <span class="statistics-number">42</span>
-    </div>
+    </div>-->
   </div>
 </template>
   
@@ -103,6 +103,7 @@
 export default {
   name: "ObjectStatistics",
   components: {},
+  props:['totalCustomer', 'totalEmployees']
 };
 </script>
   

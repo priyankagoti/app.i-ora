@@ -3,14 +3,16 @@
     class="body-space"
   >
     <SideBarComponent />
-    <HeaderComponent title="Customers" />
-    <ObjectStatistics/>
+    <HeaderComponent title="Customers"/>
+    <ObjectStatistics :totalCustomer="totalCustomer" :totalEmployees="totalEmployees"/>
     <div class="flex items-center justify-between mb-30">
       <div class="flex">
         <div class="relative w-60 mr-5">
           <input
             type="text"
-            placeholder="Employee Id"
+            placeholder="Customer Name"
+            v-model="search"
+            @input="fetch"
             class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full border-2 border-white"
           />
           <button
@@ -26,7 +28,7 @@
             </svg>
           </button>
         </div>
-        <div class="relative w-60">
+<!--        <div class="relative w-60">
           <input
             type="text"
             placeholder="Employee Name"
@@ -44,7 +46,7 @@
               />
             </svg>
           </button>
-        </div>
+        </div>-->
       </div>
       <RouterLink to="/new-customer" class="btn btn-sky">
         <svg
@@ -229,110 +231,11 @@ export default {
     return {
       currentPage:1,
       perPage:5,
-      Projects: [
-        {
-          ID: "1",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: true,
-        },
-        {
-          ID: "2",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: true,
-        },
-        {
-          ID: "3",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: true,
-        },
-        {
-          ID: "4",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: true,
-        },
-        {
-          ID: "5",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: false,
-        },
-        {
-          ID: "6",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: false,
-        },
-        {
-          ID: "7",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: true,
-        },
-        {
-          ID: "8",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: true,
-        },
-        {
-          ID: "9",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: false,
-        },
-        {
-          ID: "10",
-          img: require("../../assets/images/profiles/profile-1.png"),
-          name: "Restaurant Athen",
-          open: 2,
-          completed: 10,
-          employee: 20,
-          date: "12-02-2021",
-          isCompleted: true,
-        },
-      ],
+      search: '',
       objects: [],
       deletingId: '',
+      totalCustomer: '',
+      totalEmployees: ''
     };
   },
   mounted() {
@@ -340,6 +243,7 @@ export default {
   },
   computed: {
     displayedPosts () {
+      // console.log(this.paginate(this.objects))
       return this.paginate(this.objects);
     },
       from() {
@@ -369,9 +273,16 @@ export default {
       return  info.slice(from, to);
     },
     fetch() {
-      axios.get('object')
+      axios.get('object',{
+        params:{
+          search:this.search
+        }
+      })
       .then(response => {
         this.objects = response.data.object
+        this.totalCustomer = response.data['total customer']
+        this.totalEmployees = response.data['total employees']
+
       })
     },
     setId(id){
