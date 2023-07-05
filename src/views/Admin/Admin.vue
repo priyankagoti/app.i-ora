@@ -60,7 +60,7 @@
         <h4 class="mb-0 text-base font-bold">All Employee</h4>
         <div class="flex">
           <div class="relative w-60 mr-5">
-            <input type="text" placeholder="Employee Id" class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full" />
+            <input type="text" placeholder="Employee Id" v-model="employee_number" @input="fetch" class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full" />
             <button class="w-8 h-8 flex items-center justify-center absolute top-1 right-1 bg-white rounded-full">
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                 <path
@@ -73,7 +73,7 @@
             </button>
           </div>
           <div class="relative w-60">
-            <input type="text" placeholder="Employee Name" class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full" />
+            <input type="text" placeholder="Employee Name" v-model="first_name" @input="fetch" class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full" />
             <button class="w-8 h-8 flex items-center justify-center absolute top-1 right-1 bg-white rounded-full">
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                 <path
@@ -154,7 +154,7 @@
         </tbody>
       </table>
       <div class="p-4 pt-0 flex justify-between items-center">
-        <p class="text-[10px]">Showing data {{from +1}} to {{to}} of {{employees.length}} entries</p>
+        <p class="text-[10px]">Showing data {{from}} to {{to}} of {{total}} entries</p>
         <PagerComponent :totalLength="employees.length" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
       </div>
     </div>
@@ -188,8 +188,8 @@ export default {
   data() {
     return {
      employees: [],
-      from:'',
-      to:'',
+      employee_number:'',
+      first_name:'',
       currentPage:1,
       perPage:5,
       deletingId:'',
@@ -204,6 +204,19 @@ export default {
     displayedPosts () {
       return this.paginate(this.employees);
     },
+    from() {
+      return this.perPage * (this.currentPage - 1) + (this.employees.length > 0 ? 1 : 0)
+    },
+    to() {
+      let highBound = this.from + this.perPage - 1
+      if (this.total < highBound) {
+        highBound = this.total
+      }
+      return highBound
+    },
+    total() {
+      return this.employees.length >0 ? this.employees.length : 0
+    },
   },
   methods: {
     updatePage(page) {
@@ -214,9 +227,7 @@ export default {
       let page = this.currentPage;
       let perPage = this.perPage;
       let from = (page * perPage) - perPage;
-      this.from = from
       let to = (page * perPage);
-      this.to = to
       return  info.slice(from, to);
     },
     toggleConfDelete(s) {
@@ -234,7 +245,12 @@ export default {
     },
     fetch(){
       // eslint-disable-next-line no-undef
-      axios.get('employee')
+      axios.get('employee',{
+        params:{
+          employee_number:this.employee_number,
+          first_name:this.first_name,
+        }
+      })
           .then(response => {
             this.employees = response.data.object
           })
