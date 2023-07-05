@@ -1,13 +1,13 @@
 <template>
   <div class="p-5 w-full bg-white rounded-[20px] pb-0 shadow-lg shadow-black/5">
-    <h4 class="mb-5 text-base font-bold">Employees</h4>
+    <h4 class="mb-5 text-base font-bold">{{translatedObject.employeesList}}</h4>
     <table class="w-full text-xs font-semibold">
       <thead class="bg-body font-bold">
         <tr class="text-sm">
-          <td class="p-4 rounded-l-xl">Name</td>
-          <td class="p-4">Email</td>
-          <td class="p-4">Status</td>
-          <td class="p-4 rounded-r-xl text-center">Action</td>
+          <td class="p-4 rounded-l-xl">{{translatedObject.employeeName}}</td>
+          <td class="p-4">{{ translatedObject.employeeEmail }}</td>
+          <td class="p-4">{{translatedObject.employeeStatus}}</td>
+          <td class="p-4 rounded-r-xl text-center">{{translatedObject.employeeAction}}</td>
         </tr>
       </thead>
       <tbody>

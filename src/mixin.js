@@ -12,6 +12,9 @@ export default {
             if(this.auth_user){
                 return this.auth_user.id
             }
+        },
+        translatedObject(){
+            return store.getters['auth/getJsonFile']
         }
     },
     methods: {

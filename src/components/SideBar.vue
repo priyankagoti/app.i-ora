@@ -28,7 +28,7 @@
             fill="currentcolor"
           />
         </svg>
-        <span class="inline-block ml-3"> Dashboard </span>
+        <span class="inline-block ml-3"> {{translatedObject.sidebarDashboard}} </span>
       </RouterLink>
       <RouterLink
         to="/admin"
@@ -47,7 +47,7 @@
             fill="currentcolor"
           />
         </svg>
-        <span class="inline-block ml-3"> Employees </span>
+        <span class="inline-block ml-3"> {{translatedObject.employeesList}} </span>
       </RouterLink>
       <RouterLink
         to="/customers"
@@ -105,7 +105,7 @@
             fill="#FF0000"
           />
         </svg>
-        <span>Logout</span>
+        <span>{{translatedObject.logoutBtn}}</span>
       </span>
     </div>
   </div>
@@ -136,7 +136,7 @@
           >
             <DialogPanel class="w-full max-w-md text-center transform overflow-hidden rounded-2xl bg-white p-6 align-middle shadow-xl transition-all">
               <div class="flex items-center justify-between mb-5 pb-5">
-                <DialogTitle as="h3" class="w-full text-xl font-bold text-black">Logout</DialogTitle>
+                <DialogTitle as="h3" class="w-full text-xl font-bold text-black">{{translatedObject.logoutBtn}}</DialogTitle>
                 <button @click="$event => toggleLogoutModal(false)" class="w-7 h-7 bg-body rounded-md flex items-center justify-center">
                   <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -154,8 +154,8 @@
                 you want to Logout?
                 </p>
               <div class="mt-5 flex justify-center">
-                <button type="button" class="btn btn-light-sky mr-5" @click="$event => toggleLogoutModal(false)">Cancel</button>
-                <button type="button" class="btn btn-red text-white" @click="logout">Logout</button>
+                <button type="button" class="btn btn-light-sky mr-5" @click="$event => toggleLogoutModal(false)">{{translatedObject.cancelBtn}}</button>
+                <button type="button" class="btn btn-red text-white" @click="logout">{{translatedObject.logoutBtn}}</button>
               </div>
             </DialogPanel>
           </TransitionChild>

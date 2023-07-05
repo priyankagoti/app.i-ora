@@ -7,20 +7,21 @@
         <div class="flex h-full items-center 3xl:pb-24 pb-16">
           <div class="w-full">
             <h1 class="text-black font-bold text-4xl mb-1">
-              Hey, Welcome Back!
+              {{translatedObject.commonWebTitle}}
             </h1>
             <p class="text-[#8F9BB3] mb-14 3xl:text-xl text-lg">
-             Please Sign in here to your Account,<br />
-              Have your landing pages online in minutes.
+              {{translatedObject.commonWebText}}
+<!--             Please Sign in here to your Account,<br />
+              Have your landing pages online in minutes.-->
             </p>
-<!--            <div class="relative mb-20">
+            <div class="relative mb-20">
               <select @change="$store.dispatch('auth/fetchJsonFile',$event.target.value)" class="lang-select">
                 <option value="en" >
                   English
                 </option>
                 <option value="de">German</option>
               </select>
-            </div>-->
+            </div>
             <div class="mb-10">
               <div class="relative 3xl:mb-14 ">
                 <svg
@@ -38,7 +39,7 @@
                       fill="#74BDCB"
                   />
                 </svg>
-                <input type="text" placeholder="User Name" class="auth-input" v-model="form.username" />
+                <input type="text" :placeholder="translatedObject.userNameUser" class="auth-input" v-model="form.username" />
               </div>
               <small
                   v-if="errors && errors.username"
@@ -62,7 +63,7 @@
                 </svg>
                 <input
                     type="password"
-                    placeholder="Password"
+                    :placeholder="translatedObject.passwordUser"
                     v-model="form.password"
                     class="auth-input"
                 />
@@ -74,14 +75,15 @@
             </div>
 
             <p class="text-black 3xl:text-xl text-base mt-5 text-right font-semibold">
-              Forgot your password?
+<!--              Forgot your password?-->
+              {{translatedObject.forgotPasswordUser}}
             </p>
           </div>
         </div>
-        <button class="auth-btn 3xl:mb-20 2xl:mb-10 mb-7" type="button" @click="submit">Log In</button>
+        <button class="auth-btn 3xl:mb-20 2xl:mb-10 mb-7" type="button" @click="submit">{{translatedObject.loginBtn}}</button>
         <p class="text-black 3xl:text-xl text-lg mt-5 text-center">
-          Don’t have an account?
-          <RouterLink to="/register" class="text-[#ffa384]">Sign Up</RouterLink>
+          {{translatedObject["don'tHaveAccount"]}}
+          <RouterLink to="/register" class="text-[#ffa384]">{{translatedObject.signUpLink}}</RouterLink>
         </p>
       </div>
     </div>

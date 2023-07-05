@@ -12,7 +12,8 @@ import store from "@/store";
 export default {
   name: "App",
   mounted() {
-    store.dispatch('auth/fetchJsonFile','en')
+    let lang = store.getters["auth/getLanguage"] ? store.getters["auth/getLanguage"]:'en'
+    store.dispatch('auth/fetchJsonFile',lang)
   },
 };
 </script>

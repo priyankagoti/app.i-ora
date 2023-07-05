@@ -92,11 +92,11 @@
                   />
                 </svg>
               </button>
-              Employee
+              {{translatedObject.employeeTitle}}
             </td>
-            <td class="p-4">Start Date</td>
-            <td class="p-4">Status</td>
-            <td class="p-4 rounded-r-xl text-center">Action</td>
+            <td class="p-4"> {{translatedObject.startDateLabel}}</td>
+            <td class="p-4">{{translatedObject.objectStatus}}</td>
+            <td class="p-4 rounded-r-xl text-center">{{translatedObject.objectAction}}</td>
           </tr>
         </thead>
         <tbody>

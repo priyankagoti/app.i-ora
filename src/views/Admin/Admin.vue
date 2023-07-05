@@ -1,7 +1,7 @@
 <template>
   <div class="body-space">
     <SideBarComponent />
-    <HeaderComponent title="Employees" />
+    <HeaderComponent :title="translatedObject.employeesList" />
     <div class="flex items-center justify-end mb-30">
 <!--      <button class="btn btn-sky">
         <svg class="mr-2" width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,16 +51,16 @@
           </mask>
           <g mask="url(#mask0_1305_21665)"></g>
         </svg>
-        <span>Add Employee</span>
+        <span> {{translatedObject.addEmpBtn}}</span>
       </button>
       <AddEmployeeComponent/>
     </div>
     <div class="p-5 bg-white rounded-[20px] pb-0">
       <div class="flex items-center mb-5 justify-between">
-        <h4 class="mb-0 text-base font-bold">All Employee</h4>
+        <h4 class="mb-0 text-base font-bold"> {{translatedObject.allEmpTitle}}</h4>
         <div class="flex">
           <div class="relative w-60 mr-5">
-            <input type="text" placeholder="Employee Id" v-model="employee_number" @input="fetch" class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full" />
+            <input type="text" :placeholder="translatedObject.searchEmpId" v-model="employee_number" @input="fetch" class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full" />
             <button class="w-8 h-8 flex items-center justify-center absolute top-1 right-1 bg-white rounded-full">
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                 <path
@@ -73,7 +73,7 @@
             </button>
           </div>
           <div class="relative w-60">
-            <input type="text" placeholder="Employee Name" v-model="first_name" @input="fetch" class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full" />
+            <input type="text" :placeholder="translatedObject.searchEmpName" v-model="first_name" @input="fetch" class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full" />
             <button class="w-8 h-8 flex items-center justify-center absolute top-1 right-1 bg-white rounded-full">
               <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
                 <path
@@ -90,12 +90,12 @@
       <table class="w-full text-xs font-semibold mb-4">
         <thead class="bg-body font-bold">
           <tr class="text-sm">
-            <td class="p-4 rounded-l-xl">Name</td>
-            <td class="p-4">Employee ID</td>
-            <td class="p-4">Phone</td>
-            <td class="p-4">Join Date</td>
-            <td class="p-4">Objects</td>
-            <td class="p-4 rounded-r-xl text-center">Action</td>
+            <td class="p-4 rounded-l-xl">{{translatedObject.employeeName}}</td>
+            <td class="p-4">{{translatedObject.searchEmpId}}</td>
+            <td class="p-4">{{translatedObject.employeePhone}}</td>
+            <td class="p-4">{{translatedObject.employeeJoinDate}}</td>
+            <td class="p-4">{{translatedObject.employeeObjects}}</td>
+            <td class="p-4 rounded-r-xl text-center">{{translatedObject.employeeAction}}</td>
           </tr>
         </thead>
         <tbody>

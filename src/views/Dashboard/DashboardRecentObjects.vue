@@ -1,13 +1,13 @@
 <template>
   <div class="p-5 bg-white rounded-[20px] pb-0 shadow-lg shadow-black/5">
-    <h4 class="mb-5 text-base font-bold">Recent Objects</h4>
+    <h4 class="mb-5 text-base font-bold">{{translatedObject.objectRecent}}</h4>
     <table class="w-full text-xs font-semibold">
       <thead class="bg-body">
         <tr class="text-sm font-bold">
-          <td class="p-4 rounded-l-xl">Project Name</td>
-          <td class="p-4 3xl:w-[250px] w-[200px]">Progress</td>
-          <td class="p-4 text-center">Status</td>
-          <td class="p-4 rounded-r-xl text-center">Action</td>
+          <td class="p-4 rounded-l-xl">{{translatedObject.objectProject}}</td>
+          <td class="p-4 3xl:w-[250px] w-[200px]">{{translatedObject.objectProgress}}</td>
+          <td class="p-4 text-center">{{ translatedObject.objectStatus }}</td>
+          <td class="p-4 rounded-r-xl text-center">{{translatedObject.objectAction}}</td>
         </tr>
       </thead>
       <tbody>
