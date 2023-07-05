@@ -16,10 +16,10 @@
             </p>
             <div class="relative mb-20">
               <select @change="$store.dispatch('auth/fetchJsonFile',$event.target.value)" class="lang-select">
-                <option value="en" >
+                <option value="en" :selected="translatedLang==='en'">
                   English
                 </option>
-                <option value="de">German</option>
+                <option value="de" :selected="translatedLang==='de'">German</option>
               </select>
             </div>
             <div class="mb-10">

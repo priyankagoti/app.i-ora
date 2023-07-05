@@ -15,6 +15,9 @@ export default {
         },
         translatedObject(){
             return store.getters['auth/getJsonFile']
+        },
+        translatedLang(){
+            return store.getters["auth/getLanguage"]
         }
     },
     methods: {
