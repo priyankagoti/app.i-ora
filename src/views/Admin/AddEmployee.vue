@@ -117,8 +117,8 @@
                             fill="#74BDCB"
                         />
                       </svg>
-                      <span class="text-[#8F9BB3] text-base">Choose file</span>
-                      <span class="text-sky text-xs">No file selected</span>
+                      <span class="text-[#8F9BB3] text-base">{{translatedObject.chooseFileTitle}}</span>
+                      <span class="text-sky text-xs">{{translatedObject.noFile}}</span>
                     </div>
 
                     <input
@@ -132,11 +132,10 @@
                   </label>
                   <div class="pl-5">
                     <p class="text-xl text-[#8F9BB3] mb-2">
-                      This is some placeholder block-level help text for the above input.
-                      It's a bit lighter and easily wraps to a new line.
+                      {{translatedObject.chooseFileText}}
                     </p>
                     <span class="block text-black text-sm font-semibold mb-2"
-                    >Object</span
+                    >{{translatedObject.objectTitle}}</span
                     >
                     <button class="rounded-lg btn btn-light-sky">
                       <svg
@@ -158,7 +157,7 @@
                             stroke="black"
                         />
                       </svg>
-                      <span class="text-sky font-semibold">Add Object</span>
+                      <span class="text-sky font-semibold">{{translatedObject.addObjectBtn}}</span>
                     </button>
                   </div>
                 </div>
@@ -170,11 +169,11 @@
 
               <div class="grid grid-cols-6 gap-20">
                 <div class="col-span-2">
-                  <label class="label" for="FirstName">First Name *</label>
+                  <label class="label" for="FirstName">{{translatedObject.firstNameLabel}} *</label>
                   <input
                     type="text"
                     id="FirstName"
-                    placeholder="Enter First Name"
+                    :placeholder="translatedObject.enterFirstName"
                     class="input"
                     v-model="form.first_name"
                   />
@@ -199,12 +198,12 @@
                 </div>
                 <div class="col-span-2">
                   <label class="label" for="EmailAddress"
-                    >Email Address *</label
+                    >{{translatedObject.emailAddressLabel}} *</label
                   >
                   <input
                     type="email"
                     id="EmailAddress"
-                    placeholder="Enter Email Address"
+                    :placeholder="translatedObject.enterEmailAddress"
                     class="input"
                     v-model="form.email"
                   />
@@ -214,11 +213,11 @@
                   >{{ errors.email[0] }}</small>
                 </div>
                 <div class="col-span-3">
-                  <label class="label" for="Username">Username *</label>
+                  <label class="label" for="Username">{{translatedObject.usernameLabel}} *</label>
                   <input
                     type="text"
                     id="Username"
-                    placeholder="Enter Username"
+                    :placeholder="translatedObject.employeeUsername"
                     class="input"
                     v-model="form.username"
                   />
@@ -228,11 +227,11 @@
                   >{{ errors.username[0] }}</small>
                 </div>
                 <div class="col-span-3">
-                  <label class="label" for="Password">Password *</label>
+                  <label class="label" for="Password">{{ translatedObject.passwordLabel }} *</label>
                   <input
                     type="password"
                     id="Password"
-                    placeholder="Enter Password"
+                    :placeholder="translatedObject.enterPassword"
                     class="input"
                     v-model="form.password"
                   />
@@ -242,11 +241,11 @@
                   >{{ errors.password[0] }}</small>
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="EmployeeAddress">Address *</label>
+                  <label class="label" for="EmployeeAddress">{{translatedObject.employeeAddressLabel}} *</label>
                   <input
                     type="text"
                     id="EmployeeAddress"
-                    placeholder="Enter Employee Address"
+                    :placeholder="translatedObject.enterEmployeeAddress"
                     class="input"
                     v-model="form.address"
                   />
@@ -256,11 +255,11 @@
                   >{{ errors.address[0] }}</small>
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="ZopCode">Zip Code *</label>
+                  <label class="label" for="ZopCode">{{translatedObject.zipcodeLabel}} *</label>
                   <input
                     type="text"
                     id="ZopCode"
-                    placeholder="Enter Zip Code"
+                    :placeholder="translatedObject.enterZipcode"
                     class="input"
                     v-model="form.zipcode"
                   />
@@ -270,11 +269,11 @@
                   >{{ errors.zipcode[0] }}</small>
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="City">City *</label>
+                  <label class="label" for="City">{{translatedObject.cityLabel}} *</label>
                   <input
                       type="text"
                       id="City"
-                      placeholder="Enter City Name"
+                      :placeholder="translatedObject.enterCity"
                       class="input"
                       v-model="form.city_name"
                   />
@@ -288,7 +287,7 @@
                   >{{ errors.city_name[0] }}</small>
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="Country">Country *</label>
+                  <label class="label" for="Country">{{translatedObject.countryLabel}} *</label>
                   <select v-model="form.country_id" class="input" id="Country">
                     <option value="" selected disabled>Select Country</option>
                     <option v-for="country in countries" :key="country.id" :value="country.id">{{country.name}}</option>
@@ -299,11 +298,11 @@
                   >{{ errors.country_id[0] }}</small>
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="PhoneNumber">Phone Number *</label>
+                  <label class="label" for="PhoneNumber">{{translatedObject.phoneNumberLabel}} *</label>
                   <input
                     type="text"
                     id="PhoneNumber"
-                    placeholder="Enter Phone Number"
+                    :placeholder="translatedObject.enterPhoneNumber"
                     class="input"
                     v-model="form.phone_number"
                   />
@@ -317,7 +316,7 @@
                   <input
                     type="date"
                     id="JoinDate"
-                    placeholder="Enter Join Date"
+                    :placeholder="translatedObject.joinDateLabel"
                     class="input"
                     v-model="form.join_date"
                   />
@@ -328,12 +327,12 @@
                 </div>
                 <div class="col-span-2">
                   <label class="label" for="EmployeeNumber"
-                    >Employee Number</label
+                    >{{translatedObject.employeeNumberLabel}}</label
                   >
                   <input
                     type="text"
                     id="EmployeeNumber"
-                    placeholder="Enter Employee Number"
+                    :placeholder="translatedObject.enterEmployeeNumber"
                     class="input"
                     v-model="form.employee_number"
                   />
@@ -344,12 +343,12 @@
                 </div>
                 <div class="col-span-2">
                   <label class="label" for="VacationDays"
-                    >Amount of Vacation Days *</label
+                    >{{translatedObject.vacationLabel}} *</label
                   >
                   <input
                     type="text"
                     id="VacationDays"
-                    placeholder="Enter Vacation Days"
+                    :placeholder="translatedObject.enterVacation"
                     class="input"
                     v-model="form.amount_of_vacation_days"
                   />
@@ -360,12 +359,12 @@
                 </div>
                 <div class="col-span-2">
                   <label class="label" for="EnterAmount"
-                    >Amount of hours work in a week *</label
+                    >{{translatedObject.workingHoursLabel}} *</label
                   >
                   <input
                     type="email"
                     id="EnterAmount"
-                    placeholder="Enter Hours"
+                    :placeholder="translatedObject.enterAmount"
                     class="input"
                     v-model="form.amount_of_hours_work"
                   />
@@ -381,7 +380,7 @@
                   class="btn btn-light-sky mr-5"
                   @click="closeModal"
                 >
-                  Cancel
+                  {{translatedObject.cancelBtn}}
                 </button>
                 <button v-if="isEditing" type="button" class="btn btn-sky" @click="update" :disabled="loading">
                   <SpinnerComponent v-if="loading"/>
@@ -389,7 +388,7 @@
                 </button>
                <button v-else type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
                  <SpinnerComponent v-if="loading"/>
-                 Add User
+                 {{translatedObject.addUserBtn}}
                </button>
               </div>
             </DialogPanel>
@@ -400,15 +399,15 @@
   </TransitionRoot>
   <ConfirmationModal 
     :isOpenModal="isConfOpen" 
-    title="Add Employee without an Object?"
-    text="You didn't add an Object to this Employee, are you sure you want to save?"
+    :title="translatedObject.employeePopupTitle"
+    :text="translatedObject.employeePopupText"
     :closeModal="$event => toggleConf(false)"
-    btnText="Yes, save without Object"
+    :btnText="translatedObject.popupSaveNoObjBtn"
     :SubmitModal="$event => store()"
   />
   <ConfirmationModal 
     :isOpenModal="isConfSuccessOpen" 
-    title="Update Successful"
+    :title="translatedObject.updateSuccessTitle"
     :closeModal="$event => toggleConfSuccess(false)"
     btnText="Back to Employees"
     :SubmitModal="$event => {toggleConfSuccess(false); closeModal() }"

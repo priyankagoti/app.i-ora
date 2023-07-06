@@ -3,14 +3,14 @@
     class="body-space"
   >
     <SideBarComponent />
-    <HeaderComponent title="Customers"/>
+    <HeaderComponent :title="translatedObject.customersLabel"/>
     <ObjectStatistics :totalCustomer="totalCustomer" :totalEmployees="totalEmployees"/>
     <div class="flex items-center justify-between mb-30">
       <div class="flex">
         <div class="relative w-60 mr-5">
           <input
             type="text"
-            placeholder="Customer Name"
+            :placeholder="translatedObject.customerNameLabel"
             v-model="search"
             @input="fetch"
             class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full border-2 border-white"
@@ -68,15 +68,15 @@
             stroke="black"
           />
         </svg>
-        <span>Add New Customer</span>
+        <span>{{translatedObject.addNewCustomerBtn}}</span>
       </RouterLink>
     </div>
     <div class="p-5 bg-white rounded-[20px] pb-0">
-      <h4 class="mb-5 text-base font-bold">Recent Customers</h4>
+      <h4 class="mb-5 text-base font-bold">{{translatedObject.recentCustomersLabel}}</h4>
       <table class="w-full text-xs font-semibold mb-4">
         <thead class="bg-body">
           <tr class="text-sm font-bold">
-            <td class="p-4 rounded-l-xl">Name</td>
+            <td class="p-4 rounded-l-xl">{{translatedObject.name}}</td>
             <td class="p-4" width="250px">
               <button>
                 <svg
@@ -193,17 +193,25 @@
         </tbody>
       </table>
       <div class="p-4 pt-0 flex justify-between items-center">
-        <p class="text-[10px]">Showing data {{from}} to {{to}} of {{total}} entries</p>
+        <p class="text-[10px]">
+          {{translatedObject.showDataPaginationText}}
+          {{from}}
+          {{ translatedObject.toPaginationText }}
+          {{to}}
+          {{translatedObject.fromPaginationText}}
+          {{total}}
+          {{translatedObject.entriesPaginationText}}
+        </p>
         <PagerComponent :totalLength="objects.length" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
       </div>
     </div>
   </div>
   <ConfirmationModal
     :isOpenModal="isConfDeleteOpen"
-    title="Do you really want to delete the Object?"
-    text="Please enter “Delete”"
+    :title="translatedObject.objectDeletePopupTitle"
+    :text="translatedObject.objectDeletePopupText"
     :closeModal="$event => {toggleConfDelete(false)}"
-    btnText="Delete Object"
+    :btnText="translatedObject.deleteObjPopupBtn"
     :SubmitModal="deleteObject"
   />
 </template>

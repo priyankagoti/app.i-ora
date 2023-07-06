@@ -66,7 +66,7 @@
             fill="currentcolor"
           />
         </svg>
-        <span class="inline-block ml-3"> Customers </span>
+        <span class="inline-block ml-3"> {{translatedObject.customersLabel}} </span>
       </RouterLink>
     </div>
     <div class="3xl:p-5 text-xs">
@@ -150,8 +150,7 @@
               </div>
               <img src="../assets/images/cover/logout.png" class="block mx-auto" />
               <p class="text-sm text-black mb-2">
-                Are you sure, <br/>
-                you want to Logout?
+                {{translatedObject.logoutAlert}}
                 </p>
               <div class="mt-5 flex justify-center">
                 <button type="button" class="btn btn-light-sky mr-5" @click="$event => toggleLogoutModal(false)">{{translatedObject.cancelBtn}}</button>

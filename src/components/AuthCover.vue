@@ -15,8 +15,9 @@
             class="mb-5 mx-auto h-[450px] 2xl:h-auto"
           />
           <p class="2xl:text-xl text-lg font-semibold text-black">
-            Workforce Analytics for team productivity <br />
-            management
+            {{ translatedObject.workforceAnalyticsText }} {{translatedObject.productivityText}}
+             <br />
+            {{translatedObject.managementText}}
           </p>
         </div>
       </div>

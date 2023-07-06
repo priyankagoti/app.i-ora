@@ -16,9 +16,10 @@
         </svg>
       </div>
       <h3 class="statistics-text">
-        Total
+        {{translatedObject.totalCustomerLabel}}
+<!--        Total
         <br />
-        Customer
+        Customer-->
       </h3>
       <span class="statistics-number">{{totalCustomer}}</span>
     </div>
@@ -40,9 +41,10 @@
         </svg>
       </div>
       <h3 class="statistics-text">
-        Total
+        {{translatedObject.totalEmployeeLabel}}
+<!--        Total
         <br />
-        Employees
+        Employees-->
       </h3>
       <div class="text-right ml-auto">
         <span class="statistics-number">{{totalEmployees}}</span>

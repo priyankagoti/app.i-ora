@@ -154,7 +154,15 @@
         </tbody>
       </table>
       <div class="p-4 pt-0 flex justify-between items-center">
-        <p class="text-[10px]">Showing data {{from}} to {{to}} of {{total}} entries</p>
+        <p class="text-[10px]">
+          {{translatedObject.showDataPaginationText}}
+          {{from}}
+          {{ translatedObject.toPaginationText }}
+          {{to}}
+          {{translatedObject.fromPaginationText}}
+          {{total}}
+          {{translatedObject.entriesPaginationText}}
+        </p>
         <PagerComponent
             :totalLength="employees.length"
             :currentPage="currentPage"
@@ -163,12 +171,12 @@
       </div>
     </div>
   </div>
-  <ConfirmationModal 
+  <ConfirmationModal
     :isOpenModal="isConfDeleteOpen" 
-    title="Are you sure you want do delete the Object?"
-    text="Do you really want to delete this Object from the  Employee?"
+    :title="translatedObject.objectPopupTitle"
+    :text="translatedObject.objectPopupText"
     :closeModal="$event=>toggleConfDelete(false)"
-    btnText="Yes, delete the Object"
+    :btnText="translatedObject.deleteObjBtn"
     :SubmitModal="destroy"
   />
 </template>

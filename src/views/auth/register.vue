@@ -8,10 +8,10 @@
           <div class="flex items-center justify-between 3xl:mb-14 mb-10">
             <div class="">
               <h1 class="text-black font-bold 3xl:text-4xl text-3xl mb-1">
-                Let’s Get Started!
+                {{translatedObject.getStartTitle}}
               </h1>
               <p class="text-[#8F9BB3] 3xl:text-xl 2xl:text-lg text-base">
-                Please Sign up here to your Account.
+                {{translatedObject.getStartedText}}
               </p>
               <small
                   v-if="errors && errors.profile"
@@ -82,7 +82,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" placeholder="Company Name" class="auth-input" v-model="form.company_name" />
+              <input type="text" :placeholder="translatedObject.companyName" class="auth-input" v-model="form.company_name" />
             </div>
             <small
                 v-if="errors && errors.company_name"
@@ -132,7 +132,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" placeholder="First Name" class="auth-input" v-model="form.first_name" />
+              <input type="text" :placeholder="translatedObject.firstNameLabel" class="auth-input" v-model="form.first_name" />
             </div>
             <small
                 v-if="errors && errors.first_name"
@@ -156,7 +156,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" placeholder="Surname" class="auth-input" v-model="form.last_name"/>
+              <input type="text" :placeholder="translatedObject.surnameLabel" class="auth-input" v-model="form.last_name"/>
             </div>
             <small
                 v-if="errors && errors.last_name"
@@ -182,7 +182,7 @@
               </svg>
               <input
                   type="email"
-                  placeholder="Email Address"
+                  :placeholder="translatedObject.emailAddressLabel"
                   class="auth-input"
                   v-model="form.email"
               />
@@ -209,7 +209,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="text" placeholder="Username" class="auth-input" v-model="form.username"/>
+              <input type="text" :placeholder="translatedObject.usernameLabel" class="auth-input" v-model="form.username"/>
             </div>
             <small
                 v-if="errors && errors.username"
@@ -231,7 +231,7 @@
                     fill="#74BDCB"
                 />
               </svg>
-              <input type="password" placeholder="Password" class="auth-input" v-model="form.password"/>
+              <input type="password" :placeholder="translatedObject.passwordLabel" class="auth-input" v-model="form.password"/>
             </div>
             <small
                 v-if="errors && errors.password"
@@ -255,7 +255,7 @@
               </svg>
               <input
                   type="password"
-                  placeholder="Confirm Password"
+                  :placeholder="translatedObject.confirmPasswordLabel"
                   class="auth-input"
                   v-model="form.password_confirmation"
               />
@@ -269,13 +269,14 @@
         </div>
         <div class="flex items-center mb-2.5">
           <input type="checkbox" id="conditions" class="w-7 h-7 mr-2.5 flex-shrink-0" v-model="terms_conditions">
-          <label class="text-xs" for="conditions">I have read and agree to the website terms and conditions.*</label>
+          <label class="text-xs" for="conditions">{{translatedObject.termsAndConditions}}</label>
         </div>
         <div class="flex items-center mb-2.5">
           <input type="checkbox" id="privacyPolicy" class="w-7 h-7 mr-2.5 flex-shrink-0" v-model="privacyPolicy">
           <label class="text-xs" for="privacyPolicy">
-            By using this from you agree with the storage and handling of your data by this website in accordance with our
-            <span class="text-[#ffa384]">Privacy Policy.</span>.*
+            {{translatedObject.privacyAndPolicy}}
+<!--            By using this from you agree with the storage and handling of your data by this website in accordance with our-->
+<!--            <span class="text-[#ffa384]">Privacy Policy.</span>.*-->
           </label>
         </div>
         <div class="mb-10">
@@ -285,10 +286,10 @@
           >{{ errMsg }}</small>
         </div>
 
-        <button class="auth-btn mb-7" type="button" @click="register">Sign Up</button>
+        <button class="auth-btn mb-7" type="button" @click="register">{{translatedObject.signUpBtn}}</button>
         <p class="text-black 3xl:text-xl text-lg text-center">
-          Already have an account ?
-          <RouterLink to="/login" class="text-[#ffa384]">Sign In</RouterLink>
+         {{translatedObject.haveAccount}}
+          <RouterLink to="/login" class="text-[#ffa384]">{{translatedObject.signInLink}}</RouterLink>
         </p>
       </div>
     </div>
