@@ -241,9 +241,13 @@ export default {
   mounted() {
     this.fetch()
   },
+  watch:{
+    objects(){
+      this.currentPage=1
+    }
+  },
   computed: {
     displayedPosts () {
-      // console.log(this.paginate(this.objects))
       return this.paginate(this.objects);
     },
       from() {

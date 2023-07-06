@@ -154,7 +154,7 @@
         </tbody>
       </table>
       <div class="p-4 pt-0 flex justify-between items-center">
-        <p class="text-[10px]">Showing data {{from}}( from ) to {{to}}( to ) of {{total}}( total ) entries</p>
+        <p class="text-[10px]">Showing data {{from}} to {{to}} of {{total}} entries</p>
         <PagerComponent
             :totalLength="employees.length"
             :currentPage="currentPage"
