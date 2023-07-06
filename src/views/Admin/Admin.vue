@@ -154,8 +154,12 @@
         </tbody>
       </table>
       <div class="p-4 pt-0 flex justify-between items-center">
-        <p class="text-[10px]">Showing data {{from}} to {{to}} of {{total}} entries</p>
-        <PagerComponent :totalLength="employees.length" :currentPage="currentPage" :per-page="perPage" @pageChange="updatePage"/>
+        <p class="text-[10px]">Showing data {{from}}( from ) to {{to}}( to ) of {{total}}( total ) entries</p>
+        <PagerComponent
+            :totalLength="employees.length"
+            :currentPage="currentPage"
+            :per-page="perPage"
+            @pageChange="updatePage"/>
       </div>
     </div>
   </div>
@@ -200,6 +204,11 @@ export default {
     this.emitter.on("employee.refresh",()=>this.fetch());
     this.fetch()
   },
+  watch:{
+    employees(){
+      this.currentPage=1
+    }
+  },
   computed: {
     displayedPosts () {
       return this.paginate(this.employees);
@@ -215,7 +224,7 @@ export default {
       return highBound
     },
     total() {
-      return this.employees.length >0 ? this.employees.length : 0
+      return this.employees ? this.employees.length : 0
     },
   },
   methods: {
