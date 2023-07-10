@@ -1,11 +1,11 @@
 <template>
   <div class="body-space">
     <SideBarComponent />
-    <HeaderComponent :title="isEditing? 'Edit Customer':'Add New Customer'" />
+    <HeaderComponent :title="isEditing? 'Edit Customer':translatedObject.addNewCustomerBtn" />
     <div class="p-5 bg-white rounded-[20px]" ref="scrollToTop">
       <div class="flex items-cente justify-between mb-5">
         <div>
-          <h4 class="text-xl font-bold">Object Client Details</h4>
+          <h4 class="text-xl font-bold">{{translatedObject.clientDetailsTitle}}</h4>
           <p class="text-danger">{{errorMessage}}</p>
         </div>
 
@@ -28,11 +28,11 @@
       </div>
       <div class="grid grid-cols-6 gap-20">
         <div class="col-span-2">
-          <label class="label" for="ClientName">Client Name *</label>
+          <label class="label" for="ClientName">{{translatedObject.clientNameLabel}} *</label>
           <input
             type="text"
             id="ClientName"
-            placeholder="Enter Client Name"
+            :placeholder="translatedObject.enterClientName"
             class="input"
             v-model="form.client_name"
           />
@@ -42,11 +42,11 @@
           >{{ errors.client_name[0] }}</small>
         </div>
         <div class="col-span-2">
-          <label class="label" for="ClientNumber">Client Number *</label>
+          <label class="label" for="ClientNumber">{{translatedObject.clientNumberLabel}} *</label>
           <input
             type="text"
             id="ClientNumber"
-            placeholder="Enter Client Number"
+            :placeholder="translatedObject.enterClientNumber"
             class="input"
             v-model="form.client_number"
           />
@@ -56,11 +56,11 @@
           >{{ errors.client_number[0] }}</small>
         </div>
         <div class="col-span-2">
-          <label class="label" for="Address">Address</label>
+          <label class="label" for="Address">{{translatedObject.address}}</label>
           <input
             type="text"
             id="Address"
-            placeholder="Enter Address"
+            :placeholder="translatedObject.addressLabel"
             class="input"
             v-model="form.address"
           />
@@ -70,11 +70,11 @@
           >{{ errors.address[0] }}</small>
         </div>
         <div class="col-span-1">
-          <label class="label" for="PostcodeCity">Postcode</label>
+          <label class="label" for="PostcodeCity">{{translatedObject.postcode}}</label>
           <input
             type="text"
             id="PostcodeCity"
-            placeholder="Enter Postcode City"
+            :placeholder="translatedObject.enterPostcodeCity"
             class="input"
             v-model="form.postcode"
           />
@@ -84,11 +84,11 @@
           >{{ errors.postcode[0] }}</small>
         </div>
         <div class="col-span-1">
-          <label class="label" for="City">City *</label>
+          <label class="label" for="City">{{translatedObject.cityLabel}} *</label>
           <input
               type="text"
               id="City"
-              placeholder="Enter City"
+              :placeholder="translatedObject.enterCity"
               class="input"
               v-model="form.city_name"
           />
@@ -106,11 +106,11 @@
           >{{ errors.city_id[0] }}</small>-->
         </div>
         <div class="col-span-2">
-          <label class="label" for="KeyNumber">Key Number</label>
+          <label class="label" for="KeyNumber">{{translatedObject.keyNumberLabel}}</label>
           <input
             type="text"
             id="KeyNumber"
-            placeholder="Enter Key Number"
+            :placeholder="translatedObject.enterKeyNumber"
             class="input"
             v-model="form.key_number"
           />
@@ -120,7 +120,7 @@
           >{{ errors.key_number[0] }}</small>
         </div>
         <div class="col-span-2">
-          <label class="label" for="StartDate">Start Date *</label>
+          <label class="label" for="StartDate">{{translatedObject.startDateLabel}} *</label>
           <input
             type="date"
             id="StartDate"
@@ -134,11 +134,11 @@
           >{{ errors.start_date[0] }}</small>
         </div>
         <div class="col-span-3">
-          <label class="label" for="PhoneNumber">Phone Number</label>
+          <label class="label" for="PhoneNumber">{{translatedObject.phoneNumberLabel}}</label>
           <input
             type="text"
             id="PhoneNumber"
-            placeholder="Enter Phone Number"
+            :placeholder="translatedObject.enterPhoneNumber"
             class="input"
             v-model="form.phone_number"
           />
@@ -148,7 +148,7 @@
           >{{ errors.phone_number[0] }}</small>
         </div>
         <div class="col-span-3">
-          <label class="label" for="GoogleMapURL">Google Map URL*</label>
+          <label class="label" for="GoogleMapURL">{{translatedObject.googleUrlLabel}}*</label>
           <input
             type="text"
             id="GoogleMapURL"
@@ -164,7 +164,7 @@
         <div class="col-span-2">
           <div class="grid grid-cols-2 gap-6">
             <div class="">
-              <label class="label" for="ImplementationTime">Implementation Time</label>
+              <label class="label" for="ImplementationTime">{{translatedObject.impTimeLabel}}</label>
               <div
                 class="flex bg-body rounded-full p-1 items-center justify-between"
               >
@@ -237,7 +237,7 @@
           </div>
         </div>
         <div class="col-span-2">
-          <label class="label">Rotation
+          <label class="label">{{translatedObject.rotationLabel}}
             <small
                 v-if="errors && errors.rotation_type"
                 class="text-danger text-sm"
@@ -254,7 +254,7 @@
                 v-model="form.rotation_type"
               />
               <label for="rotation" class="rotation-check">
-                <span class="text-xs">Weekly</span>
+                <span class="text-xs">{{translatedObject.weekRotation}}</span>
               </label>
               <span for="rotation" class="rotation-checkmark"></span>
               <svg
@@ -284,7 +284,7 @@
                 v-model="form.rotation_type"
               />
               <label for="rotation-weekly" class="rotation-check">
-                <span class="text-xs">Every 2 weeks</span>
+                <span class="text-xs">{{translatedObject['2WeekRotation']}}</span>
               </label>
               <span class="rotation-checkmark"></span>
               <svg
@@ -314,7 +314,7 @@
                 v-model="form.rotation_type"
               />
               <label for="rotation-monthly" class="rotation-check">
-                <span class="text-xs">Monthly</span>
+                <span class="text-xs">{{translatedObject.monthlyRotation}}</span>
               </label>
               <span class="rotation-checkmark"></span>
               <svg
@@ -337,7 +337,7 @@
           </div>
         </div>
         <div class="col-span-2">
-          <label class="label">Day</label>
+          <label class="label">{{translatedObject.daysLabel}}</label>
           <div class="flex justify-between items-center">
 <!--            <div>
               <input
@@ -420,7 +420,7 @@
           </div>
         </div>
         <div class="col-span-3 flex flex-col">
-          <label class="label">Upload Pdf Document *
+          <label class="label">{{translatedObject.uploadPdfLabel}} *
             <small
                 v-if="errors && errors.pdf"
                 class="text-danger text-sm"
@@ -443,12 +443,12 @@
           </p>
         </div>
         <div class="col-span-3">
-          <label class="label">Task List Contract</label>
+          <label class="label">{{translatedObject.taskListLabel}}</label>
           <div class="rounded-lg p-5 bg-body">
             <div class="relative mb-5">
               <input
                 type="text"
-                placeholder="Search"
+                :placeholder="translatedObject.searchBar"
                 v-model="searchPdf"
                 @input="fetchObject"
                 class="w-full text-xs py-3 pl-5 pr-20 bg-[#E7F2F8] rounded-full border-2 border-white"
@@ -601,11 +601,11 @@
           </div>
         </div>
         <div class="col-span-3">
-          <label class="label" for="PersonName">Person Name</label>
+          <label class="label" for="PersonName">{{translatedObject.personNameLabel}}</label>
           <input
             type="text"
             id="PersonName"
-            placeholder="Enter Person Name"
+            :placeholder="translatedObject.enterPersonName"
             v-model="form.contact_person_name"
             class="input"
           />
@@ -615,11 +615,11 @@
           >{{ errors.contact_person_name[0] }}</small>
         </div>
         <div class="col-span-3">
-          <label class="label" for="PersonPhoneNumber">Phone Number</label>
+          <label class="label" for="PersonPhoneNumber">{{translatedObject.phoneNumberLabel}}</label>
           <input
             type="text"
             id="PersonPhoneNumber"
-            placeholder="Enter Phone Number"
+            :placeholder="translatedObject.enterPhoneNumber"
             class="input"
             v-model="form.contact_person_phone_number"
           />
@@ -631,9 +631,9 @@
       </div>
     </div>
     <div class="p-5 bg-white rounded-[20px] mb-30 mt-30">
-      <h4 class="text-xl font-bold mb-5">Employee Information</h4>
+      <h4 class="text-xl font-bold mb-5">{{translatedObject.EmployeeInfoTitle}}</h4>
       <div class="">
-        <label class="label" for="EmployeeName">Employee Name *</label>
+        <label class="label" for="EmployeeName">{{translatedObject.EmployeeNameLabel}} *</label>
         <VueMultiselect
             v-model="form.employee_id"
             :options="employees"
@@ -644,7 +644,7 @@
             :max="2"
             label="first_name"
             track-by="first_name"
-            placeholder="Enter Employee"
+            :placeholder="translatedObject.enterEmployeeName"
         >
         </VueMultiselect>
         <small

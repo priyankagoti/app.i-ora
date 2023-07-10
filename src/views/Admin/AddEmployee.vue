@@ -72,7 +72,7 @@
                 class="flex items-center justify-between mb-5 pb-5 border-b border-body"
               >
                 <DialogTitle as="h3" class="text-xl font-bold text-black"
-                  >{{ isEditing?'Edit Employee':'Add Employee' }}</DialogTitle
+                  >{{ isEditing?translatedObject.editBtn:translatedObject.add }} {{translatedObject.sidebarEmployee}}</DialogTitle
                 >
                 <button
                   @click="closeModal"
@@ -126,6 +126,7 @@
                         type="file"
                         ref="empProfileImg"
                         name=""
+                        :disabled="isView"
                         @change="changeProfile"
                         id="EmployeeProfile"
                     />
@@ -175,6 +176,7 @@
                     id="FirstName"
                     :placeholder="translatedObject.enterFirstName"
                     class="input"
+                    :disabled="isView"
                     v-model="form.first_name"
                   />
                   <small
@@ -189,6 +191,7 @@
                     id="LastName"
                     placeholder="Enter Last Name"
                     class="input"
+                    :disabled="isView"
                     v-model="form.last_name"
                   />
                   <small
@@ -205,6 +208,7 @@
                     id="EmailAddress"
                     :placeholder="translatedObject.enterEmailAddress"
                     class="input"
+                    :disabled="isView"
                     v-model="form.email"
                   />
                   <small
@@ -219,6 +223,7 @@
                     id="Username"
                     :placeholder="translatedObject.employeeUsername"
                     class="input"
+                    :disabled="isView"
                     v-model="form.username"
                   />
                   <small
@@ -233,6 +238,7 @@
                     id="Password"
                     :placeholder="translatedObject.enterPassword"
                     class="input"
+                    :disabled="isView"
                     v-model="form.password"
                   />
                   <small
@@ -247,6 +253,7 @@
                     id="EmployeeAddress"
                     :placeholder="translatedObject.enterEmployeeAddress"
                     class="input"
+                    :disabled="isView"
                     v-model="form.address"
                   />
                   <small
@@ -261,6 +268,7 @@
                     id="ZopCode"
                     :placeholder="translatedObject.enterZipcode"
                     class="input"
+                    :disabled="isView"
                     v-model="form.zipcode"
                   />
                   <small
@@ -275,6 +283,7 @@
                       id="City"
                       :placeholder="translatedObject.enterCity"
                       class="input"
+                      :disabled="isView"
                       v-model="form.city_name"
                   />
 <!--                  <select v-model="form.city_id" class="input" id="City">
@@ -288,7 +297,7 @@
                 </div>
                 <div class="col-span-2">
                   <label class="label" for="Country">{{translatedObject.countryLabel}} *</label>
-                  <select v-model="form.country_id" class="input" id="Country">
+                  <select v-model="form.country_id" class="input" id="Country" :disabled="isView">
                     <option value="" selected disabled>Select Country</option>
                     <option v-for="country in countries" :key="country.id" :value="country.id">{{country.name}}</option>
                   </select>
@@ -304,6 +313,7 @@
                     id="PhoneNumber"
                     :placeholder="translatedObject.enterPhoneNumber"
                     class="input"
+                    :disabled="isView"
                     v-model="form.phone_number"
                   />
                   <small
@@ -318,6 +328,7 @@
                     id="JoinDate"
                     :placeholder="translatedObject.joinDateLabel"
                     class="input"
+                    :disabled="isView"
                     v-model="form.join_date"
                   />
                   <small
@@ -334,6 +345,7 @@
                     id="EmployeeNumber"
                     :placeholder="translatedObject.enterEmployeeNumber"
                     class="input"
+                    :disabled="isView"
                     v-model="form.employee_number"
                   />
                   <small
@@ -350,6 +362,7 @@
                     id="VacationDays"
                     :placeholder="translatedObject.enterVacation"
                     class="input"
+                    :disabled="isView"
                     v-model="form.amount_of_vacation_days"
                   />
                   <small
@@ -366,6 +379,7 @@
                     id="EnterAmount"
                     :placeholder="translatedObject.enterAmount"
                     class="input"
+                    :disabled="isView"
                     v-model="form.amount_of_hours_work"
                   />
                   <small
@@ -386,7 +400,7 @@
                   <SpinnerComponent v-if="loading"/>
                   Edit User
                 </button>
-               <button v-else type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
+               <button v-if="!isEditing && !isView" type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
                  <SpinnerComponent v-if="loading"/>
                  {{translatedObject.addUserBtn}}
                </button>
@@ -458,6 +472,7 @@ export default {
       },
       loading: false,
       employee: {},
+      type:'',
       cities: [],
       countries: [],
       object: null,
@@ -471,14 +486,24 @@ export default {
       this.fetchCities()
       this.fetchCountries()
     });
-    this.emitter.on("openEditEmp", employee=> {
-      this.fetch(employee)
+    this.emitter.on("openEditEmp", object=> {
+      console.log('object',object.employee)
+      this.type = object.type
+      this.fetch(object.employee)
+    });
+    this.emitter.on("openViewEmp", object=> {
+      console.log('openViewEmp',object)
+      this.type = object.type
+      this.fetch(object.employee)
     });
   },
   computed: {
     isEditing(){
-      return !!Object.keys(this.employee).length>0
+      return !!Object.keys(this.employee).length>0 && this.type==='edit'
     },
+    isView(){
+      return this.type==='view'
+    }
   },
   methods: {
     closeModal() {
@@ -505,6 +530,7 @@ export default {
       this.$refs.empProfileImg.value = '';
       this.employee = {}
       this.errors = {}
+      this.type=''
     },
     changeProfile() {
       const binaryData = []

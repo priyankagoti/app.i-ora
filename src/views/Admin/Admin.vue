@@ -120,7 +120,7 @@
             </td>
             <td class="text-center p-4">
               <div class="flex items-center justify-center">
-                <button class="p-2">
+                <button class="p-2" @click="openViewEmpModal(employee)">
                   <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
                     <path
                       d="M8.375 0C5.1682 0 2.37518 2.01412 0.875 5.00006C2.37518 7.98655 5.1682 10.0001 8.375 10.0001C11.5818 10.0001 14.3748 7.98655 15.875 5.00006C14.3748 2.01412 11.5818 0 8.375 0ZM8.375 8.12512C6.64886 8.12512 5.24994 6.7262 5.24994 5.00006C5.24994 3.27393 6.64886 1.875 8.375 1.875C10.1011 1.875 11.5001 3.27393 11.5001 5.00006C11.5001 6.7262 10.1011 8.12512 8.375 8.12512Z"
@@ -257,7 +257,11 @@ export default {
       this.emitter.emit("openAddEmp", true);
     },
     openEditEmpModal(employee){
-      this.emitter.emit("openEditEmp", employee);
+      this.emitter.emit("openEditEmp", {type:'edit',employee});
+      this.openAddEmpModal()
+    },
+    openViewEmpModal(employee){
+      this.emitter.emit("openViewEmp", {type:'view',employee});
       this.openAddEmpModal()
     },
     fetch(){
