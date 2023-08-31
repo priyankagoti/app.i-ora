@@ -436,7 +436,7 @@
               src="../../assets/images/icons/upload.png"
               alt=""
             />
-            <span class="block text-xs text-black">Upload Now</span>
+            <span class="block text-xs text-black">{{translatedObject.enterDocument}}</span>
           </label>
           <p v-for="pdf in pdfs" class="text-blue-700 font-bold" :key="pdf.name">
             {{pdf.name}}
@@ -659,10 +659,10 @@
       <ObjectHistory :object-history="form.objectHistory" :objectID="objectID"/>
     </div>
     <div class="mt-5 flex justify-end">
-      <button type="button" class="btn btn-light-sky mr-5" @click="$router.push('/customers')">Cancel</button>
+      <button type="button" class="btn btn-light-sky mr-5" @click="$router.push('/customers')">{{translatedObject.cancelBtn}}</button>
       <button type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
         <SpinnerComponent v-if="loading"/>
-        Update</button>
+        {{translatedObject.updateBtn}}</button>
     </div>
   </div>
   <ConfirmationModal 

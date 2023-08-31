@@ -185,11 +185,11 @@
                   >{{ errors.first_name[0] }}</small>
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="LastName">Last Name *</label>
+                  <label class="label" for="LastName">{{translatedObject.lastNameLabel}} *</label>
                   <input
                     type="text"
                     id="LastName"
-                    placeholder="Enter Last Name"
+                    :placeholder="translatedObject.enterLastNameText"
                     class="input"
                     :disabled="isView"
                     v-model="form.last_name"
@@ -322,7 +322,7 @@
                   >{{ errors.phone_number[0] }}</small>
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="JoinDate">Join Date</label>
+                  <label class="label" for="JoinDate">{{translatedObject.joinDate}}</label>
                   <input
                     type="date"
                     id="JoinDate"

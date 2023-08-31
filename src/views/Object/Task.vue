@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 bg-white rounded-[20px]">
     <div class="flex items-center justify-between mb-5">
-      <h4 class="text-xl font-bold">All Tasks</h4>
+      <h4 class="text-xl font-bold">{{translatedObject.allTaskTitle}}</h4>
       <button class="btn btn-light-sky" @click="$event => toggleAddTaskModal(true)">
         <svg
             class="mr-3"
@@ -22,14 +22,14 @@
               stroke="black"
           />
         </svg>
-        <span>Add Tasks</span>
+        <span>{{translatedObject.addTaskBtn}}</span>
       </button>
     </div>
     <div class="relative mb-5">
       <input
           type="text"
           v-model="search_task"
-          placeholder="Task Search"
+          :placeholder="translatedObject.taskSearchbar"
           @input="fetchTask"
           class="w-full text-xs py-4 pl-5 pr-20 bg-[#E7F2F8] rounded-full"
       />
@@ -118,7 +118,7 @@
             >
               <DialogPanel class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div class="flex items-center justify-between mb-5 pb-5 border-b border-body">
-                  <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? 'Edit' : 'Add' }} Tasks</DialogTitle>
+                  <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? 'Edit Tasks' :translatedObject.addTaskBtn }}</DialogTitle>
                   <button @click="$event => toggleAddTaskModal(false)" class="w-7 h-7 bg-body rounded-md flex items-center justify-center">
                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -131,20 +131,20 @@
                   </button>
                 </div>
                 <div>
-                  <label class="label" for="Address">Task </label>
+                  <label class="label" for="Address">{{translatedObject.taskLabel}} </label>
                   <input
                       type="text"
                       id="Task"
                       v-model="task.name"
-                      placeholder="Enter your task"
+                      :placeholder="translatedObject.enterTask"
                       class="input"
                   />
                 </div>
                 <div class="mt-5 flex justify-end">
-                  <button type="button" class="btn btn-light-sky mr-5" @click="$event => {toggleAddTaskModal(false), this.task={}}">Cancel</button>
+                  <button type="button" class="btn btn-light-sky mr-5" @click="$event => {toggleAddTaskModal(false), this.task={}}">{{translatedObject.cancelBtn}}</button>
                   <button type="button" class="btn btn-sky" @click="isTaskEditing?editTask():addTask()">
                     <SpinnerComponent v-if="loading"/>
-                    Save</button>
+                    {{translatedObject.saveBtn}}</button>
                 </div>
               </DialogPanel>
             </TransitionChild>

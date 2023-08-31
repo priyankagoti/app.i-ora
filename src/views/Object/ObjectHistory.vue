@@ -1,14 +1,14 @@
 <template>
   <div class="p-5 bg-white rounded-[20px] pb-0">
-    <h4 class="text-xl font-bold mb-5">Object History</h4>
+    <h4 class="text-xl font-bold mb-5">{{translatedObject.objHistoryTitle}}</h4>
     <table class="w-full text-xs font-semibold">
       <thead class="bg-body font-bold">
       <tr class="text-sm">
-        <td class="p-4 rounded-l-xl">Name</td>
-        <td class="p-4">Start Date</td>
-        <td class="p-4">Total Time</td>
-        <td class="p-4">Status</td>
-        <td class="p-4">Deadline</td>
+        <td class="p-4 rounded-l-xl">{{translatedObject.name}}</td>
+        <td class="p-4">{{translatedObject.startDateLabel}}</td>
+        <td class="p-4">{{translatedObject.totalTimeLabel}}</td>
+        <td class="p-4">{{translatedObject.objectStatus}}</td>
+        <td class="p-4">{{translatedObject.deadlineLabel}}</td>
         <td class="p-4 rounded-r-xl"></td>
       </tr>
       </thead>
@@ -119,12 +119,12 @@
                   <TabList class="inline-flex space-x-1 rounded-full bg-body p-1 text-xs text-black">
                     <Tab as="template" v-slot="{selected}">
                       <button :class="['rounded-full py-4 px-11 leading-5  whitespace-nowrap focus:outline-0', selected ? 'bg-white font-bold shadow-lg shadow-sky/40' : ' bg-transparent']">
-                        Complete Task
+                        {{translatedObject.completeTaskBtn}}
                       </button>
                     </Tab>
                     <Tab as="template" v-slot="{selected}">
                       <button :class="['rounded-full px-11 py-2.5 leading-5  whitespace-nowrap focus:outline-0', selected ? 'bg-white font-bold shadow-lg shadow-sky/40' : ' bg-transparent']">
-                        Pending Task
+                        {{translatedObject.pendingTaskBtn}}
                       </button>
                     </Tab>
                     <Tab as="template" v-slot="{selected}">
