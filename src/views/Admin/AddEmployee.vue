@@ -298,7 +298,7 @@
                 <div class="col-span-2">
                   <label class="label" for="Country">{{translatedObject.countryLabel}} *</label>
                   <select v-model="form.country_id" class="input" id="Country" :disabled="isView">
-                    <option value="" selected disabled>Select Country</option>
+                    <option value="" selected disabled>{{translatedObject.selectCountryLabel}}</option>
                     <option v-for="country in countries" :key="country.id" :value="country.id">{{country.name}}</option>
                   </select>
                   <small

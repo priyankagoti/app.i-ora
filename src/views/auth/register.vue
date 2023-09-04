@@ -106,7 +106,7 @@
               </svg>
               <!--            <input type="text" placeholder="Salutation" class="auth-input" v-model="form.salutation_id"/>-->
               <select v-model="form.salutation_id" class="auth-input">
-                <option value="" selected>--Please choose an option--</option>
+                <option value="" selected>{{translatedObject.enterSalutation}}</option>
                 <option v-for="salutation in salutations" :key="salutation.id" :value="salutation.id">{{salutation.name}}</option>
               </select>
             </div>

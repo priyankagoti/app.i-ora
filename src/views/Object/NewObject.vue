@@ -1,7 +1,7 @@
 <template>
   <div class="body-space">
     <SideBarComponent />
-    <HeaderComponent :title="isEditing? 'Edit Customer':translatedObject.addNewCustomerBtn" />
+    <HeaderComponent :title="isEditing? translatedObject.editCustomerLabel:translatedObject.addNewCustomerBtn" />
     <div class="p-5 bg-white rounded-[20px]" ref="scrollToTop">
       <div class="flex items-cente justify-between mb-5">
         <div>
@@ -709,14 +709,15 @@
             <DialogPanel class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-body align-middle shadow-xl transition-all">
               <div class="flex items-center">
                 <div class="w-full text-center p-6">
-                  <h3 class="w-full text-xl font-bold text-black mb-9">Alert</h3>
+                  <h3 class="w-full text-xl font-bold text-black mb-9">{{translatedObject.alertTitle}}</h3>
                   <img src="../../assets/images/cover/alert.png" class="block mx-auto mix-blend-multiply" />
                   <p class="text-sm text-black my-5">
-                    Are you sure you want to assign this <br/> Employee to this customer?
+                    {{translatedObject.alertText}}
+<!--                    Are you sure you want to assign this <br/> Employee to this customer?-->
                   </p>
                   <div class="mt-5 flex justify-center">
-                    <button type="button" class="btn btn-white mr-5" @click="$event => selectNo(false)">No</button>
-                    <button type="button" class="btn btn-sky text-white" @click="$event => toggleAlertModal(false)">Yes</button>
+                    <button type="button" class="btn btn-white mr-5" @click="$event => selectNo(false)">{{translatedObject.noBtn}}</button>
+                    <button type="button" class="btn btn-sky text-white" @click="$event => toggleAlertModal(false)">{{translatedObject.yesBtn}}</button>
                   </div>
                 </div>
                 <div class="w-full max-w-sm bg-white p-6">
@@ -737,7 +738,7 @@
                     <thead class="bg-body">
                       <tr class="text-sm font-bold">
                         <td class="p-4 rounded-l-xl">Customer</td>
-                        <td class="p-4 rounded-r-xl">Project Name</td>
+                        <td class="p-4 rounded-r-xl">{{translatedObject.objectProject}}</td>
                       </tr>
                     </thead>
                     <tbody>
