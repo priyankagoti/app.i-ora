@@ -138,7 +138,20 @@
                     <span class="block text-black text-sm font-semibold mb-2"
                     >{{translatedObject.objectTitle}}</span
                     >
-                    <button class="rounded-lg btn btn-light-sky">
+                    <VueMultiselect
+                        class="w-auto"
+                        v-model="object"
+                        :options="unassignedObjects"
+                        :searchable="false"
+                        :close-on-select="false"
+                        :show-labels="false"
+                        :multiple="true"
+                        label="client_name"
+                        track-by="client_name"
+                        :placeholder="translatedObject.addObjectBtn"
+                    >
+                    </VueMultiselect>
+<!--                    <button class="rounded-lg btn btn-light-sky">
                       <svg
                           width="12"
                           height="12"
@@ -159,7 +172,7 @@
                         />
                       </svg>
                       <span class="text-sky font-semibold">{{translatedObject.addObjectBtn}}</span>
-                    </button>
+                    </button>-->
                   </div>
                 </div>
                 <small
@@ -437,8 +450,11 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/vue";
+import VueMultiselect from 'vue-multiselect'
+import "vue-multiselect/dist/vue-multiselect.css"
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
 import SpinnerComponent from "../../components/Spinner.vue";
+import axios from "axios";
 
 export default {
   name: "AddEmployeeComponent",
@@ -450,6 +466,7 @@ export default {
     DialogTitle,
     ConfirmationModal,
     SpinnerComponent,
+    VueMultiselect,
   },
   data() {
     return {
@@ -475,6 +492,7 @@ export default {
       type:'',
       cities: [],
       countries: [],
+      unassignedObjects:[],
       object: null,
       isConfirmed: false,
       errors: {},
@@ -484,6 +502,7 @@ export default {
     this.emitter.on("openAddEmp", isOpen => {
       this.isOpen = isOpen;
       this.fetchCities()
+      this.fetchUnassignedObjects()
       this.fetchCountries()
     });
     this.emitter.on("openEditEmp", object=> {
@@ -530,6 +549,7 @@ export default {
       this.$refs.empProfileImg.value = '';
       this.employee = {}
       this.errors = {}
+      this.object = null
       this.type=''
     },
     changeProfile() {
@@ -551,6 +571,13 @@ export default {
             // console.log('countries',response)
             this.countries = response.data.object
           })
+    },
+    fetchUnassignedObjects(){
+      axios.get('object/unassigned')
+      .then(res=>{
+        console.log('unassigned',res)
+        this.unassignedObjects = res.data.object
+      })
     },
     fetch(employee) {
       this.employee = employee
