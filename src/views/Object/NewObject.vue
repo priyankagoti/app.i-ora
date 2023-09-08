@@ -707,6 +707,16 @@
             leave-to="opacity-0 scale-95"
           >
             <DialogPanel class="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-body align-middle shadow-xl transition-all">
+              <button @click="$event => selectNo(false)" class="w-full h-7 p-2 bg-body rounded-md flex items-center justify-end">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M7.42079 6.08931L11.7176 1.73259C12.1089 1.33579 12.1089 0.694406 11.7176 0.297603C11.3262 -0.0992008 10.6937 -0.0992008 10.3023 0.297603L6.00555 4.65432L1.70876 0.297603C1.31741 -0.0992008 0.684854 -0.0992008 0.293509 0.297603C-0.0978363 0.694406 -0.0978363 1.33579 0.293509 1.73259L4.5903 6.08931L0.293509 10.446C-0.0978363 10.8428 -0.0978363 11.4842 0.293509 11.881C0.488681 12.0789 0.744907 12.1784 1.00113 12.1784C1.25736 12.1784 1.51358 12.0789 1.70876 11.881L6.00555 7.52429L10.3023 11.881C10.4975 12.0789 10.7537 12.1784 11.01 12.1784C11.2662 12.1784 11.5224 12.0789 11.7176 11.881C12.1089 11.4842 12.1089 10.8428 11.7176 10.446L7.42079 6.08931Z"
+                      fill="#18203A"
+                  />
+                </svg>
+              </button>
               <div class="flex items-center">
                 <div class="w-full text-center p-6">
                   <h3 class="w-full text-xl font-bold text-black mb-9">{{translatedObject.alertTitle}}</h3>
@@ -723,7 +733,7 @@
                 <div class="w-full max-w-sm bg-white p-6">
                   <div class="flex items-center justify-between mb-5 ">
                     <DialogTitle as="h3" class="text-xl font-bold text-black">Employee Customers</DialogTitle>
-                    <button @click="$event => selectNo(false)" class="w-7 h-7 bg-body rounded-md flex items-center justify-center">
+<!--                    <button @click="$event => selectNo(false)" class="w-7 h-7 bg-body rounded-md flex items-center justify-center">
                       <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                           fill-rule="evenodd"
@@ -732,7 +742,7 @@
                           fill="#18203A"
                         />
                       </svg>
-                    </button>
+                    </button>-->
                   </div>
                   <table class="w-full text-xs font-semibold text-left">
                     <thead class="bg-body">
@@ -743,21 +753,21 @@
                     </thead>
                     <tbody>
                       <tr
-                        v-for="project in Projects"
-                        :key="project.ID"
+                        v-for="object in empObjects"
+                        :key="object.id"
                         class="border-b border-body"
                       >
                         <td class="text-xs p-4 font-bold">
-                          {{ project.ID }}
+                          {{ object.client_name }}
                         </td>
                         <td class="text-xs font-normal p-4">
                           <div class="">
                             <span class="block text-black font-bold">{{
-                              project.name
+                                object.name
                             }}</span>
                             <span class="block text-[#8F9BB3] text-[10px]"
-                              >{{ project.open }} Open,
-                              {{ project.completed }} Completed</span
+                              >{{ object.open }} Open,
+                              {{ object.completed }} Completed</span
                             >
                           </div>
                         </td>
@@ -848,6 +858,7 @@ export default {
       errorMessage:'',
       implementationTime: 0,
       employees: [],
+      empObjects: [],
       selectedEmpId:null,
       loading: false,
       isAlertModalOpen: false
@@ -895,6 +906,7 @@ export default {
      toggleAlertModal(s,e) {
        if(s){
          this.selectedEmpId = e.id
+         this.fetchEmpObjects()
        }
        else {
          this.selectedEmpId=null
@@ -949,14 +961,6 @@ export default {
         }
       // }
     },
-
-    fetchEmployee(){
-      // eslint-disable-next-line no-undef
-      axios.get('employee')
-          .then(response => {
-            this.employees = response.data.object
-          })
-    },
     refreshForm(){
       this.form = {}
       this.errors = {}
@@ -966,6 +970,13 @@ export default {
       this.seconds = 0
       this.fromHours = 0
       this.fromMinutes = 0
+    },
+    fetchEmployee(){
+      // eslint-disable-next-line no-undef
+      axios.get('employee')
+          .then(response => {
+            this.employees = response.data.object
+          })
     },
     fetchObject(){
       axios.get(`object/${this.objectID}`,{
@@ -987,6 +998,13 @@ export default {
             this.fromMinutes = from_time[0]
           })
           .catch(()=>{})
+    },
+    fetchEmpObjects(){
+       axios.get(`object/user/${this.selectedEmpId}`)
+        .then(res =>{
+          console.log('objects',res)
+          this.empObjects = res.data.object
+        })
     },
     confirmSave(){
       this.loading = true
