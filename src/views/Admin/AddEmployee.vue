@@ -138,9 +138,10 @@
                     <span class="block text-black text-sm font-semibold mb-2"
                     >{{translatedObject.objectTitle}}</span
                     >
+<!--                    {{object_ids}}-->
                     <VueMultiselect
                         class="w-auto"
-                        v-model="object"
+                        v-model="object_ids"
                         :options="unassignedObjects"
                         :searchable="false"
                         :close-on-select="false"
@@ -493,7 +494,7 @@ export default {
       cities: [],
       countries: [],
       unassignedObjects:[],
-      object: null,
+      object_ids: [],
       isConfirmed: false,
       errors: {},
     }
@@ -549,7 +550,7 @@ export default {
       this.$refs.empProfileImg.value = '';
       this.employee = {}
       this.errors = {}
-      this.object = null
+      this.object_ids = []
       this.type=''
     },
     changeProfile() {
@@ -594,7 +595,7 @@ export default {
     },
     confirmSave(){
       this.loading = true
-      if(!this.object) {
+      if(this.object_ids.length===0) {
        this.toggleConf(true)
       }
       else {
@@ -622,6 +623,11 @@ export default {
       formData.append('employee_number',this.form.employee_number)
       formData.append('amount_of_vacation_days',this.form.amount_of_vacation_days)
       formData.append('amount_of_hours_work',this.form.amount_of_hours_work)
+      if(this.object_ids.length>0){
+        for(let i=0; i<this.object_ids.length; i++){
+          formData.append(`object_ids[${i}]`,this.object_ids[i].id)
+        }
+      }
       formData.append('status',1)
       // eslint-disable-next-line no-undef
       axios.post('employee',formData)
