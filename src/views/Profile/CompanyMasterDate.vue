@@ -1,6 +1,6 @@
 <template>  
   <div class="flex items-center justify-between mb-5">
-    <h3 class="font-bold text-xl">Company Master Date</h3>
+    <h3 class="font-bold text-xl">{{ translatedObject.companyMasterTitle }}</h3>
     <button class="btn btn-sky" :disabled="loading" @click="editCompany">
       <SpinnerComponent v-if="loading"/>
       <svg class="mr-2.5" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,91 +9,91 @@
           fill="black"
         />
       </svg>
-      <span>Edit</span>
+      <span>{{ translatedObject.editBtn }}</span>
     </button>
   </div>
-  <h4 class="font-semibold text-base mb-5">General Information</h4>
+  <h4 class="font-semibold text-base mb-5">{{ translatedObject.generalInfoLabel }}</h4>
   <div class="grid grid-cols-2 gap-20 mb-5">
     <div class="">
-      <label class="label" for="Name">Name</label>
-      <input type="text" v-model="company.name" id="Name" placeholder="Enter Name" class="input" />
+      <label class="label" for="Name">{{ translatedObject.nameLabel }}</label>
+      <input type="text" v-model="company.name" id="Name" :placeholder="translatedObject.enterNameCompany" class="input" />
       <small
           v-if="errors && errors.name"
           class="text-danger"
       >{{ errors.name[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="LegalName">Legal Name</label>
-      <input type="text" v-model="company.legal_name" id="LegalName" placeholder="Enter Legal Name" class="input" />
+      <label class="label" for="LegalName">{{ translatedObject.legalNameLabel }}</label>
+      <input type="text" v-model="company.legal_name" id="LegalName" :placeholder="translatedObject.enterLegalName" class="input" />
       <small
           v-if="errors && errors.legal_name"
           class="text-danger"
       >{{ errors.legal_name[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="VATID">VAT ID</label>
-      <input type="text" v-model="company.vatId" id="VATID" placeholder="Enter VAT ID" class="input" />
+      <label class="label" for="VATID">{{ translatedObject.vatIdLabel }}</label>
+      <input type="text" v-model="company.vatId" id="VATID" :placeholder="translatedObject.enterVatId" class="input" />
       <small
           v-if="errors && errors.vatId"
           class="text-danger"
       >{{ errors.vatId[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="EmailAddress">Email Address</label>
-      <input type="email" v-model="company.email" id="EmailAddress" placeholder="Enter Email Address" class="input" />
+      <label class="label" for="EmailAddress">{{ translatedObject.emailAddressLabel }}</label>
+      <input type="email" v-model="company.email" id="EmailAddress" :placeholder="translatedObject.enterEmailAddress" class="input" />
       <small
           v-if="errors && errors.email"
           class="text-danger"
       >{{ errors.email[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="ContactNumber">Contact Number</label>
-      <input type="text" v-model="company.contact_number" id="ContactNumber" placeholder="Enter Contact Number" class="input" />
+      <label class="label" for="ContactNumber">{{ translatedObject.contactLabel }}</label>
+      <input type="text" v-model="company.contact_number" id="ContactNumber" :placeholder="translatedObject.enterContact" class="input" />
       <small
           v-if="errors && errors.contact_number"
           class="text-danger"
       >{{ errors.contact_number[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="Website">Website</label>
-      <input type="text" v-model="company.website" id="Website" placeholder="Enter Website" class="input" />
+      <label class="label" for="Website">{{ translatedObject.websiteLabel }}</label>
+      <input type="text" v-model="company.website" id="Website" :placeholder="translatedObject.enterWebsite" class="input" />
       <small
           v-if="errors && errors.website"
           class="text-danger"
       >{{ errors.website[0] }}</small>
     </div>
   </div>
-  <h4 class="font-semibold text-base mb-5">Business Address</h4>
+  <h4 class="font-semibold text-base mb-5">{{ translatedObject.businessAddressTitle }}</h4>
   <div class="grid grid-cols-2 gap-20 mb-5">
     <div class="">
-      <label class="label" for="StreetHouseNumber">Street & House Number</label>
-      <input type="text" v-model="company.business_street" id="StreetHouseNumber" placeholder="Enter Street & House Number" class="input" />
+      <label class="label" for="StreetHouseNumber">{{ translatedObject.streetLabel }}</label>
+      <input type="text" v-model="company.business_street" id="StreetHouseNumber" :placeholder="translatedObject.enterStreet" class="input" />
       <small
           v-if="errors && errors.business_street"
           class="text-danger"
       >{{ errors.business_street[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="Zipcode">Zipcode</label>
-      <input type="text" v-model="company.business_postcode" id="Zipcode" placeholder="Enter Zipcode" class="input" />
+      <label class="label" for="Zipcode">{{ translatedObject.zipcodeLabel }}</label>
+      <input type="text" v-model="company.business_postcode" id="Zipcode" :placeholder="translatedObject.enterZipcode" class="input" />
       <small
           v-if="errors && errors.business_postcode"
           class="text-danger"
       >{{ errors.business_postcode[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="City">City</label>
-      <input type="text" v-model="company.business_city" id="City" placeholder="Enter City" class="input" />
+      <label class="label" for="City">{{ translatedObject.cityLabel }}</label>
+      <input type="text" v-model="company.business_city" id="City" :placeholder="translatedObject.enterCity" class="input" />
       <small
           v-if="errors && errors.business_city"
           class="text-danger"
       >{{ errors.business_city[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="Country">Country</label>
+      <label class="label" for="Country">{{ translatedObject.countryLabel }}</label>
 <!--      <input type="email" id="Country" placeholder="Enter Country" class="input" />-->
       <select v-model="company.business_country_id" class="input" id="Country">
-        <option value="" selected disabled>Enter Country</option>
+        <option value="" selected disabled>{{ translatedObject.enterCountry }}</option>
         <option v-for="country in countries" :key="country.id" :value="country.id">{{country.name}}</option>
       </select>
       <small
@@ -102,37 +102,37 @@
       >{{ errors.business_country_id[0] }}</small>
     </div>
   </div>
-  <h4 class="font-semibold text-base mb-5">Billing Address</h4>
+  <h4 class="font-semibold text-base mb-5">{{ translatedObject.billingAddressTitle }}</h4>
   <div class="grid grid-cols-2 gap-20">
     <div class="">
-      <label class="label" for="BillingStreetHouseNumber">Street & House Number</label>
-      <input type="text" v-model="company.billing_street" id="BillingStreetHouseNumber" placeholder="Enter Street & House Number" class="input" />
+      <label class="label" for="BillingStreetHouseNumber">{{ translatedObject.streetLabel }}</label>
+      <input type="text" v-model="company.billing_street" id="BillingStreetHouseNumber" :placeholder="translatedObject.enterStreet" class="input" />
       <small
           v-if="errors && errors.billing_street"
           class="text-danger"
       >{{ errors.billing_street[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="BillingZipcode">Zipcode</label>
-      <input type="text" v-model="company.billing_postcode" id="BillingZipcode" placeholder="Enter Zipcode" class="input" />
+      <label class="label" for="BillingZipcode">{{ translatedObject.zipcodeLabel }}</label>
+      <input type="text" v-model="company.billing_postcode" id="BillingZipcode" :placeholder="translatedObject.enterZipcode" class="input" />
       <small
           v-if="errors && errors.billing_postcode"
           class="text-danger"
       >{{ errors.billing_postcode[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="BillingCity">City</label>
-      <input type="text" v-model="company.billing_city" id="BillingCity" placeholder="Enter City" class="input" />
+      <label class="label" for="BillingCity">{{ translatedObject.cityLabel }}</label>
+      <input type="text" v-model="company.billing_city" id="BillingCity" :placeholder="translatedObject.enterCity" class="input" />
       <small
           v-if="errors && errors.billing_city"
           class="text-danger"
       >{{ errors.billing_city[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="BillingCountry">Country</label>
+      <label class="label" for="BillingCountry">{{ translatedObject.countryLabel }}</label>
 <!--      <input type="email" id="BillingCountry" placeholder="Enter Country" class="input" />-->
       <select v-model="company.billing_country_id" class="input" id="Country">
-        <option value="" selected disabled>Enter Country</option>
+        <option value="" selected disabled>{{ translatedObject.enterCountry }}</option>
         <option v-for="country in countries" :key="country.id" :value="country.id">{{country.name}}</option>
       </select>
       <small

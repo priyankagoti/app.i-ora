@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-between mb-5">
-    <h3 class="font-bold text-xl">Profile Information</h3>
+    <h3 class="font-bold text-xl">{{ translatedObject.profileInfoLabel }}</h3>
     <button class="btn btn-sky" :disabled="loading" @click="editUser">
       <SpinnerComponent v-if="loading"/>
       <svg class="mr-2.5" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,7 +9,7 @@
           fill="black"
         />
       </svg>
-      <span>Edit</span>
+      <span>{{ translatedObject.editBtn }}</span>
     </button>
   </div>
   <div class="flex items-center mb-5">
@@ -18,30 +18,30 @@
       <img v-else src="../../assets/images/profiles/big-profile.png" alt="" class="rounded-[20px] w-full h-full" />
     </div>
     <div class="w-[200px]">
-      <p class="text-base mb-5">Update your photo and personal details.</p>
+      <p class="text-base mb-5">{{ translatedObject.updateProfileText }}</p>
 
       <div class="flex">
         <div class="relative">
           <input type="file" id="fileInput" ref="profileImg" class="hidden" @change="onProfileChange" />
           <label for="fileInput" class="choose-file-label mr-2.5">
-            Change
+            {{ translatedObject.changeProfileBtn }}
           </label>
         </div>
 <!--        <span class="sr-only">Change</span>
         <input type="file" class="choose-file-btn mr-2.5" />-->
 <!--        <input type="file" class="btn btn-sky appearance-none mr-2.5">-->
 <!--        <button class="btn btn-sky mr-2.5">Change</button>-->
-        <button class="btn btn-light-sky" @click="removeProfile">Remove</button>
+        <button class="btn btn-light-sky" @click="removeProfile">{{ translatedObject.removeProfileBtn }}</button>
       </div>
 <!--      <button class="btn btn-sky mr-2.5">Change</button>-->
     </div>
   </div>
   <div class="grid grid-cols-3 gap-20">
     <div class="">
-      <label class="label" for="Salutation">Salutation</label>
+      <label class="label" for="Salutation">{{ translatedObject.salutationLabel }}</label>
 <!--      <input type="text" id="Salutation" placeholder="Salutation" class="input" />-->
       <select v-model="user.salutation_id" class="input">
-        <option value="" selected>Salutation</option>
+        <option value="" selected>{{ translatedObject.salutationLabel }}</option>
         <option v-for="salutation in salutations" :key="salutation.id" :value="salutation.id">{{salutation.name}}</option>
       </select>
       <small
@@ -50,8 +50,8 @@
       >{{ errors.salutation_id[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="CompanyName">Company Name</label>
-      <input type="text" v-model="user.company_name" id="CompanyName" placeholder="Enter Company Name" class="input" />
+      <label class="label" for="CompanyName">{{ translatedObject.companyNameLabel }}</label>
+      <input type="text" v-model="user.company_name" id="CompanyName" :placeholder="translatedObject.enterCompanyName" class="input" />
       <small
           v-if="errors && errors.company_name"
           class="text-danger"
@@ -59,48 +59,48 @@
     </div>
     <div class=""></div>
     <div class="">
-      <label class="label" for="FirstName">First Name</label>
-      <input type="text" v-model="user.first_name" id="FirstName" placeholder="Enter First Name" class="input" />
+      <label class="label" for="FirstName">{{ translatedObject.firstNameLabel }}</label>
+      <input type="text" v-model="user.first_name" id="FirstName" :placeholder="translatedObject.enterFirstName" class="input" />
       <small
           v-if="errors && errors.first_name"
           class="text-danger"
       >{{ errors.first_name[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="Surname">Surname</label>
-      <input type="text"  v-model="user.last_name" id="Surname" placeholder="Enter Surname" class="input" />
+      <label class="label" for="Surname">{{ translatedObject.surnameLabel }}</label>
+      <input type="text"  v-model="user.last_name" id="Surname" :placeholder="translatedObject.enterSurname" class="input" />
       <small
           v-if="errors && errors.last_name"
           class="text-danger"
       >{{ errors.last_name[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="EmailAddress">Email Address</label>
-      <input type="email" v-model="user.email" id="EmailAddress" placeholder="Enter Email Address" class="input" />
+      <label class="label" for="EmailAddress">{{ translatedObject.emailAddressLabel }}</label>
+      <input type="email" v-model="user.email" id="EmailAddress" :placeholder="translatedObject.enterEmailAddress" class="input" />
       <small
           v-if="errors && errors.email"
           class="text-danger"
       >{{ errors.email[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="ContactNumber">Contact Number</label>
-      <input type="text" v-model="user.contact_number" id="ContactNumber" placeholder="Enter Contact Number" class="input" />
+      <label class="label" for="ContactNumber">{{ translatedObject.contactLabel }}</label>
+      <input type="text" v-model="user.contact_number" id="ContactNumber" :placeholder="translatedObject.enterContact" class="input" />
       <small
           v-if="errors && errors.contact_number"
           class="text-danger"
       >{{ errors.contact_number[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="Password">Password</label>
-      <input type="password" v-model="user.password" id="Password" placeholder="Enter Password" class="input" />
+      <label class="label" for="Password">{{ translatedObject.passwordLabel }}</label>
+      <input type="password" v-model="user.password" id="Password" :placeholder="translatedObject.enterPassword" class="input" />
       <small
           v-if="errors && errors.password"
           class="text-danger"
       >{{ errors.password[0] }}</small>
     </div>
     <div class="">
-      <label class="label" for="ConfirmPassword">Confirm Password</label>
-      <input type="password" v-model="user.password_confirmation" id="ConfirmPassword" placeholder="Enter Confirm Password" class="input" />
+      <label class="label" for="ConfirmPassword">{{ translatedObject.confirmPasswordLabel }}</label>
+      <input type="password" v-model="user.password_confirmation" id="ConfirmPassword" :placeholder="translatedObject.enterConfirmPassword" class="input" />
       <small
           v-if="errors && errors.password_confirmation"
           class="text-danger"

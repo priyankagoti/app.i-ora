@@ -6,12 +6,12 @@
       <TabList class="inline-flex space-x-1 rounded-full bg-white p-1 text-xl text-black mb-30">
         <Tab as="template" v-slot="{selected}">
           <button :class="['rounded-full py-4 px-11 leading-5  whitespace-nowrap focus:outline-0', selected ? 'bg-sky font-bold shadow-lg shadow-sky/40' : ' bg-white']">
-            My Profile
+            {{ translatedObject.myProfile }}
           </button>
         </Tab>
         <Tab as="template" v-slot="{selected}">
           <button :class="['rounded-full px-11 py-2.5 leading-5  whitespace-nowrap focus:outline-0', selected ? 'bg-sky font-bold shadow-lg shadow-sky/40' : ' bg-white']">
-            Company Master Date
+            {{ translatedObject.companyMasterBtn }}
           </button>
         </Tab>
       </TabList>
