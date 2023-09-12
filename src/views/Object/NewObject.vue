@@ -224,11 +224,11 @@
               </div>
             </div>
             <div class="">
-              <label class="label" for="PhoneNumber">At / From Time </label>
+              <label class="label" for="PhoneNumber">{{ translatedObject.atTimeLabel }} </label>
               <div
                 class="bg-body rounded-full p-1 flex items-center justify-center h-12"
               >
-                <span class="text-xs">At / From &nbsp;</span>
+<!--                <span class="text-xs">From &nbsp;</span>-->
                 <input v-model.number="fromHours"  type="number" class="time-input" />
                 <span>:</span>
                 <input v-model.number="fromMinutes" type="number" class="time-input" />
@@ -747,23 +747,23 @@
                   <table class="w-full text-xs font-semibold text-left">
                     <thead class="bg-body">
                       <tr class="text-sm font-bold">
-                        <td class="p-4 rounded-l-xl">Customer</td>
+                        <td class="p-4 rounded-l-xl">{{ translatedObject.customersLabel }}</td>
                         <td class="p-4 rounded-r-xl">{{translatedObject.objectProject}}</td>
                       </tr>
                     </thead>
                     <tbody>
                       <tr
-                        v-for="object in empObjects"
+                        v-for="(object,index) in empObjects"
                         :key="object.id"
                         class="border-b border-body"
                       >
                         <td class="text-xs p-4 font-bold">
-                          {{ object.client_name }}
+                          {{ index+1 }}
                         </td>
                         <td class="text-xs font-normal p-4">
                           <div class="">
                             <span class="block text-black font-bold">{{
-                                object.name
+                                object.client_name
                             }}</span>
                             <span class="block text-[#8F9BB3] text-[10px]"
                               >{{ object.open }} Open,

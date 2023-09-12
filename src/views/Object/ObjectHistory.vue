@@ -129,7 +129,7 @@
                     </Tab>
                     <Tab as="template" v-slot="{selected}">
                       <button :class="['rounded-full px-11 py-2.5 leading-5  whitespace-nowrap focus:outline-0', selected ? 'bg-white font-bold shadow-lg shadow-sky/40' : ' bg-transparent']">
-                        {{translatedObject.objInProgress }}
+                        {{translatedObject.inProgress }}
                       </button>
                     </Tab>
                     <Tab as="template" v-slot="{selected}">
