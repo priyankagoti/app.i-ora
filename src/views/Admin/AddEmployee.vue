@@ -507,12 +507,10 @@ export default {
       this.fetchCountries()
     });
     this.emitter.on("openEditEmp", object=> {
-      console.log('object',object.employee)
       this.type = object.type
       this.fetch(object.employee)
     });
     this.emitter.on("openViewEmp", object=> {
-      console.log('openViewEmp',object)
       this.type = object.type
       this.fetch(object.employee)
     });
@@ -569,20 +567,17 @@ export default {
       // eslint-disable-next-line no-undef
       axios.get('countries')
           .then(response =>{
-            // console.log('countries',response)
             this.countries = response.data.object
           })
     },
     fetchUnassignedObjects(){
       axios.get('object/unassigned')
       .then(res=>{
-        console.log('unassigned',res)
         this.unassignedObjects = res.data.object
       })
     },
     fetch(employee) {
       this.employee = employee
-      // console.log('in fetch',this.employee)
       // eslint-disable-next-line no-undef
       axios.get(`employee/${employee.id}`)
           .then(response => {
@@ -590,7 +585,7 @@ export default {
             this.form = _.merge(this.form,response.data.post)
             this.form.profile = response.data.post.profile ? response.data.post.profile : null
             this.form.password = ''
-            // console.log('single emp',response)
+            this.object_ids = response.data.post.employee_objects.map(o=>o.objects)
           })
     },
     confirmSave(){
@@ -632,13 +627,11 @@ export default {
       // eslint-disable-next-line no-undef
       axios.post('employee',formData)
       .then(()=>{
-        // console.log(response)
         this.loading = false
         this.toggleConfSuccess(true)
         this.emitter.emit("employee.refresh");
       })
       .catch(error => {
-        // console.log(error.response)
         this.errors = error.response.data.errors
         this.loading = false
       })
@@ -666,18 +659,21 @@ export default {
       formData.append('employee_number',this.form.employee_number)
       formData.append('amount_of_vacation_days',this.form.amount_of_vacation_days)
       formData.append('amount_of_hours_work',this.form.amount_of_hours_work)
+      if(this.object_ids.length>0){
+        for(let i=0; i<this.object_ids.length; i++){
+          formData.append(`object_ids[${i}]`,this.object_ids[i].id)
+        }
+      }
       formData.append('status',1)
       formData.append('_method','put')
       // eslint-disable-next-line no-undef
       axios.post(`employee/${this.employee.id}`,formData)
           .then(()=>{
-            // console.log(response)
             this.toggleConfSuccess(true)
             this.emitter.emit("employee.refresh");
             this.loading = false
           })
           .catch(error => {
-            // console.log(error.response)
             this.errors = error.response.data.errors
             this.loading = false
           })

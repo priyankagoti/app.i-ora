@@ -115,8 +115,18 @@
             <td class="text-xs font-normal p-4">
               <span>{{ employee.join_date }}</span>
             </td>
-            <td class="text-xs font-normal p-4">
-              <span class="whitespace-pre">{{ employee.objects }}</span>
+            <td v-if="employee.employee_objects.length>0" class="text-xs font-normal p-4">
+              <span class="whitespace-pre"
+              v-for="object in employee.employee_objects"
+                    :key="object.id"
+              >
+                {{ object.objects.client_name }}
+              </span>
+            </td>
+            <td v-else class="text-xs font-normal p-4">
+              <span class="whitespace-pre">
+                No objects assigned
+              </span>
             </td>
             <td class="text-center p-4">
               <div class="flex items-center justify-center">
