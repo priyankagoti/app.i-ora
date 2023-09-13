@@ -83,7 +83,7 @@ const actions = {
     // eslint-disable-next-line no-undef
     axios.get(`translations`,{
       headers:{
-        'Accept-Language': language
+        'Accept-Language': language.value
       }
     }).then(response => {
       commit('SET_JSON_FILE', response.data)

@@ -15,12 +15,24 @@
               Have your landing pages online in minutes.-->
             </p>
             <div class="relative mb-20">
-              <select @change="$store.dispatch('auth/fetchJsonFile',$event.target.value)" class="lang-select">
-                <option value="en" :selected="translatedLang==='en'">
-                  English
-                </option>
-                <option value="de" :selected="translatedLang==='de'">German</option>
-              </select>
+<!--              <select @change="$store.dispatch('auth/fetchJsonFile',$event.target.value)" class="lang-select">-->
+<!--                <option value="en" :selected="translatedLang==='en'">-->
+<!--                  English-->
+<!--                </option>-->
+<!--                <option value="de" :selected="translatedLang==='de'">German</option>-->
+<!--              </select>-->
+              <VueMultiselect
+                  class="w-72"
+                  v-model="translatedLang"
+                  :options="languageOption"
+                  :searchable="false"
+                  :close-on-select="true"
+                  :show-labels="false"
+                  label="name"
+                  track-by="value"
+                  @select="$store.dispatch('auth/fetchJsonFile',$event)"
+              >
+              </VueMultiselect>
             </div>
             <div class="mb-10">
               <div class="relative 3xl:mb-14 ">
@@ -95,6 +107,9 @@
 import AuthCover from "../../components/AuthCover.vue";
 import { RouterLink } from "vue-router";
 import { authMethods } from '@/store/helpers'
+import VueMultiselect from 'vue-multiselect'
+import "vue-multiselect/dist/vue-multiselect.css"
+
 export default {
   name: "AuthLogin",
   props: {
@@ -103,6 +118,7 @@ export default {
   components: {
     AuthCover,
     RouterLink,
+    VueMultiselect,
   },
   data() {
     return {
@@ -114,7 +130,20 @@ export default {
       status: '',
       errMsg: '',
       errors: {},
+      languageOption: [
+          {
+            name:"English",
+            value:"en"
+          },
+        {
+          name:"German",
+          value:"de"
+        }
+      ]
     }
+  },
+  computed: {
+
   },
   methods: {
     ...authMethods,

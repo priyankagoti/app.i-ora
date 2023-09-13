@@ -22,11 +22,11 @@
             <span>{{employee.email}}</span>
           </td>
           <td class="p-4">
-            <span v-if="employee.status==='1'" class="py-2 px-3 rounded-full bg-[#BFFFE8] text-[#15C787]">Active</span>
+            <span v-if="employee.status===1" class="py-2 px-3 rounded-full bg-[#BFFFE8] text-[#15C787]">Active</span>
             <span v-else class="py-2 px-3 rounded-full bg-[#FFF0F0] text-[#FF0000]">Deactive</span>
           </td>
           <td class="text-center p-4">
-            <button class="p-2">
+            <button class="p-2" @click="openViewEmpModal(employee)">
               <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
                 <path
                   d="M8.375 0C5.1682 0 2.37518 2.01412 0.875 5.00006C2.37518 7.98655 5.1682 10.0001 8.375 10.0001C11.5818 10.0001 14.3748 7.98655 15.875 5.00006C14.3748 2.01412 11.5818 0 8.375 0ZM8.375 8.12512C6.64886 8.12512 5.24994 6.7262 5.24994 5.00006C5.24994 3.27393 6.64886 1.875 8.375 1.875C10.1011 1.875 11.5001 3.27393 11.5001 5.00006C11.5001 6.7262 10.1011 8.12512 8.375 8.12512Z"
@@ -42,15 +42,19 @@
         </tr>
       </tbody>
     </table>
+    <AddEmployeeComponent/>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import AddEmployeeComponent from "@/views/Admin/AddEmployee";
 
 export default {
   name: "DashboardEmployees",
-  components: {},
+  components: {
+    AddEmployeeComponent
+  },
   data() {
     return {
       employees:[],
@@ -138,7 +142,15 @@ export default {
         this.employees = response.data.object
         console.log(response)
       })
-    }
+    },
+    openAddEmpModal() {
+      this.emitter.emit("openAddEmp", true);
+    },
+    openViewEmpModal(employee){
+      console.log('sfs',employee)
+      this.emitter.emit("openViewEmp", {type:'view',employee});
+      this.openAddEmpModal()
+    },
   }
 };
 </script>

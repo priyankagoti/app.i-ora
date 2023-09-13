@@ -16,8 +16,16 @@ export default {
         translatedObject(){
             return store.getters['auth/getJsonFile']
         },
-        translatedLang(){
-            return store.getters["auth/getLanguage"]
+        translatedLang:{
+            get () {
+                return this.$store.getters['auth/getLanguage']
+            },
+            set (value) {
+                if(value){
+                    this.$store.commit('auth/SET_LANGUAGE', value)
+                }
+
+            }
         }
     },
     methods: {
