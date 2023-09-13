@@ -14,7 +14,9 @@
         <tr v-for="employee in employees" :key="employee.id" class="border-b border-body">
           <td class="p-4">
             <div class="flex items-center">
-              <img class="mr-2" :src="employee.img" alt="" width="32" height="32" />
+              <img v-if="employee.profile" class="mr-2" :src="employee.profile" alt="" width="32" height="32" />
+              <img v-else  class="mr-2" src="../../assets/images/profiles/big-profile.png" alt="" width="32" height="32"  />
+
               <span>{{employee.first_name}}</span>
             </div>
           </td>
