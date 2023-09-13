@@ -126,7 +126,7 @@
               </div>
             </td>
             <td class="text-xs font-normal p-4">
-              {{ object.employee_id }}
+              {{ object.employee_objects_count }}
             </td>
             <td class="text-xs font-normal p-4">
               {{ object.start_date }}
