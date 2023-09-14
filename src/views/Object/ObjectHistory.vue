@@ -339,7 +339,7 @@ export default {
     fetch(selectedTab){
       this.tasks = []
       this.selectedTab = selectedTab
-      let status = this.selectedTab===0?2:this.selectedTab===1?0:1
+      let status = this.selectedTab===0?2:this.selectedTab===1?0:this.selectedTab===2?1:4
       // eslint-disable-next-line no-undef
       axios.get('list-tasks',{
         params:{
