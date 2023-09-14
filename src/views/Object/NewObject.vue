@@ -417,7 +417,7 @@
                             <span class="text-xs">Sun</span>
                           </label>
                         </div>-->
-            <MultiCheckbox v-model:value="form.days" :options="translatedLang==='en'?daysOptions:daysOptionsDe" />
+            <MultiCheckbox v-model:value="form.days" :options="translatedLang.value==='en'?daysOptions:daysOptionsDe" />
           </div>
         </div>
         <div class="col-span-3 flex flex-col">
