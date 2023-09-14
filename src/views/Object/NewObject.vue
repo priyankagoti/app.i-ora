@@ -1,7 +1,8 @@
 <template>
   <div class="body-space">
     <SideBarComponent />
-    <HeaderComponent :title="isEditing? translatedObject.editCustomerLabel:translatedObject.addNewCustomerBtn" />
+    <HeaderComponent v-if="isView" title="View Customer"/>
+    <HeaderComponent v-else :title="isEditing? translatedObject.editCustomerLabel:translatedObject.addNewCustomerBtn" />
     <div class="p-5 bg-white rounded-[20px]" ref="scrollToTop">
       <div class="flex items-cente justify-between mb-5">
         <div>
@@ -661,9 +662,10 @@
     </div>
     <div class="mt-5 flex justify-end">
       <button type="button" class="btn btn-light-sky mr-5" @click="$router.push('/customers')">{{translatedObject.cancelBtn}}</button>
-      <button type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
+      <button v-if="!isView" type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
         <SpinnerComponent v-if="loading"/>
-        {{translatedObject.updateBtn}}</button>
+        {{translatedObject.updateBtn}}
+      </button>
     </div>
   </div>
   <ConfirmationModal
@@ -876,6 +878,9 @@ export default {
   computed:{
     isEditing() {
       return !!this.objectID
+    },
+    isView(){
+      return this.$route.params.type==='view'
     },
     minDate() {
       let minDate = new Date();

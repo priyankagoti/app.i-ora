@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="project in Projects" :key="project.ID" class="border-b border-body">
+        <tr v-for="project in Projects" :key="project.id" class="border-b border-body">
           <td class="p-4">
             <span class="block text-black font-semibold">{{ project.name }}</span>
             <span class="block text-[#8F9BB3] text-[10px]">{{ project.open }} Open, {{ project.completed }} Completed</span>
@@ -38,18 +38,21 @@
             </svg>
           </td>
           <td class="text-center p-4">
-            <button class="p-2">
-              <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
-                <path
-                  d="M8.375 0C5.1682 0 2.37518 2.01412 0.875 5.00006C2.37518 7.98655 5.1682 10.0001 8.375 10.0001C11.5818 10.0001 14.3748 7.98655 15.875 5.00006C14.3748 2.01412 11.5818 0 8.375 0ZM8.375 8.12512C6.64886 8.12512 5.24994 6.7262 5.24994 5.00006C5.24994 3.27393 6.64886 1.875 8.375 1.875C10.1011 1.875 11.5001 3.27393 11.5001 5.00006C11.5001 6.7262 10.1011 8.12512 8.375 8.12512Z"
-                  fill="#74BDCB"
-                />
-                <path
-                  d="M8.375 6.875C9.41053 6.875 10.25 6.03553 10.25 5C10.25 3.96447 9.41053 3.125 8.375 3.125C7.33947 3.125 6.5 3.96447 6.5 5C6.5 6.03553 7.33947 6.875 8.375 6.875Z"
-                  fill="#74BDCB"
-                />
-              </svg>
-            </button>
+            <RouterLink :to="{name:'EditCustomer',params:{id:project.id, type:'view'}}">
+              <button class="p-2">
+                <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+                  <path
+                      d="M8.375 0C5.1682 0 2.37518 2.01412 0.875 5.00006C2.37518 7.98655 5.1682 10.0001 8.375 10.0001C11.5818 10.0001 14.3748 7.98655 15.875 5.00006C14.3748 2.01412 11.5818 0 8.375 0ZM8.375 8.12512C6.64886 8.12512 5.24994 6.7262 5.24994 5.00006C5.24994 3.27393 6.64886 1.875 8.375 1.875C10.1011 1.875 11.5001 3.27393 11.5001 5.00006C11.5001 6.7262 10.1011 8.12512 8.375 8.12512Z"
+                      fill="#74BDCB"
+                  />
+                  <path
+                      d="M8.375 6.875C9.41053 6.875 10.25 6.03553 10.25 5C10.25 3.96447 9.41053 3.125 8.375 3.125C7.33947 3.125 6.5 3.96447 6.5 5C6.5 6.03553 7.33947 6.875 8.375 6.875Z"
+                      fill="#74BDCB"
+                  />
+                </svg>
+              </button>
+            </RouterLink>
+
           </td>
         </tr>
       </tbody>
@@ -65,7 +68,7 @@ export default {
     return {
       Projects: [
         {
-          ID: "1",
+          id: 1,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,
@@ -73,7 +76,7 @@ export default {
           isCompleted: true
         },
         {
-          ID: "2",
+          id: 2,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,
@@ -81,7 +84,7 @@ export default {
           isCompleted: true
         },
         {
-          ID: "3",
+          id: 3,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,
@@ -89,7 +92,7 @@ export default {
           isCompleted: true
         },
         {
-          ID: "4",
+          id: 4,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,
@@ -97,7 +100,7 @@ export default {
           isCompleted: true
         },
         {
-          ID: "5",
+          id: 5,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,
@@ -105,7 +108,7 @@ export default {
           isCompleted: false
         },
         {
-          ID: "6",
+          id: 6,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,
@@ -113,7 +116,7 @@ export default {
           isCompleted: false
         },
         {
-          ID: "7",
+          id: 7,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,
@@ -121,7 +124,7 @@ export default {
           isCompleted: true
         },
         {
-          ID: "8",
+          id: 8,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,
@@ -129,7 +132,7 @@ export default {
           isCompleted: true
         },
         {
-          ID: "9",
+          id: 9,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,
@@ -137,7 +140,7 @@ export default {
           isCompleted: false
         },
         {
-          ID: "10",
+          id: 10,
           name: "Restaurant Athen",
           open: 2,
           completed: 10,

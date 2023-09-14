@@ -74,7 +74,7 @@ const routes = [
     },
   },
   {
-    path: "/edit-customer/:id",
+    path: "/edit-customer/:id/:type?",
     name: "EditCustomer",
     component: NewObject,
     meta: {
