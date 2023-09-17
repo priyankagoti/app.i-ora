@@ -11,18 +11,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="project in Projects" :key="project.id" class="border-b border-body">
+        <tr v-for="object in objects" :key="object.id" class="border-b border-body">
           <td class="p-4">
-            <span class="block text-black font-semibold">{{ project.name }}</span>
-            <span class="block text-[#8F9BB3] text-[10px]">{{ project.open }} Open, {{ project.completed }} Completed</span>
+            <span class="block text-black font-semibold">{{ object.client_name }}</span>
+            <span class="block text-[#8F9BB3] text-[10px]">{{ object.pending_task }} Open, {{ object.complete_task }} Completed</span>
           </td>
           <td class="text-xs font-normal p-4">
             <div class="relative h-1 w-full bg-body rounded-lg">
-              <div class="absolute h-[6px] rounded-lg  w-1/2 -top-[1.5px] left-0" :class="project.progress > 50 ? 'bg-sky' : 'bg-[#FFA384]' " ></div>
+              <div class="absolute h-[6px] rounded-lg  w-1/2 -top-[1.5px] left-0" :class="object.progress > 50 ? 'bg-sky' : 'bg-[#FFA384]' " ></div>
             </div>
           </td>
           <td class="p-4 text-center">
-            <svg v-if="project.isCompleted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="inline" fill="none">
+            <svg v-if="object.isCompleted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="inline" fill="none">
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
@@ -38,7 +38,7 @@
             </svg>
           </td>
           <td class="text-center p-4">
-            <RouterLink :to="{name:'EditCustomer',params:{id:project.id, type:'view'}}">
+            <RouterLink :to="{name:'EditCustomer',params:{id:object.id, type:'view'}}">
               <button class="p-2">
                 <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
                   <path
@@ -147,8 +147,22 @@ export default {
           progress: 20,
           isCompleted: true
         },
-      ]
+      ],
+      objects:[]
     };
+  },
+  mounted() {
+    this.fetch()
+  },
+  methods:{
+    fetch(){
+      // eslint-disable-next-line no-undef
+      axios.get('dashboard/objects')
+      .then(res => {
+        this.objects = res.data.object
+        console.log(res)
+      })
+    }
   }
 };
 </script>
