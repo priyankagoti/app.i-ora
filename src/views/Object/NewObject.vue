@@ -768,8 +768,8 @@
                                 object.client_name
                               }}</span>
                           <span class="block text-[#8F9BB3] text-[10px]"
-                          >{{ object.open }} Open,
-                              {{ object.completed }} Completed</span
+                          >{{ object.pending_task }} Open,
+                              {{ object.complete_task }} Completed</span
                           >
                         </div>
                       </td>

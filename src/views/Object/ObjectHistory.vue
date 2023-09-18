@@ -20,13 +20,13 @@
       >
         <td class="p-4">
           <div class="flex items-center">
-            <img
+<!--            <img
                 class="mr-2"
                 :src="object.employee[0].profile"
                 alt=""
                 width="32"
                 height="32"
-            />
+            />-->
             <span>{{ object.employee[0].first_name }}</span>
           </div>
         </td>
@@ -38,7 +38,7 @@
         </td>
         <td class="p-4">
           <svg
-              v-if="object.status==='1'"
+              v-if="object.status===1"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"

@@ -119,8 +119,8 @@
                       object.client_name
                   }}</span>
                   <span class="block text-[#8F9BB3] text-[10px]"
-                    >{{ object.open }} Open,
-                    {{ object.completed }} Completed</span
+                    >{{ object.pending_task }} Open,
+                    {{ object.complete_task }} Completed</span
                   >
                 </div>
               </div>
@@ -248,6 +248,7 @@ export default {
   },
   mounted() {
     this.fetch()
+    this.fetchStatistics()
   },
   watch:{
     objects(){
@@ -292,10 +293,18 @@ export default {
       })
       .then(response => {
         this.objects = response.data.object
-        this.totalCustomer = response.data['total customer']
-        this.totalEmployees = response.data['total employees']
+        // this.totalCustomer = response.data['total customer']
+        // this.totalEmployees = response.data['total employees']
 
       })
+    },
+    fetchStatistics(){
+      axios.get('dashboard/count')
+          .then(response => {
+            this.totalCustomer = response.data['total customer']
+            this.totalEmployees = response.data['total employees']
+            console.log(response)
+          })
     },
     setId(id){
       this.deletingId=id
