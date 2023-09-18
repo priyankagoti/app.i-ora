@@ -17,12 +17,18 @@
             <span class="block text-[#8F9BB3] text-[10px]">{{ object.pending_task }} Open, {{ object.complete_task }} Completed</span>
           </td>
           <td class="text-xs font-normal p-4">
-            <div class="relative h-1 w-full bg-body rounded-lg">
-              <div class="absolute h-[6px] rounded-lg  w-1/2 -top-[1.5px] left-0" :class="object.progress > 50 ? 'bg-sky' : 'bg-[#FFA384]' " ></div>
+            <div v-if="object.pending_task >0 && object.inprogress_count===0" class="relative h-1 w-full bg-body rounded-lg">
+              <div class="absolute h-[6px] rounded-lg  w-1/2 -top-[1.5px] left-0"  :class="'bg-red-500'" ></div>
+            </div>
+            <div v-if="object.pending_task >0 && object.inprogress_count>0" class="relative h-1 w-full bg-body rounded-lg">
+              <div class="absolute h-[6px] rounded-lg  w-3/4 -top-[1.5px] left-0" :class="'bg-orange-500'" ></div>
+            </div>
+            <div v-if="object.pending_task ===0 && object.inprogress_count===0" class="relative h-1 w-full bg-body rounded-lg">
+              <div class="absolute h-[6px] rounded-lg  w-full -top-[1.5px] left-0" :class="'bg-green-500'" ></div>
             </div>
           </td>
           <td class="p-4 text-center">
-            <svg v-if="object.isCompleted" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="inline" fill="none">
+            <svg v-if="object.status===1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" class="inline" fill="none">
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
