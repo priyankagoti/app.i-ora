@@ -664,7 +664,7 @@
       <button type="button" class="btn btn-light-sky mr-5" @click="$router.push('/customers')">{{translatedObject.cancelBtn}}</button>
       <button v-if="!isView" type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
         <SpinnerComponent v-if="loading"/>
-        {{isEditing?translatedObject.updateBtn:saveBtn}}
+        {{isEditing?translatedObject.updateBtn:translatedObject.saveBtn}}
       </button>
     </div>
   </div>
