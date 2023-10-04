@@ -1,6 +1,6 @@
 <template>
   <div class="p-5 bg-white rounded-[20px] pb-0 shadow-lg shadow-black/5">
-    <h4 class="mb-5 text-base font-bold">{{translatedObject.objectRecent}}</h4>
+    <h4 class="mb-5 text-base font-bold">{{translatedObject.recentCustomersLabel}}</h4>
     <table class="w-full text-xs font-semibold">
       <thead class="bg-body">
         <tr class="text-sm font-bold">
