@@ -412,7 +412,7 @@
                 </button>
                 <button v-if="isEditing" type="button" class="btn btn-sky" @click="update" :disabled="loading">
                   <SpinnerComponent v-if="loading"/>
-                  Edit User
+                  {{translatedObject.editUserLabel}}
                 </button>
                <button v-if="!isEditing && !isView" type="button" class="btn btn-sky" @click="confirmSave" :disabled="loading">
                  <SpinnerComponent v-if="loading"/>
