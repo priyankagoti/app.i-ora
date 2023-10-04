@@ -9,6 +9,9 @@
             <h1 class="text-black font-bold text-4xl mb-1">
               {{translatedObject.commonWebTitle}}
             </h1>
+            <p class="text-[#8F9BB3] mb-2 3xl:text-xl text-lg">
+              Here begins your journey into our digital world.
+            </p>
             <p class="text-[#8F9BB3] mb-14 3xl:text-xl text-lg">
               {{translatedObject.commonWebText}}
 <!--             Please Sign in here to your Account,<br />
@@ -93,10 +96,20 @@
           </div>
         </div>
         <button class="auth-btn 3xl:mb-20 2xl:mb-10 mb-7" type="button" @click="submit">{{translatedObject.loginBtn}}</button>
-        <p class="text-black 3xl:text-xl text-lg mt-5 text-center">
-          {{translatedObject["don'tHaveAccount"]}}
-          <RouterLink to="/register" class="text-[#ffa384]">{{translatedObject.signUpLink}}</RouterLink>
-        </p>
+
+        <div class="text-black 3xl:text-xl text-base mt-5 text-start">
+          <p class="font-bold">Not a member yet?</p>
+          <p>Discover the full potential of I Ora by creating an account.</p>
+        </div>
+        <div class="text-black 3xl:text-xl text-base mt-5 text-start">
+          <RouterLink to="/register">
+            <p class="font-bold">Register Now <span class="font-normal">and embark on your digital journey with us.</span> </p>
+          </RouterLink>
+        </div>
+<!--        <p class="text-black 3xl:text-xl text-lg mt-5 text-center">-->
+<!--          {{translatedObject["don'tHaveAccount"]}}-->
+<!--          <RouterLink to="/register" class="text-[#ffa384]">{{translatedObject.signUpLink}}</RouterLink>-->
+<!--        </p>-->
       </div>
     </div>
     <AuthCover />
