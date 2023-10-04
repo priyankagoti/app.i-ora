@@ -113,7 +113,7 @@
               leave-from="opacity-100 scale-100"
               leave-to="opacity-0 scale-95"
           >
-            <DialogPanel class=" w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+            <DialogPanel class=" w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
               <TabGroup :selectedIndex="selectedTab" @change="fetch">
                 <div class="flex items-center justify-between p-5 border-b-2 border-body">
                   <TabList class="inline-flex space-x-1 rounded-full bg-body p-1 text-xs text-black">
