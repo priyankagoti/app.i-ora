@@ -131,16 +131,15 @@
                         id="EmployeeProfile"
                     />
                   </label>
-                  <div class="pl-5">
-                    <p class="text-xl text-[#8F9BB3] mb-2">
-                      {{translatedObject.chooseFileText}}
-                    </p>
-                    <span class="block text-black text-sm font-semibold mb-2"
-                    >{{translatedObject.objectTitle}}</span
+                  <div class="pl-5 mt-4 flex-grow">
+<!--                    <p class="text-xl text-[#8F9BB3] mb-2">-->
+<!--                      {{translatedObject.chooseFileText}}-->
+<!--                    </p>-->
+                    <label class="block text-black text-sm font-semibold mb-2"
+                    >{{translatedObject.objectTitle}}</label
                     >
-<!--                    {{object_ids}}-->
                     <VueMultiselect
-                        class="w-auto"
+                        class=""
                         v-model="object_ids"
                         :options="unassignedObjects"
                         :searchable="false"
@@ -152,28 +151,7 @@
                         :placeholder="translatedObject.addObjectBtn"
                     >
                     </VueMultiselect>
-<!--                    <button class="rounded-lg btn btn-light-sky">
-                      <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 12 12"
-                          class="mr-2.5"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M9.88672 5.05371H6.13672V1.30371C6.13672 0.958086 5.85672 0.678711 5.51172 0.678711C5.16672 0.678711 4.88672 0.958086 4.88672 1.30371V5.05371H1.13672C0.791719 5.05371 0.511719 5.33309 0.511719 5.67871C0.511719 6.02434 0.791719 6.30371 1.13672 6.30371H4.88672V10.0537C4.88672 10.3993 5.16672 10.6787 5.51172 10.6787C5.85672 10.6787 6.13672 10.3993 6.13672 10.0537V6.30371H9.88672C10.2317 6.30371 10.5117 6.02434 10.5117 5.67871C10.5117 5.33309 10.2317 5.05371 9.88672 5.05371Z"
-                            fill="black"
-                        />
-                        <path
-                            d="M9.88672 5.05371H6.13672V1.30371C6.13672 0.958086 5.85672 0.678711 5.51172 0.678711C5.16672 0.678711 4.88672 0.958086 4.88672 1.30371V5.05371H1.13672C0.791719 5.05371 0.511719 5.33309 0.511719 5.67871C0.511719 6.02434 0.791719 6.30371 1.13672 6.30371H4.88672V10.0537C4.88672 10.3993 5.16672 10.6787 5.51172 10.6787C5.85672 10.6787 6.13672 10.3993 6.13672 10.0537V6.30371H9.88672C10.2317 6.30371 10.5117 6.02434 10.5117 5.67871C10.5117 5.33309 10.2317 5.05371 9.88672 5.05371"
-                            stroke="black"
-                        />
-                      </svg>
-                      <span class="text-sky font-semibold">{{translatedObject.addObjectBtn}}</span>
-                    </button>-->
+
                   </div>
                 </div>
                 <small

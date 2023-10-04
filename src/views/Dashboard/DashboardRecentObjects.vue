@@ -4,7 +4,7 @@
     <table class="w-full text-xs font-semibold">
       <thead class="bg-body">
         <tr class="text-sm font-bold">
-          <td class="p-4 rounded-l-xl">{{translatedObject.objectProject}}</td>
+          <td class="p-4 rounded-l-xl">{{translatedObject.customerNameLabel}}</td>
           <td class="p-4 3xl:w-[250px] w-[200px]">{{translatedObject.objectProgress}}</td>
           <td class="p-4 text-center">{{ translatedObject.objectStatus }}</td>
           <td class="p-4 rounded-r-xl text-center">{{translatedObject.objectAction}}</td>
