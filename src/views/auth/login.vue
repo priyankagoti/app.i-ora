@@ -10,7 +10,7 @@
               {{translatedObject.commonWebTitle}}
             </h1>
             <p class="text-[#8F9BB3] mb-2 3xl:text-xl text-lg">
-              Here begins your journey into our digital world.
+              {{translatedObject.commonWebText1}}
             </p>
             <p class="text-[#8F9BB3] mb-14 3xl:text-xl text-lg">
               {{translatedObject.commonWebText}}
@@ -27,6 +27,7 @@
               <VueMultiselect
                   class="w-72"
                   v-model="translatedLang"
+                  :placeholder="translatedObject.loginChooseLang"
                   :options="languageOption"
                   :searchable="false"
                   :close-on-select="true"
@@ -98,12 +99,12 @@
         <button class="auth-btn 3xl:mb-20 2xl:mb-10 mb-7" type="button" @click="submit">{{translatedObject.loginBtn}}</button>
 
         <div class="text-black 3xl:text-xl text-base mt-5 text-start">
-          <p class="font-bold">Not a member yet?</p>
-          <p>Discover the full potential of I Ora by creating an account.</p>
+          <p class="font-bold">{{translatedObject.loginNotMember}}</p>
+          <p>{{translatedObject.loginDiscoverText}}</p>
         </div>
         <div class="text-black 3xl:text-xl text-base mt-5 text-start">
           <RouterLink to="/register">
-            <p class="font-bold">Register Now <span class="font-normal">and embark on your digital journey with us.</span> </p>
+            <p class="font-bold">{{translatedObject.loginRegisterText}} <span class="font-normal">{{translatedObject.loginEmbarkText}}</span> </p>
           </RouterLink>
         </div>
 <!--        <p class="text-black 3xl:text-xl text-lg mt-5 text-center">-->

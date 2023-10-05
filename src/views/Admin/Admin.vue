@@ -183,10 +183,10 @@
   </div>
   <ConfirmationModal
     :isOpenModal="isConfDeleteOpen" 
-    :title="translatedObject.objectPopupTitle"
+    :title="translatedObject.empPopupTitle"
     :text="translatedObject.objectPopupText"
     :closeModal="$event=>toggleConfDelete(false)"
-    :btnText="translatedObject.deleteObjBtn"
+    :btnText="translatedObject.deleteEmpBtn"
     :SubmitModal="destroy"
   />
 </template>

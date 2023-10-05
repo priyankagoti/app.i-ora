@@ -15,10 +15,10 @@
             class="mb-5 mx-auto h-[450px] 2xl:h-auto"
           />
           <p class="2xl:text-xl text-lg font-semibold text-black">
-            Efficiency redefined, data used intelligently:
+            {{translatedObject.loginCoverEfficiencyText}}
 <!--            {{ translatedObject.workforceAnalyticsText }} {{translatedObject.productivityText}}-->
              <br />
-            I-ora - Your future, optimized.
+            {{translatedObject.loginCoverIoraText}}
 <!--            {{translatedObject.managementText}}-->
           </p>
         </div>
