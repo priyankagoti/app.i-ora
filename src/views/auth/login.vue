@@ -4,7 +4,7 @@
   >
     <div class="3xl:p-16 2xl:p-7 p-8">
       <div class="2xl:max-w-[582px] max-w-[482px] mx-auto h-full flex flex-col">
-        <div class="flex h-full items-center 3xl:pb-24 pb-16">
+        <div class="flex items-center 3xl:pb-5 pb-2">
           <div class="w-full">
             <h1 class="text-black font-bold text-4xl mb-1">
               {{translatedObject.commonWebTitle}}
@@ -12,12 +12,12 @@
             <p class="text-[#8F9BB3] mb-2 3xl:text-xl text-lg">
               {{translatedObject.commonWebText1}}
             </p>
-            <p class="text-[#8F9BB3] mb-14 3xl:text-xl text-lg">
+            <p class="text-[#8F9BB3] mb-5 3xl:text-xl text-lg">
               {{translatedObject.commonWebText}}
 <!--             Please Sign in here to your Account,<br />
               Have your landing pages online in minutes.-->
             </p>
-            <div class="relative mb-20">
+            <div class="relative mb-5">
 <!--              <select @change="$store.dispatch('auth/fetchJsonFile',$event.target.value)" class="lang-select">-->
 <!--                <option value="en" :selected="translatedLang==='en'">-->
 <!--                  English-->
@@ -38,7 +38,7 @@
               >
               </VueMultiselect>
             </div>
-            <div class="mb-10">
+            <div class="mb-5">
               <div class="relative 3xl:mb-14 ">
                 <svg
                     class="auth-input-icon"
@@ -96,13 +96,13 @@
             </p>
           </div>
         </div>
-        <button class="auth-btn 3xl:mb-20 2xl:mb-10 mb-7" type="button" @click="submit">{{translatedObject.loginBtn}}</button>
+        <button class="auth-btn 3xl:mb-5 2xl:mb-2 mb-2" type="button" @click="submit">{{translatedObject.loginBtn}}</button>
 
-        <div class="text-black 3xl:text-xl text-base mt-5 text-start">
+        <div class="text-black 3xl:text-base text-sm text-start">
           <p class="font-bold">{{translatedObject.loginNotMember}}</p>
           <p>{{translatedObject.loginDiscoverText}}</p>
         </div>
-        <div class="text-black 3xl:text-xl text-base mt-5 text-start">
+        <div class="text-black 3xl:text-xl text-base mt-2 text-start">
           <RouterLink to="/register">
             <p class="font-bold">{{translatedObject.loginRegisterText}} <span class="font-normal">{{translatedObject.loginEmbarkText}}</span> </p>
           </RouterLink>
