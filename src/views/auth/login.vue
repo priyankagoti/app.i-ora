@@ -98,11 +98,11 @@
         </div>
         <button class="auth-btn 3xl:mb-5 2xl:mb-2 mb-2" type="button" @click="submit">{{translatedObject.loginBtn}}</button>
 
-        <div class="text-black 3xl:text-base text-sm text-start">
+        <div class="text-black 3xl:text-base text-sm text-start ml-5">
           <p class="font-bold">{{translatedObject.loginNotMember}}</p>
           <p>{{translatedObject.loginDiscoverText}}</p>
         </div>
-        <div class="text-black 3xl:text-xl text-base mt-2 text-start">
+        <div class="text-black 3xl:text-xl text-base mt-2 text-start ml-5">
           <RouterLink to="/register">
             <p class="font-bold">{{translatedObject.loginRegisterText}} <span class="font-normal">{{translatedObject.loginEmbarkText}}</span> </p>
           </RouterLink>
