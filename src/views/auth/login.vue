@@ -140,8 +140,6 @@ export default {
         username: '',
         password: '',
       },
-      language: 'en',
-      status: '',
       errMsg: '',
       errors: {},
       languageOption: [
