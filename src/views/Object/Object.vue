@@ -173,7 +173,7 @@
                     </svg>
                   </button>
                 </RouterLink>
-                <button class="p-2" @click="$event => {toggleConfDelete(true);setId(object.id)}">
+                <button :disabled="object.employee_objects_count>0" class="p-2" @click="$event => {toggleConfDelete(true);setId(object.id)}">
                   <svg
                     width="16"
                     height="16"
@@ -212,6 +212,7 @@
     :text="translatedObject.objectDeletePopupText"
     :closeModal="$event => {toggleConfDelete(false)}"
     :btnText="translatedObject.deleteObjPopupBtn"
+    :closeBtnText="translatedObject.cancelBtn"
     :SubmitModal="deleteObject"
   />
 </template>
