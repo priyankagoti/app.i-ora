@@ -409,13 +409,15 @@
     :text="translatedObject.employeePopupText"
     :closeModal="$event => toggleConf(false)"
     :btnText="translatedObject.popupSaveNoObjBtn"
+    :closeBtnText="translatedObject.cancelBtn"
     :SubmitModal="$event => store()"
   />
   <ConfirmationModal 
     :isOpenModal="isConfSuccessOpen" 
     :title="translatedObject.updateSuccessTitle"
     :closeModal="$event => toggleConfSuccess(false)"
-    btnText="Back to Employees"
+    :btnText="translatedObject.backEmpBtn"
+    :closeBtnText="translatedObject.cancelBtn"
     :SubmitModal="$event => {toggleConfSuccess(false); closeModal() }"
   />
 </template>

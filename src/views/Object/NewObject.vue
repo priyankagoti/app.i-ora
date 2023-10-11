@@ -670,17 +670,19 @@
   </div>
   <ConfirmationModal
       :isOpenModal="isConfOpen"
-      title="Save Object without an Employee?"
-      text="You didn't add an Employee to this Object, are you sure you want to save?"
+      :title="translatedObject.objectWithoutEmpPopupTitle"
+      :text="translatedObject.objectWithoutEmpPopupText"
       :closeModal="$event => toggleConf(false)"
-      btnText="Yes, save without Employee"
+      :btnText="translatedObject.saveWithoutEmpBtn"
+      :closeBtnText="translatedObject.cancelBtn"
       :SubmitModal="$event => {isEditing ? update() :store()}"
   />
   <ConfirmationModal
       :isOpenModal="isConfSuccessOpen"
-      title="Update Successful"
+      :title="translatedObject.updateSuccessTitle"
       :closeModal="$event => toggleConfSuccess(false)"
-      btnText="Back to Objects"
+      :btnText="translatedObject.backObjBtn"
+      :closeBtnText="translatedObject.cancelBtn"
       :SubmitModal="$event => {toggleConfSuccess(false); closeModal()}"
   />
   <TransitionRoot appear :show="isAlertModalOpen" as="template">
