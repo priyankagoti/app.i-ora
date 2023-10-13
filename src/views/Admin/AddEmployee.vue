@@ -347,7 +347,7 @@
                 </div>
                 <div class="col-span-2">
                   <label class="label" for="VacationDays"
-                    >{{translatedObject.vacationLabel}} *</label
+                    >{{translatedObject.vacationLabel}}</label
                   >
                   <input
                     type="text"
@@ -364,7 +364,7 @@
                 </div>
                 <div class="col-span-2">
                   <label class="label" for="EnterAmount"
-                    >{{translatedObject.workingHoursLabel}} *</label
+                    >{{translatedObject.workingHoursLabel}}</label
                   >
                   <input
                     type="email"
