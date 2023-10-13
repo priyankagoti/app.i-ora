@@ -57,7 +57,7 @@
           >{{ errors.client_number[0] }}</small>
         </div>
         <div class="col-span-2">
-          <label class="label" for="Address">{{translatedObject.address}}</label>
+          <label class="label" for="Address">{{translatedObject.address}} *</label>
           <input
               type="text"
               id="Address"
@@ -71,7 +71,7 @@
           >{{ errors.address[0] }}</small>
         </div>
         <div class="col-span-1">
-          <label class="label" for="PostcodeCity">{{translatedObject.postcode}}</label>
+          <label class="label" for="PostcodeCity">{{translatedObject.postcode}} *</label>
           <input
               type="text"
               id="PostcodeCity"
@@ -149,7 +149,7 @@
           >{{ errors.phone_number[0] }}</small>
         </div>
         <div class="col-span-3">
-          <label class="label" for="GoogleMapURL">{{translatedObject.googleUrlLabel}}*</label>
+          <label class="label" for="GoogleMapURL">{{translatedObject.googleUrlLabel}}</label>
           <input
               type="text"
               id="GoogleMapURL"
@@ -421,7 +421,7 @@
           </div>
         </div>
         <div class="col-span-3 flex flex-col">
-          <label class="label">{{translatedObject.uploadPdfLabel}} *
+          <label class="label">{{translatedObject.uploadPdfLabel}}
             <small
                 v-if="errors && errors.pdf"
                 class="text-danger text-sm"
