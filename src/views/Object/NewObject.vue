@@ -235,6 +235,17 @@
                 <input v-model.number="fromMinutes" type="number" class="time-input" />
               </div>
             </div>
+            <div class="">
+              <label class="label" for="PhoneNumber">At time </label>
+              <div
+                  class="bg-body rounded-full p-1 flex items-center justify-center h-12"
+              >
+                <!--                <span class="text-xs">From &nbsp;</span>-->
+                <input v-model.number="fromHours"  type="number" class="time-input" />
+                <span>:</span>
+                <input v-model.number="fromMinutes" type="number" class="time-input" />
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-span-2">

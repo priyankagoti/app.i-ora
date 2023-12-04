@@ -133,7 +133,7 @@
             </td>
             <td class="p-4">
               <span
-                v-if="object.status==='1'"
+                v-if="object.status===1"
                 class="py-2 px-3 rounded-full bg-[#BFFFE8] text-[#15C787]"
                 >Active</span
               >
