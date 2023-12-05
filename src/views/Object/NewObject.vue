@@ -163,8 +163,8 @@
           >{{ errors.google_map_url[0] }}</small>
         </div>
         <div class="col-span-2">
-          <div class="grid grid-cols-2 gap-6">
-            <div class="">
+          <div class="flex justify-between">
+            <div>
               <label class="label" for="ImplementationTime">{{translatedObject.impTimeLabel}}</label>
               <div
                   class="flex bg-body rounded-full p-1 items-center justify-between"
@@ -224,8 +224,8 @@
                 </button>
               </div>
             </div>
-            <div class="">
-              <label class="label" for="PhoneNumber">{{ translatedObject.atTimeLabel }} </label>
+            <div class="w-20">
+              <label class="label" for="PhoneNumber">{{ translatedObject.fromTimeLabel }} </label>
               <div
                   class="bg-body rounded-full p-1 flex items-center justify-center h-12"
               >
@@ -235,15 +235,15 @@
                 <input v-model.number="fromMinutes" type="number" class="time-input" />
               </div>
             </div>
-            <div class="">
-              <label class="label" for="PhoneNumber">At time </label>
+            <div class="w-20">
+              <label class="label" for="PhoneNumber">{{ translatedObject.atTimeLabel }} </label>
               <div
                   class="bg-body rounded-full p-1 flex items-center justify-center h-12"
               >
                 <!--                <span class="text-xs">From &nbsp;</span>-->
-                <input v-model.number="fromHours"  type="number" class="time-input" />
+                <input v-model.number="atHours"  type="number" class="time-input" />
                 <span>:</span>
-                <input v-model.number="fromMinutes" type="number" class="time-input" />
+                <input v-model.number="atMinutes" type="number" class="time-input" />
               </div>
             </div>
           </div>
@@ -865,6 +865,7 @@ export default {
         google_map_url: '',
         implementation_time: '',
         from_time: '',
+        at_time: '',
         rotation_type: '1',
         days:[],
         contact_person_name: '',
@@ -877,6 +878,8 @@ export default {
       seconds:0,
       fromHours:0,
       fromMinutes:0,
+      atHours:0,
+      atMinutes:0,
       cities: [],
       errors: {},
       errorMessage:'',
@@ -916,6 +919,12 @@ export default {
     },
     fromMinutes(newValue) {
       this.fromMinutes = this.padNumber(this.validateTime(newValue));
+    },
+    atHours(newValue) {
+      this.atHours = this.padNumber(this.validateHours(newValue));
+    },
+    atMinutes(newValue) {
+      this.atMinutes = this.padNumber(this.validateTime(newValue));
     }
   },
   mounted() {
@@ -924,6 +933,8 @@ export default {
     // this.seconds = this.padNumber(this.seconds);
     this.fromHours = this.padNumber(this.fromHours);
     this.fromMinutes = this.padNumber(this.fromMinutes);
+    this.atHours = this.padNumber(this.atHours);
+    this.atMinutes = this.padNumber(this.atMinutes);
     this.fetchEmployee()
     if(this.isEditing){
       this.fetchObject()
@@ -997,6 +1008,8 @@ export default {
       this.seconds = 0
       this.fromHours = 0
       this.fromMinutes = 0
+      this.atHours = 0
+      this.atMinutes = 0
     },
     fetchEmployee(){
       // eslint-disable-next-line no-undef
@@ -1020,9 +1033,14 @@ export default {
             let implementation_time = response.data.data.implementation_time.split(':')
             this.hours = implementation_time[0]
             this.minutes = implementation_time[1]
-            let from_time = response.data.data.from_time.split(':')
+            let from_time = response.data.data.from_time?.split(':')
+            console.log('from_time',response.data.data)
             this.fromHours = from_time[0]
-            this.fromMinutes = from_time[0]
+            this.fromMinutes = from_time[1]
+            let at_time = response.data.data.at_time?.split(':')
+            console.log('at_time',at_time)
+            this.atHours = at_time?.[0] ?? 0
+            this.atMinutes = at_time?.[1] ?? 0
           })
           .catch(()=>{})
     },
@@ -1050,8 +1068,10 @@ export default {
       this.toggleConf(false)
       this.form.implementation_time = `${this.hours}:${this.minutes}`
       this.form.from_time = `${this.fromHours}:${this.fromMinutes}`
+      this.form.at_time = `${this.atHours}:${this.atMinutes}`
       const formData = new FormData()
       formData.append('user_id',this.auth_user_id)
+      formData.append('status',1)
       formData.append('client_name',this.form.client_name)
       formData.append('client_number',this.form.client_number)
       formData.append('address',this.form.address)
@@ -1063,6 +1083,7 @@ export default {
       formData.append('google_map_url',this.form.google_map_url)
       formData.append('implementation_time',this.form.implementation_time)
       formData.append('from_time',this.form.from_time)
+      formData.append('at_time',this.form.at_time)
       formData.append('rotation_type',this.form.rotation_type)
       formData.append('contact_person_name',this.form.contact_person_name)
       formData.append('contact_person_phone_number',this.form.contact_person_phone_number)
@@ -1096,8 +1117,10 @@ export default {
       this.toggleConf(false)
       this.form.implementation_time = `${this.hours}:${this.minutes}`
       this.form.from_time = `${this.fromHours}:${this.fromMinutes}`
+      this.form.at_time = `${this.atHours}:${this.atMinutes}`
       const formData = new FormData()
       formData.append('id',this.objectID)
+      formData.append('status',1)
       formData.append('user_id',this.auth_user_id)
       formData.append('client_name',this.form.client_name)
       formData.append('client_number',this.form.client_number)
@@ -1110,6 +1133,7 @@ export default {
       formData.append('google_map_url',this.form.google_map_url)
       formData.append('implementation_time',this.form.implementation_time)
       formData.append('from_time',this.form.from_time)
+      formData.append('at_time',this.form.at_time)
       formData.append('rotation_type',this.form.rotation_type)
       formData.append('contact_person_name',this.form.contact_person_name)
       formData.append('contact_person_phone_number',this.form.contact_person_phone_number)
