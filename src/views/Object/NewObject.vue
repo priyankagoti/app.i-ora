@@ -43,7 +43,7 @@
           >{{ errors.client_name[0] }}</small>
         </div>
         <div class="col-span-2">
-          <label class="label" for="ClientNumber">{{translatedObject.clientNumberLabel}} *</label>
+          <label class="label" for="ClientNumber">{{translatedObject.clientNumberLabel}}</label>
           <input
               type="text"
               id="ClientNumber"
@@ -810,9 +810,10 @@ import TaskComponent from "@/views/Object/Task";
 import ObjectHistory from "@/views/Object/ObjectHistory";
 import VueMultiselect from 'vue-multiselect'
 import "vue-multiselect/dist/vue-multiselect.css"
-import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle} from "@headlessui/vue";
+import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot} from "@headlessui/vue";
 import axios from "axios";
 import _ from "lodash";
+
 export default {
   name: "NewObject",
 
@@ -853,6 +854,7 @@ export default {
       ],
       objectID: this.$route.params.id,
       form: {
+        status:1,
         employee_id: null,
         client_name: '',
         client_number: '',
@@ -952,12 +954,8 @@ export default {
       this.isAlertModalOpen= s;
     },
     selectNo(s){
-      console.log('before--->', this.form.employee_id, this.selectedEmpId)
-      let newArray =this.form.employee_id.filter(e=> e.id !== this.selectedEmpId)
-      this.form.employee_id =newArray
-      console.log('after--->', this.form.employee_id,this.selectedEmpId )
+      this.form.employee_id =this.form.employee_id.filter(e => e.id !== this.selectedEmpId)
       this.toggleAlertModal(s)
-      console.log('after close------>', this.form.employee_id,this.selectedEmpId )
     },
     onChange(value) {
       this.emitter.emit('change', value);
@@ -1026,6 +1024,7 @@ export default {
       })
           .then(response=>{
             this.form = _.merge(this.form,response.data.data)
+            this.form.status = response.data.data.status
             this.form.days = response.data.data.days.split(',')
             this.form.employee_id = response.data.data.employeeObjects
             this.form.objectDocuments = response.data.data.objectDocuments
@@ -1034,11 +1033,9 @@ export default {
             this.hours = implementation_time[0]
             this.minutes = implementation_time[1]
             let from_time = response.data.data.from_time?.split(':')
-            console.log('from_time',response.data.data)
             this.fromHours = from_time[0]
             this.fromMinutes = from_time[1]
             let at_time = response.data.data.at_time?.split(':')
-            console.log('at_time',at_time)
             this.atHours = at_time?.[0] ?? 0
             this.atMinutes = at_time?.[1] ?? 0
           })
@@ -1047,7 +1044,6 @@ export default {
     fetchEmpObjects(){
       axios.get(`object/user/${this.selectedEmpId}`)
           .then(res =>{
-            console.log('objects',res)
             this.empObjects = res.data.object
           })
     },
@@ -1064,14 +1060,13 @@ export default {
       }
     },
     store(){
-      console.log('days-->',this.form.days)
       this.toggleConf(false)
       this.form.implementation_time = `${this.hours}:${this.minutes}`
       this.form.from_time = `${this.fromHours}:${this.fromMinutes}`
       this.form.at_time = `${this.atHours}:${this.atMinutes}`
       const formData = new FormData()
       formData.append('user_id',this.auth_user_id)
-      formData.append('status',1)
+      formData.append('status',this.form.status)
       formData.append('client_name',this.form.client_name)
       formData.append('client_number',this.form.client_number)
       formData.append('address',this.form.address)
@@ -1120,7 +1115,7 @@ export default {
       this.form.at_time = `${this.atHours}:${this.atMinutes}`
       const formData = new FormData()
       formData.append('id',this.objectID)
-      formData.append('status',1)
+      formData.append('status',this.form.status)
       formData.append('user_id',this.auth_user_id)
       formData.append('client_name',this.form.client_name)
       formData.append('client_number',this.form.client_number)
@@ -1163,7 +1158,6 @@ export default {
             this.$nextTick(() => {
               this.$refs.scrollToTop.scrollTop = 0;
             });
-            // console.log(error.response)
             this.errors = error.response.data.errors
             this.loading = false
           })
