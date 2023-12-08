@@ -28,7 +28,7 @@
                 </button>-->
       </div>
       <div class="grid grid-cols-6 gap-20">
-        <div class="col-span-2">
+        <div class="col-span-6 md:col-span-3 lg:col-span-2">
           <label class="label" for="ClientName">{{translatedObject.clientNameLabel}} *</label>
           <input
               type="text"
@@ -42,7 +42,7 @@
               class="text-danger"
           >{{ errors.client_name[0] }}</small>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-6 md:col-span-3 lg:col-span-2">
           <label class="label" for="ClientNumber">{{translatedObject.clientNumberLabel}}</label>
           <input
               type="text"
@@ -56,7 +56,7 @@
               class="text-danger"
           >{{ errors.client_number[0] }}</small>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-6 md:col-span-3 lg:col-span-2">
           <label class="label" for="Address">{{translatedObject.address}} *</label>
           <input
               type="text"
@@ -70,7 +70,7 @@
               class="text-danger"
           >{{ errors.address[0] }}</small>
         </div>
-        <div class="col-span-1">
+        <div class="col-span-6 md:col-span-3 lg:col-span-1">
           <label class="label" for="PostcodeCity">{{translatedObject.postcode}} *</label>
           <input
               type="text"
@@ -84,7 +84,7 @@
               class="text-danger"
           >{{ errors.postcode[0] }}</small>
         </div>
-        <div class="col-span-1">
+        <div class="col-span-6 md:col-span-3 lg:col-span-1">
           <label class="label" for="City">{{translatedObject.cityLabel}} *</label>
           <input
               type="text"
@@ -97,16 +97,8 @@
               v-if="errors && errors.city_name"
               class="text-danger"
           >{{ errors.city_name[0] }}</small>
-          <!--          <select v-model="form.city_id" class="input" id="City">
-                      <option value="" selected disabled>Select city</option>
-                      <option v-for="city in cities" :key="city.id" :value="city.id">{{city.name}}</option>
-                    </select>-->
-          <!--          <small
-                        v-if="errors && errors.city_id"
-                        class="text-danger"
-                    >{{ errors.city_id[0] }}</small>-->
         </div>
-        <div class="col-span-2">
+        <div class="col-span-6 md:col-span-3 lg:col-span-2">
           <label class="label" for="KeyNumber">{{translatedObject.keyNumberLabel}}</label>
           <input
               type="text"
@@ -120,7 +112,7 @@
               class="text-danger"
           >{{ errors.key_number[0] }}</small>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-6 md:col-span-3 lg:col-span-2">
           <label class="label" for="StartDate">{{translatedObject.startDateLabel}} *</label>
           <input
               type="date"
@@ -134,7 +126,7 @@
               class="text-danger"
           >{{ errors.start_date[0] }}</small>
         </div>
-        <div class="col-span-3">
+        <div class="col-span-6 md:col-span-3 lg:col-span-2">
           <label class="label" for="PhoneNumber">{{translatedObject.phoneNumberLabel}}</label>
           <input
               type="text"
@@ -148,7 +140,7 @@
               class="text-danger"
           >{{ errors.phone_number[0] }}</small>
         </div>
-        <div class="col-span-3">
+        <div class="col-span-6 md:col-span-3 lg:col-span-2">
           <label class="label" for="GoogleMapURL">{{translatedObject.googleUrlLabel}}</label>
           <input
               type="text"
@@ -162,93 +154,99 @@
               class="text-danger"
           >{{ errors.google_map_url[0] }}</small>
         </div>
-        <div class="col-span-2">
-          <div class="flex justify-between">
-            <div>
-              <label class="label" for="ImplementationTime">{{translatedObject.impTimeLabel}}</label>
-              <div
-                  class="flex bg-body rounded-full p-1 items-center justify-between"
-              >
-                <button
-                    class="w-10 h-10 flex items-center justify-center rounded-full bg-white"
-                    @click="decrement"
-                >
-                  <svg
-                      width="15"
-                      height="3"
-                      viewBox="0 0 15 3"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                        d="M13.5484 0.0488281H1.45161C0.653226 0.0488281 0 0.702054 0 1.50044C0 2.29883 0.653226 2.95205 1.45161 2.95205H13.5484C14.3468 2.95205 15 2.29883 15 1.50044C15 0.702054 14.3468 0.0488281 13.5484 0.0488281Z"
-                        fill="#FFA384"
-                    />
-                  </svg>
-                </button>
-                <div class="flex space-x-1">
-                  <input v-model.number="hours"  type="number" class="time-input" />
-                  <span>:</span>
-                  <input v-model.number="minutes" type="number" class="time-input" />
-                  <!--                  <span>:</span>
-                                    <input v-model.number="seconds" type="number" class="time-input" />-->
-                </div>
-                <!--                <div class="flex">
-                                  <input type="text" class="time-input" :value="implementationTime" @input="changeTimeFormat($event.target.value)">
-                                  <input type="text" class="time-input" :value="implementationTime" @input="changeTimeFormat($event.target.value)">
-                                </div>-->
+        <div class="col-span-6 md:col-span-3 lg:col-span-2">
+          <label class="label" for="status">{{translatedObject.objectStatus}}</label>
+          <select v-model="form.status" class="input">
+            <option :value="1">Activate</option>
+            <option :value="0">Deactivate</option>
+          </select>
+        </div>
 
-                <!--                <span class="text-xs">00:00 hrs</span>-->
-                <button
-                    class="w-10 h-10 flex items-center justify-center rounded-full bg-white"
-                    @click="increment"
-                >
-                  <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M13.832 7.16732H8.83203V2.16732C8.83203 1.70648 8.4587 1.33398 7.9987 1.33398C7.5387 1.33398 7.16536 1.70648 7.16536 2.16732V7.16732H2.16536C1.70536 7.16732 1.33203 7.53982 1.33203 8.00065C1.33203 8.46148 1.70536 8.83398 2.16536 8.83398H7.16536V13.834C7.16536 14.2948 7.5387 14.6673 7.9987 14.6673C8.4587 14.6673 8.83203 14.2948 8.83203 13.834V8.83398H13.832C14.292 8.83398 14.6654 8.46148 14.6654 8.00065C14.6654 7.53982 14.292 7.16732 13.832 7.16732Z"
-                        fill="#74BDCB"
-                    />
-                    <path
-                        d="M13.832 7.16732H8.83203V2.16732C8.83203 1.70648 8.4587 1.33398 7.9987 1.33398C7.5387 1.33398 7.16536 1.70648 7.16536 2.16732V7.16732H2.16536C1.70536 7.16732 1.33203 7.53982 1.33203 8.00065C1.33203 8.46148 1.70536 8.83398 2.16536 8.83398H7.16536V13.834C7.16536 14.2948 7.5387 14.6673 7.9987 14.6673C8.4587 14.6673 8.83203 14.2948 8.83203 13.834V8.83398H13.832C14.292 8.83398 14.6654 8.46148 14.6654 8.00065C14.6654 7.53982 14.292 7.16732 13.832 7.16732"
-                        stroke="#74BDCB"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div class="w-20">
-              <label class="label" for="PhoneNumber">{{ translatedObject.fromTimeLabel }} </label>
-              <div
-                  class="bg-body rounded-full p-1 flex items-center justify-center h-12"
+        <div class="col-span-6 md:col-span-3 lg:col-span-2 2xl:col-span-1">
+          <label class="label" for="status">{{translatedObject.objectStatus}}</label>
+          <label class="label" for="ImplementationTime">{{translatedObject.impTimeLabel}}</label>
+          <div
+              class="flex bg-body rounded-full p-1 items-center justify-between"
+          >
+            <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-white"
+                @click="decrement"
+            >
+              <svg
+                  width="15"
+                  height="3"
+                  viewBox="0 0 15 3"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
               >
-                <!--                <span class="text-xs">From &nbsp;</span>-->
-                <input v-model.number="fromHours"  type="number" class="time-input" />
-                <span>:</span>
-                <input v-model.number="fromMinutes" type="number" class="time-input" />
-              </div>
+                <path
+                    d="M13.5484 0.0488281H1.45161C0.653226 0.0488281 0 0.702054 0 1.50044C0 2.29883 0.653226 2.95205 1.45161 2.95205H13.5484C14.3468 2.95205 15 2.29883 15 1.50044C15 0.702054 14.3468 0.0488281 13.5484 0.0488281Z"
+                    fill="#FFA384"
+                />
+              </svg>
+            </button>
+            <div class="flex space-x-1">
+              <input v-model.number="hours"  type="number" class="time-input" />
+              <span>:</span>
+              <input v-model.number="minutes" type="number" class="time-input" />
+              <!--                  <span>:</span>
+                                <input v-model.number="seconds" type="number" class="time-input" />-->
             </div>
-            <div class="w-20">
-              <label class="label" for="PhoneNumber">{{ translatedObject.atTimeLabel }} </label>
-              <div
-                  class="bg-body rounded-full p-1 flex items-center justify-center h-12"
+            <!--                <div class="flex">
+                              <input type="text" class="time-input" :value="implementationTime" @input="changeTimeFormat($event.target.value)">
+                              <input type="text" class="time-input" :value="implementationTime" @input="changeTimeFormat($event.target.value)">
+                            </div>-->
+
+            <!--                <span class="text-xs">00:00 hrs</span>-->
+            <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-white"
+                @click="increment"
+            >
+              <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
               >
-                <!--                <span class="text-xs">From &nbsp;</span>-->
-                <input v-model.number="atHours"  type="number" class="time-input" />
-                <span>:</span>
-                <input v-model.number="atMinutes" type="number" class="time-input" />
-              </div>
-            </div>
+                <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M13.832 7.16732H8.83203V2.16732C8.83203 1.70648 8.4587 1.33398 7.9987 1.33398C7.5387 1.33398 7.16536 1.70648 7.16536 2.16732V7.16732H2.16536C1.70536 7.16732 1.33203 7.53982 1.33203 8.00065C1.33203 8.46148 1.70536 8.83398 2.16536 8.83398H7.16536V13.834C7.16536 14.2948 7.5387 14.6673 7.9987 14.6673C8.4587 14.6673 8.83203 14.2948 8.83203 13.834V8.83398H13.832C14.292 8.83398 14.6654 8.46148 14.6654 8.00065C14.6654 7.53982 14.292 7.16732 13.832 7.16732Z"
+                    fill="#74BDCB"
+                />
+                <path
+                    d="M13.832 7.16732H8.83203V2.16732C8.83203 1.70648 8.4587 1.33398 7.9987 1.33398C7.5387 1.33398 7.16536 1.70648 7.16536 2.16732V7.16732H2.16536C1.70536 7.16732 1.33203 7.53982 1.33203 8.00065C1.33203 8.46148 1.70536 8.83398 2.16536 8.83398H7.16536V13.834C7.16536 14.2948 7.5387 14.6673 7.9987 14.6673C8.4587 14.6673 8.83203 14.2948 8.83203 13.834V8.83398H13.832C14.292 8.83398 14.6654 8.46148 14.6654 8.00065C14.6654 7.53982 14.292 7.16732 13.832 7.16732"
+                    stroke="#74BDCB"
+                />
+              </svg>
+            </button>
           </div>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-6 md:col-span-3 lg:col-span-2 xl:col-span-1">
+          <label class="label" for="PhoneNumber">{{ translatedObject.fromTimeLabel }} </label>
+          <div
+              class="bg-body rounded-full p-1 flex items-center justify-center h-12"
+          >
+            <!--                <span class="text-xs">From &nbsp;</span>-->
+            <input v-model.number="fromHours"  type="number" class="time-input" />
+            <span>:</span>
+            <input v-model.number="fromMinutes" type="number" class="time-input" />
+          </div>
+        </div>
+        <div class="col-span-6 md:col-span-3 lg:col-span-2 xl:col-span-1">
+          <label class="label" for="PhoneNumber">{{ translatedObject.atTimeLabel }} </label>
+          <div
+              class="bg-body rounded-full p-1 flex items-center justify-center h-12"
+          >
+            <!--                <span class="text-xs">From &nbsp;</span>-->
+            <input v-model.number="atHours"  type="number" class="time-input" />
+            <span>:</span>
+            <input v-model.number="atMinutes" type="number" class="time-input" />
+          </div>
+        </div>
+
+        <div class="col-span-6 lg:col-span-3">
           <label class="label">{{translatedObject.rotationLabel}}
             <small
                 v-if="errors && errors.rotation_type"
@@ -348,7 +346,7 @@
             </div>
           </div>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-4 xl:col-span-2">
           <label class="label">{{translatedObject.daysLabel}}</label>
           <div class="flex justify-between items-center">
             <!--            <div>
@@ -431,6 +429,7 @@
             <MultiCheckbox v-model:value="form.days" :options="translatedLang.value==='en'?daysOptions:daysOptionsDe" />
           </div>
         </div>
+        <div class="col-span-4"></div>
         <div class="col-span-3 flex flex-col">
           <label class="label">{{translatedObject.uploadPdfLabel}}
             <small
