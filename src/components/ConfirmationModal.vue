@@ -39,6 +39,7 @@
                 </button>
               </div>
               <p class="text-sm text-black mb-2">{{text}}</p>
+              <div><slot name="body"></slot></div>
               <div class="mt-5 flex justify-end">
                 <button type="button" class="btn btn-light-sky mr-5" @click="closeModal">{{closeBtnText}}</button>
                 <button type="button" class="btn btn-sky" @click="SubmitModal">{{btnText}}</button>

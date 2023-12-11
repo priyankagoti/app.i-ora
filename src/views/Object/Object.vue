@@ -1,4 +1,7 @@
 <template>
+  <div>
+
+  </div>
   <div
     class="body-space"
   >
@@ -173,7 +176,8 @@
                     </svg>
                   </button>
                 </RouterLink>
-                <button :disabled="object.employee_objects_count>0" class="p-2" @click="$event => {toggleConfDelete(true);setId(object.id)}">
+                delete
+                <button class="p-2" @click="$event => {toggleConfDelete(true);setId(object.id)}">
                   <svg
                     width="16"
                     height="16"
@@ -214,7 +218,18 @@
     :btnText="translatedObject.deleteObjPopupBtn"
     :closeBtnText="translatedObject.cancelBtn"
     :SubmitModal="deleteObject"
-  />
+  >
+    <template v-slot:body>
+      <div class="flex">
+        <p class="font-bold">Assigned Employee:</p>
+        <ul class="text-sm font-semibold mt-1 ml-1.5">
+          <li>Priyanka Goti</li>
+          <li>Pinal Patel</li>
+        </ul>
+      </div>
+
+    </template>
+    </ConfirmationModal>
 </template>
   
 <script>
