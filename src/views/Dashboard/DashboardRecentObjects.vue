@@ -166,7 +166,6 @@ export default {
       axios.get('dashboard/objects')
       .then(res => {
         this.objects = res.data.object
-        console.log(res)
       })
     }
   }

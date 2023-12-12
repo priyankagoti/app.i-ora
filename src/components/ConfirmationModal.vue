@@ -42,7 +42,7 @@
               <div><slot name="body"></slot></div>
               <div class="mt-5 flex justify-end">
                 <button type="button" class="btn btn-light-sky mr-5" @click="closeModal">{{closeBtnText}}</button>
-                <button type="button" class="btn btn-sky" @click="SubmitModal">{{btnText}}</button>
+                <button type="button" :class="`btn ${disabledClose?'btn-disabled':'btn-sky'}`" @click="SubmitModal" :disabled="disabledClose">{{btnText}}</button>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -68,6 +68,10 @@ export default {
     title: String,
     text: String,
     btnText:  String,
+    disabledClose: {
+      type: Boolean,
+      default: false
+    },
     closeBtnText:  {
       type: String,
       default: "Cancel"

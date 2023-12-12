@@ -91,7 +91,6 @@ export default {
       .then(response => {
         this.totalCustomer = response.data['total customer']
         this.totalEmployees = response.data['total employees']
-        console.log(response)
       })
     }
   }
