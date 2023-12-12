@@ -176,8 +176,7 @@
                     </svg>
                   </button>
                 </RouterLink>
-                delete
-                <button class="p-2" @click="$event => {toggleConfDelete(true);setId(object.id)}">
+                <button class="p-2" @click="$event => {openDeleteConfirmation(object);setId(object.id)}">
                   <svg
                     width="16"
                     height="16"
@@ -213,19 +212,26 @@
   <ConfirmationModal
     :isOpenModal="isConfDeleteOpen"
     :title="translatedObject.objectDeletePopupTitle"
-    :text="translatedObject.objectDeletePopupText"
-    :closeModal="$event => {toggleConfDelete(false)}"
+    :text="`&#x25cf;  ${translatedObject.objectDeletePopupText}`"
+    :closeModal="$event => {toggleConfDelete(false); assignedEmployees=[]; newObjectId=null}"
     :btnText="translatedObject.deleteObjPopupBtn"
     :closeBtnText="translatedObject.cancelBtn"
     :SubmitModal="deleteObject"
+    :disabled-close="!deleteLoading && !newObjectId"
   >
     <template v-slot:body>
       <div class="flex">
-        <p class="font-bold">Assigned Employee:</p>
-        <ul class="text-sm font-semibold mt-1 ml-1.5">
-          <li>Priyanka Goti</li>
-          <li>Pinal Patel</li>
+        <p class="label font-semibold"> &#x25cf; Assigned Employee:</p>
+        <ul class="text-sm font-normal ml-1.5">
+          <li v-for="(employee, index) in assignedEmployees" :key="employee.id">{{index+1}}. {{employee.first_name}} {{employee.last_name}}</li>
         </ul>
+      </div>
+      <div>
+        <label class="label font-semibold">&#x25cf; Objects without this object</label>
+        <select class="input" v-model="this.newObjectId">
+          <option :value="null" selected disabled>Select Customer</option>
+          <option v-for="object in unassignedObjects" :key="object.id" :value="object.id">{{object.client_name}}</option>
+        </select>
       </div>
 
     </template>
@@ -259,7 +265,11 @@ export default {
       objects: [],
       deletingId: '',
       totalCustomer: '',
-      totalEmployees: ''
+      totalEmployees: '',
+      assignedEmployees: [],
+      unassignedObjects:[],
+      newObjectId:null,
+      deleteLoading: false,
     };
   },
   mounted() {
@@ -309,9 +319,6 @@ export default {
       })
       .then(response => {
         this.objects = response.data.object
-        // this.totalCustomer = response.data['total customer']
-        // this.totalEmployees = response.data['total employees']
-
       })
     },
     fetchStatistics(){
@@ -319,18 +326,38 @@ export default {
           .then(response => {
             this.totalCustomer = response.data['total customer']
             this.totalEmployees = response.data['total employees']
-            console.log(response)
+          })
+    },
+    getUnassinedObjects(id){
+      axios.get(`without-delete-object/${id}`)
+          .then(response => {
+            this.unassignedObjects = response.data.objects
           })
     },
     setId(id){
       this.deletingId=id
     },
+    async getAssignedEmployees(id){
+      axios.get(`object-assign-employee/${id}`)
+          .then(response => {
+            this.assignedEmployees=response.data.employees
+          })
+    },
+    async openDeleteConfirmation(object){
+      await this.getAssignedEmployees(object.id)
+      await this.getUnassinedObjects(object.id)
+      this.toggleConfDelete(true)
+    },
     deleteObject(){
-      axios.delete(`object/${this.deletingId}`)
+      this.deleteLoading = true
+      axios.delete(`delete-old-object-assign-new-object/${this.deletingId}/${this.newObjectId}`)
           .then(()=>{
             this.fetch()
             this.toggleConfDelete(false)
+            this.deleteLoading = false
+            this.newObjectId = null
           })
+          .catch(()=> this.deleteLoading = false)
     },
   },
   setup() {

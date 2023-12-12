@@ -142,14 +142,12 @@ export default {
       axios.get('dashboard/employees')
       .then(response=>{
         this.employees = response.data.object
-        console.log(response)
       })
     },
     openAddEmpModal() {
       this.emitter.emit("openAddEmp", true);
     },
     openViewEmpModal(employee){
-      console.log('sfs',employee)
       this.emitter.emit("openViewEmp", {type:'view',employee});
       this.openAddEmpModal()
     },

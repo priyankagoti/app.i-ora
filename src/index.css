@@ -30,6 +30,10 @@
   @apply bg-sky shadow-lg shadow-sky/40
   hover:bg-[#2b99af];
 }
+.btn-disabled{
+  background: #adeefa;
+  color: #484848;
+}
 .choose-file-label {
   @apply bg-sky shadow-lg shadow-sky/40 text-xs font-bold py-2.5 px-5 rounded-full flex items-center
   hover:bg-[#2b99af];
