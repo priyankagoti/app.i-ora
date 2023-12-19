@@ -665,10 +665,10 @@
         >{{ errors.employee_id[0] }}</small>
       </div>
     </div>
-    <div v-if="isEditing" class="grid grid-cols-2 gap-30">
+    <div class="grid grid-cols-2 gap-30">
       <!--              All Task                  -->
       <TaskComponent :objectID="objectID"/>
-      <ObjectHistory :object-history="form.objectHistory" :objectID="objectID"/>
+      <ObjectHistory  v-if="isEditing"  :object-history="form.objectHistory" :objectID="objectID"/>
     </div>
     <div class="mt-5 flex justify-end">
       <button type="button" class="btn btn-light-sky mr-5" @click="$router.push('/customers')">{{translatedObject.cancelBtn}}</button>
