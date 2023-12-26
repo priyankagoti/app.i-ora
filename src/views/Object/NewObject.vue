@@ -163,7 +163,6 @@
         </div>
 
         <div class="col-span-6 md:col-span-3 lg:col-span-2 2xl:col-span-1">
-          <label class="label" for="status">{{translatedObject.objectStatus}}</label>
           <label class="label" for="ImplementationTime">{{translatedObject.impTimeLabel}}</label>
           <div
               class="flex bg-body rounded-full p-1 items-center justify-between"
@@ -667,7 +666,8 @@
     </div>
     <div class="grid grid-cols-2 gap-30">
       <!--              All Task                  -->
-      <TaskComponent :objectID="objectID"/>
+      <TaskComponent ref="taskDetails" :objectID="objectID"/>
+
       <ObjectHistory  v-if="isEditing"  :object-history="form.objectHistory" :objectID="objectID"/>
     </div>
     <div class="mt-5 flex justify-end">
@@ -872,6 +872,7 @@ export default {
         contact_person_name: '',
         contact_person_phone_number: '',
       },
+      task_list_ids: [],
       searchPdf: '',
       pdfs: [],
       hours:0,
@@ -929,6 +930,10 @@ export default {
     }
   },
   mounted() {
+    this.emitter.on("selected-task", (selectedTask) => {
+      // console.log('selectedTask from parent',selectedTask.map(task=>task.id))
+      this.task_list_ids = selectedTask.map(task => task.id)
+    });
     this.hours = this.padNumber(this.hours);
     this.minutes = this.padNumber(this.minutes);
     // this.seconds = this.padNumber(this.seconds);
@@ -1081,6 +1086,11 @@ export default {
       formData.append('rotation_type',this.form.rotation_type)
       formData.append('contact_person_name',this.form.contact_person_name)
       formData.append('contact_person_phone_number',this.form.contact_person_phone_number)
+      if (this.task_list_ids.length > 0) {
+        for (let i = 0; i < this.task_list_ids.length; i++) {
+          formData.append('task_list_ids[]', this.task_list_ids[i])
+        }
+      }
       if(this.form.employee_id){
         for(let i=0; i<this.form.employee_id.length; i++){
           formData.append(`employee_id[${i}]`,this.form.employee_id[i].id)
