@@ -25,7 +25,25 @@
         <span>{{translatedObject.addTaskBtn}}</span>
       </button>
     </div>
+    <div class="flex mb-4">
+      <VueMultiselect
+          v-model="selectedTasks"
+          :close-on-select="true"
+          :options="tasks"
+          class="w-72 mr-4"
+          label="name"
+          multiple
+          placeholder="Select Task"
+          track-by="id"
+          @remove="sendTask"
+          @select="sendTask"
+      >
+      </VueMultiselect>
+      <!--      <button class="btn btn-sky">Add</button>-->
+    </div>
+
     <div class="relative mb-5">
+
       <input
           type="text"
           v-model="search_task"
@@ -47,19 +65,19 @@
       </button>
     </div>
     <div
-        v-for="(task,index) in tasks"
+        v-for="(task,index) in selectedTasks"
         :key="task.id"
-        class="flex items-center py-2 justify-between border-[body]"
         :class="tasks.length-1!==index && 'border-b-2'"
+        class="flex items-center py-2 justify-between border-[body]"
     >
-      <p class="text-sm">{{index+1}}. {{task.name}}</p>
+      <p class="text-sm">{{ index + 1 }}. {{ task.name }}</p>
       <div class="flex">
         <button class="p-2 mr-2" @click="fetchSingleTask(task)">
           <svg
-              width="12"
+              fill="none"
               height="12"
               viewBox="0 0 12 12"
-              fill="none"
+              width="12"
               xmlns="http://www.w3.org/2000/svg"
           >
             <path
@@ -70,10 +88,10 @@
         </button>
         <button class="p-2" @click="$event => {toggleConfDeleteTask(true),this.taskDeletingID=task.id}">
           <svg
-              width="12"
+              fill="none"
               height="12"
               viewBox="0 0 12 12"
-              fill="none"
+              width="12"
               xmlns="http://www.w3.org/2000/svg"
           >
             <path
@@ -84,14 +102,60 @@
         </button>
       </div>
       <ConfirmationModal
-          :isOpenModal="isConfDeleteTask"
-          title="Do you really want to delete the Task?"
-          text="Please enter “Delete”"
-          :closeModal="$event => toggleConfDeleteTask(false)"
-          btnText="Delete"
           :SubmitModal="deleteTask"
+          :closeModal="$event => toggleConfDeleteTask(false)"
+          :isOpenModal="isConfDeleteTask"
+          btnText="Delete"
+          text="Please enter “Delete”"
+          title="Do you really want to delete the Task?"
       />
     </div>
+    <!--    <div
+            v-for="(task,index) in tasks"
+            :key="task.id"
+            class="flex items-center py-2 justify-between border-[body]"
+            :class="tasks.length-1!==index && 'border-b-2'"
+        >
+          <p class="text-sm">{{index+1}}. {{task.name}}</p>
+          <div class="flex">
+            <button class="p-2 mr-2" @click="fetchSingleTask(task)">
+              <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                    d="M6.35674 2.32816L0.613909 8.07099C0.402294 8.283 0.268554 8.56031 0.234403 8.85791L0.00558271 10.8671C-0.0093331 11.0083 0.00572183 11.1512 0.0497644 11.2863C0.0938069 11.4213 0.165846 11.5456 0.261178 11.6509C0.35651 11.7563 0.47299 11.8403 0.603011 11.8976C0.733032 11.9548 0.87367 11.984 1.01574 11.9833H1.13294L3.14209 11.7544C3.4385 11.7201 3.71521 11.5887 3.92901 11.3805L9.67184 5.6321L6.35674 2.32816ZM11.614 1.84262L10.1574 0.385983C10.0355 0.263644 9.89071 0.16657 9.73125 0.100334C9.57179 0.0340967 9.40082 0 9.22815 0C9.05548 0 8.88451 0.0340967 8.72504 0.100334C8.56558 0.16657 8.42077 0.263644 8.29892 0.385983L6.94832 1.73658L10.2634 5.05168L11.614 3.70108C11.7364 3.57923 11.8334 3.43442 11.8997 3.27496C11.9659 3.11549 12 2.94452 12 2.77185C12 2.59918 11.9659 2.42821 11.8997 2.26875C11.8334 2.10928 11.7364 1.96447 11.614 1.84262Z"
+                    fill="#15C787"
+                />
+              </svg>
+            </button>
+            <button class="p-2" @click="$event => {toggleConfDeleteTask(true),this.taskDeletingID=task.id}">
+              <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                    d="M11.4 1.8H0.6C0.44087 1.8 0.288258 1.86321 0.175736 1.97574C0.0632141 2.08826 0 2.24087 0 2.4C0 2.55913 0.0632141 2.71174 0.175736 2.82426C0.288258 2.93679 0.44087 3 0.6 3H1.8V10.2C1.8 10.6774 1.98964 11.1352 2.32721 11.4728C2.66477 11.8104 3.12261 12 3.6 12H8.4C8.87739 12 9.33523 11.8104 9.67279 11.4728C10.0104 11.1352 10.2 10.6774 10.2 10.2V3H11.4C11.5591 3 11.7117 2.93679 11.8243 2.82426C11.9368 2.71174 12 2.55913 12 2.4C12 2.24087 11.9368 2.08826 11.8243 1.97574C11.7117 1.86321 11.5591 1.8 11.4 1.8ZM5.4 8.4C5.4 8.55913 5.33679 8.71174 5.22426 8.82426C5.11174 8.93679 4.95913 9 4.8 9C4.64087 9 4.48826 8.93679 4.37574 8.82426C4.26321 8.71174 4.2 8.55913 4.2 8.4V5.4C4.2 5.24087 4.26321 5.08826 4.37574 4.97574C4.48826 4.86321 4.64087 4.8 4.8 4.8C4.95913 4.8 5.11174 4.86321 5.22426 4.97574C5.33679 5.08826 5.4 5.24087 5.4 5.4V8.4ZM7.8 8.4C7.8 8.55913 7.73679 8.71174 7.62426 8.82426C7.51174 8.93679 7.35913 9 7.2 9C7.04087 9 6.88826 8.93679 6.77574 8.82426C6.66321 8.71174 6.6 8.55913 6.6 8.4V5.4C6.6 5.24087 6.66321 5.08826 6.77574 4.97574C6.88826 4.86321 7.04087 4.8 7.2 4.8C7.35913 4.8 7.51174 4.86321 7.62426 4.97574C7.73679 5.08826 7.8 5.24087 7.8 5.4V8.4ZM4.8 1.2H7.2C7.35913 1.2 7.51174 1.13679 7.62426 1.02426C7.73679 0.911742 7.8 0.75913 7.8 0.6C7.8 0.44087 7.73679 0.288258 7.62426 0.175736C7.51174 0.0632141 7.35913 0 7.2 0H4.8C4.64087 0 4.48826 0.0632141 4.37574 0.175736C4.26321 0.288258 4.2 0.44087 4.2 0.6C4.2 0.75913 4.26321 0.911742 4.37574 1.02426C4.48826 1.13679 4.64087 1.2 4.8 1.2Z"
+                    fill="#FFA384"
+                />
+              </svg>
+            </button>
+          </div>
+          <ConfirmationModal
+              :isOpenModal="isConfDeleteTask"
+              title="Do you really want to delete the Task?"
+              text="Please enter “Delete”"
+              :closeModal="$event => toggleConfDeleteTask(false)"
+              btnText="Delete"
+              :SubmitModal="deleteTask"
+          />
+        </div>-->
     <TransitionRoot appear :show="isAddTaskModalOpen" as="template">
       <Dialog as="div" @close="$event => toggleAddTaskModal(false)" class="relative z-30">
         <TransitionChild
@@ -119,7 +183,8 @@
               <DialogPanel class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div class="flex items-center justify-between mb-5 pb-5 border-b border-body">
                   <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? 'Edit Tasks' :translatedObject.addTaskBtn }}</DialogTitle>
-                  <button @click="$event => toggleAddTaskModal(false)" class="w-7 h-7 bg-body rounded-md flex items-center justify-center">
+                  <button class="w-7 h-7 bg-body rounded-md flex items-center justify-center"
+                          @click="toggleAddTaskModal(false)">
                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                           fill-rule="evenodd"
@@ -139,9 +204,15 @@
                       :placeholder="translatedObject.enterTask"
                       class="input"
                   />
+                  <small
+                      v-if="taskErrors && taskErrors.name"
+                      class="text-danger"
+                  >{{ taskErrors.name[0] }}</small>
                 </div>
                 <div class="mt-5 flex justify-end">
-                  <button type="button" class="btn btn-light-sky mr-5" @click="$event => {toggleAddTaskModal(false), this.task={}}">{{translatedObject.cancelBtn}}</button>
+                  <button class="btn btn-light-sky mr-5" type="button" @click="toggleAddTaskModal(false)">
+                    {{ translatedObject.cancelBtn }}
+                  </button>
                   <button type="button" class="btn btn-sky" @click="isTaskEditing?editTask():addTask()">
                     <SpinnerComponent v-if="loading"/>
                     {{translatedObject.saveBtn}}</button>
@@ -157,9 +228,11 @@
 <script>
 import axios from "axios";
 import {ref} from "vue";
-import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle} from "@headlessui/vue";
+import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot} from "@headlessui/vue";
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
 import SpinnerComponent from "../../components/Spinner.vue";
+import VueMultiselect from 'vue-multiselect'
+import "vue-multiselect/dist/vue-multiselect.css"
 
 
 export default {
@@ -172,6 +245,7 @@ export default {
     DialogTitle,
     ConfirmationModal,
     SpinnerComponent,
+    VueMultiselect,
   },
   props:['objectID'],
   data(){
@@ -180,9 +254,12 @@ export default {
         name:'',
       },
       tasks: [],
+      selectedTasks: [],
       search_task:'',
       taskDeletingID: '',
       loading: false,
+      taskErrors: {},
+      isAddTaskModalOpen: false
     }
   },
   computed:{
@@ -194,26 +271,38 @@ export default {
     this.fetchTask()
   },
   methods:{
+    toggleAddTaskModal(s) {
+      this.isAddTaskModalOpen = s;
+      this.taskErrors = {}
+      this.task = {}
+    },
+    sendTask() {
+      this.emitter.emit("selected-task", this.selectedTasks);
+    },
     addTask(){
       // eslint-disable-next-line no-undef
       this.loading = true
-      axios.post('tasks',{
+      axios.post('task-lists', {
         name: this.task.name,
-        object_id: this.objectID
       })
-          .then(() => {
-            this.task={}
+          .then((response) => {
+            const addedTask = response.data.data
+            const newTask = {id: addedTask.id, name: addedTask.name}
+            console.log('newTask after', newTask)
+            this.selectedTasks.push(newTask)
             this.toggleAddTaskModal(false)
             this.loading = false
             this.fetchTask()
-          }).catch(()=>this.loading = false)
+          }).catch((error) => {
+        this.taskErrors = error.response.data.errors
+        this.loading = false
+      })
     },
     fetchTask(){
       // eslint-disable-next-line no-undef
-      axios.get('tasks',{
+      axios.get('task-lists', {
         params:{
           name: this.search_task,
-          object_id: this.objectID
         }
       })
           .then(response => {
@@ -224,49 +313,51 @@ export default {
       // this.task = task
       this.toggleAddTaskModal(true)
       // eslint-disable-next-line no-undef
-      axios.get(`tasks/${task.id}`)
-          .then((response) => {
-            this.task = response.data.task
-          })
+      this.task = task
+      // axios.get(`task-lists/${task.id}`)
+      //     .then((response) => {
+      //       this.task = response.data.task
+      //     })
     },
     editTask(){
       // eslint-disable-next-line no-undef
       this.loading = true
-      axios.put(`tasks/${this.task.id}`,{
+      axios.put(`task-lists/${this.task.id}`, {
         name: this.task.name,
-        object_id: this.objectID
       })
           .then(() => {
             this.toggleAddTaskModal(false)
-            this.task={}
             this.loading = false
             this.fetchTask()
-          }).catch(()=>this.loading = false)
+          }).catch((error) => {
+        this.taskErrors = error.response.data.errors
+        this.loading = false
+      })
     },
     deleteTask(){
+      this.selectedTasks = this.selectedTasks.filter(task => task.id !== this.taskDeletingID)
+      this.toggleConfDeleteTask(false)
       // eslint-disable-next-line no-undef
-      axios.delete(`tasks/${this.taskDeletingID}`)
-          .then(() => {
-            this.toggleConfDeleteTask(false)
-            this.fetchTask()
-          })
+      // axios.delete(`tasks/${this.taskDeletingID}`)
+      //     .then(() => {
+      //       this.toggleConfDeleteTask(false)
+      //       this.fetchTask()
+      //     })
     },
   },
   setup() {
     let isConfDeleteTask= ref(false);
-    let isAddTaskModalOpen = ref(false);
+    // let isAddTaskModalOpen = ref(false);
     // let isCompleteTaskModalOpen = ref(false);
     let toggleConfDeleteTask = (s) => {
       isConfDeleteTask.value = s;
     }
-    let toggleAddTaskModal = (s) => {
-      isAddTaskModalOpen.value = s;
-    }
+
     // let toggleCompleteTaskModal = (s) => {
     //   isCompleteTaskModalOpen.value = s;
     // }
     return {
-      isAddTaskModalOpen, toggleAddTaskModal,
+      // isAddTaskModalOpen, toggleAddTaskModal,
       // isCompleteTaskModalOpen, toggleCompleteTaskModal,
       isConfDeleteTask,toggleConfDeleteTask,
     }
