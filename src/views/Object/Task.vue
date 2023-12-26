@@ -275,9 +275,21 @@ export default {
       this.isAddTaskModalOpen = s;
       this.taskErrors = {}
       this.task = {}
+      // this.fetchTask()
     },
     sendTask() {
       this.emitter.emit("selected-task", this.selectedTasks);
+    },
+    async fetchTask() {
+      // eslint-disable-next-line no-undef
+      await axios.get('task-lists', {
+        params: {
+          name: this.search_task,
+        }
+      })
+          .then(response => {
+            this.tasks = response.data.data
+          })
     },
     addTask(){
       // eslint-disable-next-line no-undef
@@ -288,7 +300,6 @@ export default {
           .then((response) => {
             const addedTask = response.data.data
             const newTask = {id: addedTask.id, name: addedTask.name}
-            console.log('newTask after', newTask)
             this.selectedTasks.push(newTask)
             this.toggleAddTaskModal(false)
             this.loading = false
@@ -298,22 +309,12 @@ export default {
         this.loading = false
       })
     },
-    fetchTask(){
-      // eslint-disable-next-line no-undef
-      axios.get('task-lists', {
-        params:{
-          name: this.search_task,
-        }
-      })
-          .then(response => {
-            this.tasks = response.data.data
-          })
-    },
+
     fetchSingleTask(task){
       // this.task = task
       this.toggleAddTaskModal(true)
       // eslint-disable-next-line no-undef
-      this.task = task
+      this.task = {...task}
       // axios.get(`task-lists/${task.id}`)
       //     .then((response) => {
       //       this.task = response.data.task
@@ -325,10 +326,12 @@ export default {
       axios.put(`task-lists/${this.task.id}`, {
         name: this.task.name,
       })
-          .then(() => {
+          .then(async () => {
             this.toggleAddTaskModal(false)
             this.loading = false
-            this.fetchTask()
+            await this.fetchTask()
+            const selectedIds = this.selectedTasks.map(task => task.id)
+            this.selectedTasks = this.tasks.filter(task => selectedIds.includes(task.id));
           }).catch((error) => {
         this.taskErrors = error.response.data.errors
         this.loading = false
