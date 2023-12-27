@@ -1,68 +1,73 @@
 <template>
   <div class="p-5 bg-white rounded-[20px]">
     <div class="flex items-center justify-between mb-5">
-      <h4 class="text-xl font-bold">{{translatedObject.allTaskTitle}}</h4>
+      <h4 class="text-xl font-bold">All Tasks</h4>
       <button class="btn btn-light-sky" @click="$event => toggleAddTaskModal(true)">
         <svg
             class="mr-3"
-            width="11"
+            fill="none"
             height="12"
             viewBox="0 0 11 12"
-            fill="none"
+            width="11"
             xmlns="http://www.w3.org/2000/svg"
         >
           <path
-              fill-rule="evenodd"
               clip-rule="evenodd"
               d="M9.875 5.375H6.125V1.625C6.125 1.27938 5.845 1 5.5 1C5.155 1 4.875 1.27938 4.875 1.625V5.375H1.125C0.78 5.375 0.5 5.65438 0.5 6C0.5 6.34562 0.78 6.625 1.125 6.625H4.875V10.375C4.875 10.7206 5.155 11 5.5 11C5.845 11 6.125 10.7206 6.125 10.375V6.625H9.875C10.22 6.625 10.5 6.34562 10.5 6C10.5 5.65438 10.22 5.375 9.875 5.375"
               fill="black"
+              fill-rule="evenodd"
           />
           <path
               d="M9.875 5.375H6.125V1.625C6.125 1.27938 5.845 1 5.5 1C5.155 1 4.875 1.27938 4.875 1.625V5.375H1.125C0.78 5.375 0.5 5.65438 0.5 6C0.5 6.34562 0.78 6.625 1.125 6.625H4.875V10.375C4.875 10.7206 5.155 11 5.5 11C5.845 11 6.125 10.7206 6.125 10.375V6.625H9.875C10.22 6.625 10.5 6.34562 10.5 6C10.5 5.65438 10.22 5.375 9.875 5.375"
               stroke="black"
           />
         </svg>
-        <span>{{translatedObject.addTaskBtn}}</span>
+        <span>Add Tasks</span>
       </button>
     </div>
-    <div class="flex items-center justify-items-center mb-4 w-full">
-      <VueMultiselect
-          v-model="selectedTask"
-          :close-on-select="true"
-          :options="tasks"
-          class="mr-4"
-          label="name"
-          placeholder="Select Task"
-          track-by="id"
+    <div class="mb-4">
 
-      >
-      </VueMultiselect>
-      <button class="btn btn-sky" @click="sendTask">Add</button>
+      <div class="flex mb-1 items-center justify-items-center w-full">
+        <VueMultiselect
+            v-model="selectedTask"
+            :close-on-select="true"
+            :options="allTasks"
+            class="mr-2"
+            label="name"
+            placeholder="Select Task"
+            track-by="id"
+        >
+        </VueMultiselect>
+        <button class="btn btn-sky" @click="addTask('selected')">Add</button>
+      </div>
+      <small
+          class="text-danger"
+      >{{ addErrorMsg }}</small>
     </div>
 
     <div class="relative mb-5">
-
       <input
-          type="text"
           v-model="search_task"
-          :placeholder="translatedObject.taskSearchbar"
           class="w-full text-xs py-4 pl-5 pr-20 bg-[#E7F2F8] rounded-full"
+          placeholder="Task Search"
+          type="text"
+          @input="fetchTask"
       />
       <button
           class="w-10 h-10 flex items-center justify-center absolute top-1 right-1 bg-white rounded-full"
       >
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+        <svg fill="none" height="13" viewBox="0 0 16 16" width="13">
           <path
-              fill-rule="evenodd"
               clip-rule="evenodd"
               d="M11.161 12.622C9.99752 13.4847 8.55708 13.9949 6.99747 13.9949C3.13289 13.9949 0 10.8621 0 6.99747C0 3.13286 3.13286 0 6.99747 0C10.8621 0 13.9949 3.13282 13.9949 6.99743C13.9949 8.56773 13.4777 10.0172 12.6043 11.1848L15.7043 14.2848L15.7101 14.2906C16.0989 14.6826 16.0963 15.3155 15.7043 15.7043C15.6109 15.7969 15.5001 15.8702 15.3783 15.92C15.2565 15.9697 15.1261 15.995 14.9946 15.9942C14.863 15.995 14.7326 15.9697 14.6108 15.92C14.489 15.8702 14.3782 15.7969 14.2848 15.7043L11.161 12.622ZM10.4376 10.6234C9.5415 11.4739 8.33042 11.9956 6.99747 11.9956C4.23703 11.9956 1.99929 9.7579 1.99929 6.99747C1.99929 4.23703 4.23707 1.99929 6.99747 1.99929C9.7579 1.99929 11.9956 4.23703 11.9956 6.99747C11.9956 8.34088 11.4656 9.56049 10.6033 10.4586C10.5677 10.4868 10.5336 10.5176 10.5012 10.5512C10.4787 10.5745 10.4575 10.5986 10.4376 10.6234Z"
               fill="#74BDCB"
+              fill-rule="evenodd"
           />
         </svg>
       </button>
     </div>
     <div
-        v-for="(task,index) in filterSelectedTask"
+        v-for="(task,index) in tasks"
         :key="task.id"
         :class="tasks.length-1!==index && 'border-b-2'"
         class="flex items-center py-2 justify-between border-[body]"
@@ -107,8 +112,8 @@
           title="Do you really want to delete the Task?"
       />
     </div>
-    <TransitionRoot appear :show="isAddTaskModalOpen" as="template">
-      <Dialog as="div" @close="$event => toggleAddTaskModal(false)" class="relative z-30">
+    <TransitionRoot :show="isAddTaskModalOpen" appear as="template">
+      <Dialog as="div" class="relative z-30" @close="$event => toggleAddTaskModal(false)">
         <TransitionChild
             as="template"
             enter="duration-300 ease-out"
@@ -131,29 +136,31 @@
                 leave-from="opacity-100 scale-100"
                 leave-to="opacity-0 scale-95"
             >
-              <DialogPanel class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <DialogPanel
+                  class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div class="flex items-center justify-between mb-5 pb-5 border-b border-body">
-                  <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? 'Edit Tasks' :translatedObject.addTaskBtn }}</DialogTitle>
+                  <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? 'Edit' : 'Add' }} Tasks
+                  </DialogTitle>
                   <button class="w-7 h-7 bg-body rounded-md flex items-center justify-center"
-                          @click="toggleAddTaskModal(false)">
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          @click="$event => toggleAddTaskModal(false)">
+                    <svg fill="none" height="13" viewBox="0 0 13 13" width="13" xmlns="http://www.w3.org/2000/svg">
                       <path
-                          fill-rule="evenodd"
                           clip-rule="evenodd"
                           d="M7.42079 6.08931L11.7176 1.73259C12.1089 1.33579 12.1089 0.694406 11.7176 0.297603C11.3262 -0.0992008 10.6937 -0.0992008 10.3023 0.297603L6.00555 4.65432L1.70876 0.297603C1.31741 -0.0992008 0.684854 -0.0992008 0.293509 0.297603C-0.0978363 0.694406 -0.0978363 1.33579 0.293509 1.73259L4.5903 6.08931L0.293509 10.446C-0.0978363 10.8428 -0.0978363 11.4842 0.293509 11.881C0.488681 12.0789 0.744907 12.1784 1.00113 12.1784C1.25736 12.1784 1.51358 12.0789 1.70876 11.881L6.00555 7.52429L10.3023 11.881C10.4975 12.0789 10.7537 12.1784 11.01 12.1784C11.2662 12.1784 11.5224 12.0789 11.7176 11.881C12.1089 11.4842 12.1089 10.8428 11.7176 10.446L7.42079 6.08931Z"
                           fill="#18203A"
+                          fill-rule="evenodd"
                       />
                     </svg>
                   </button>
                 </div>
                 <div>
-                  <label class="label" for="Address">{{translatedObject.taskLabel}} </label>
+                  <label class="label" for="Address">Task </label>
                   <input
-                      type="text"
                       id="Task"
                       v-model="task.name"
-                      :placeholder="translatedObject.enterTask"
                       class="input"
+                      placeholder="Enter your task"
+                      type="text"
                   />
                   <small
                       v-if="taskErrors && taskErrors.name"
@@ -161,12 +168,11 @@
                   >{{ taskErrors.name[0] }}</small>
                 </div>
                 <div class="mt-5 flex justify-end">
-                  <button class="btn btn-light-sky mr-5" type="button" @click="toggleAddTaskModal(false)">
-                    {{ translatedObject.cancelBtn }}
+                  <button class="btn btn-light-sky mr-5" type="button"
+                          @click="$event => {toggleAddTaskModal(false), this.task={}}">Cancel
                   </button>
-                  <button type="button" class="btn btn-sky" @click="isTaskEditing?editTask():addTask()">
-                    <SpinnerComponent v-if="loading"/>
-                    {{translatedObject.saveBtn}}</button>
+                  <button class="btn btn-sky" type="button" @click="isTaskEditing?editTask():addTask('new')">Save
+                  </button>
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -180,70 +186,77 @@
 import axios from "axios";
 import {ref} from "vue";
 import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot} from "@headlessui/vue";
-import ConfirmationModal from "../../components/ConfirmationModal.vue";
-import SpinnerComponent from "../../components/Spinner.vue";
 import VueMultiselect from 'vue-multiselect'
 import "vue-multiselect/dist/vue-multiselect.css"
+import ConfirmationModal from "../../components/ConfirmationModal.vue";
+
 
 export default {
-  name:'TaskComponent',
-  components:{
+  name: 'UpdateCustomerTask',
+  components: {
     TransitionRoot,
     TransitionChild,
     Dialog,
     DialogPanel,
     DialogTitle,
     ConfirmationModal,
-    SpinnerComponent,
     VueMultiselect,
   },
-  data(){
-    return{
-      task:{
-        name:'',
+  props: ['objectID'],
+  data() {
+    return {
+      task: {
+        name: '',
       },
-      tasks: [],
-      selectedTasks: [],
       selectedTask: null,
-      search_task:'',
+      allTasks: [],
+      tasks: [],
+      search_task: '',
       taskDeletingID: '',
-      loading: false,
+      isAddTaskModalOpen: false,
+      addErrorMsg: '',
       taskErrors: {},
-      isAddTaskModalOpen: false
     }
   },
-  computed:{
+  computed: {
     isTaskEditing() {
       return !!this.task.id
-    },
-    filterSelectedTask() {
-      if (this.search_task.length > 0) {
-        return this.selectedTasks.filter((task) => task?.name.toLowerCase().includes(this.search_task.toLowerCase()));
-      } else {
-        return this.selectedTasks
-      }
-    },
+    }
   },
-  mounted() {
+  async mounted() {
+    await this.fetchAllTask()
     this.fetchTask()
   },
-  methods:{
-    toggleAddTaskModal(s) {
-      this.isAddTaskModalOpen = s;
-      this.taskErrors = {}
-      this.task = {}
-    },
-    sendTask() {
-      if (this.selectedTask) {
-        this.selectedTasks.push(this.selectedTask)
-        this.selectedTasks = [...new Map(this.selectedTasks.filter(Boolean).map(item =>
-            [item['id'], item])).values()];
-        console.log('sdsfd', this.selectedTasks)
-        this.emitter.emit("selected-task", this.selectedTasks);
-        this.selectedTask = null
+  methods: {
+    addTask(addType) {
+      // eslint-disable-next-line no-undef
+      const payload = {
+        object_id: this.objectID
       }
+      if (this.selectedTask || this.task?.name?.length > 0) {
+        this.addErrorMsg = ''
+        if (addType === 'selected') {
+          Object.assign(payload, {task_list_id: this.selectedTask.id})
+        } else if (addType === 'new') {
+          Object.assign(payload, {name: this.task.name})
+        }
+        console.log('payload', payload)
+        axios.post('tasks', payload)
+            .then(() => {
+              this.toggleAddTaskModal(false)
+              this.fetchTask()
+              this.fetchAllTask()
+            })
+            .catch((error) => {
+              this.taskErrors = error.response.data.errors
+              this.loading = false
+            })
+      } else {
+        this.addErrorMsg = 'You should select task or add new task name.'
+      }
+
     },
-    async fetchTask() {
+    async fetchAllTask() {
       // eslint-disable-next-line no-undef
       await axios.get('task-lists', {
         params: {
@@ -251,63 +264,65 @@ export default {
         }
       })
           .then(response => {
+            this.allTasks = response.data.data
+          })
+    },
+    fetchTask() {
+      // eslint-disable-next-line no-undef
+      axios.get('tasks', {
+        params: {
+          name: this.search_task,
+          object_id: this.objectID
+        }
+      })
+          .then(response => {
             this.tasks = response.data.data
           })
     },
-    addTask(){
-      // eslint-disable-next-line no-undef
-      this.loading = true
-      axios.post('task-lists', {
-        name: this.task.name,
-      })
-          .then((response) => {
-            const addedTask = response.data.data
-            const newTask = {id: addedTask.id, name: addedTask.name}
-            this.selectedTasks.push(newTask)
-            this.emitter.emit("selected-task", this.selectedTasks);
-            this.toggleAddTaskModal(false)
-            this.loading = false
-            this.fetchTask()
-          }).catch((error) => {
-        this.taskErrors = error.response.data.errors
-        this.loading = false
-      })
-    },
-
-    fetchSingleTask(task){
+    fetchSingleTask(task) {
+      // this.task = task
       this.toggleAddTaskModal(true)
-      this.task = {...task}
-    },
-    editTask(){
       // eslint-disable-next-line no-undef
-      this.loading = true
-      axios.put(`task-lists/${this.task.id}`, {
-        name: this.task.name,
-      })
-          .then(async () => {
-            this.toggleAddTaskModal(false)
-            this.loading = false
-            await this.fetchTask()
-            const selectedIds = this.selectedTasks.map(task => task.id)
-            this.selectedTasks = this.tasks.filter(task => selectedIds.includes(task.id));
-          }).catch((error) => {
-        this.taskErrors = error.response.data.errors
-        this.loading = false
-      })
+      axios.get(`tasks/${task.id}`)
+          .then((response) => {
+            this.task = response.data.task
+          })
     },
-    deleteTask(){
-      this.selectedTasks = this.selectedTasks.filter(task => task.id !== this.taskDeletingID)
-      this.emitter.emit("selected-task", this.selectedTasks);
-      this.toggleConfDeleteTask(false)
+    editTask() {
+      // eslint-disable-next-line no-undef
+      axios.put(`tasks/${this.task.id}`, {
+        name: this.task.name,
+        object_id: this.objectID
+      })
+          .then(() => {
+            this.toggleAddTaskModal(false)
+            this.task = {}
+            this.fetchTask()
+          })
+    },
+    deleteTask() {
+      // eslint-disable-next-line no-undef
+      axios.delete(`tasks/${this.taskDeletingID}`)
+          .then(() => {
+            this.toggleConfDeleteTask(false)
+            this.fetchTask()
+          })
+    },
+    toggleAddTaskModal(s) {
+      this.isAddTaskModalOpen = s;
+      this.taskErrors = {}
+      this.task = {}
+      this.selectedTask = null
     },
   },
   setup() {
-    let isConfDeleteTask= ref(false);
+    let isConfDeleteTask = ref(false);
     let toggleConfDeleteTask = (s) => {
       isConfDeleteTask.value = s;
     }
     return {
-      isConfDeleteTask,toggleConfDeleteTask,
+      // isCompleteTaskModalOpen, toggleCompleteTaskModal,
+      isConfDeleteTask, toggleConfDeleteTask,
     }
   }
 
