@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 bg-white rounded-[20px]">
     <div class="flex items-center justify-between mb-5">
-      <h4 class="text-xl font-bold">All Tasks</h4>
+      <h4 class="text-xl font-bold">{{translatedObject.allTaskTitle}}</h4>
       <button class="btn btn-light-sky" @click="$event => toggleAddTaskModal(true)">
         <svg
             class="mr-3"
@@ -22,7 +22,7 @@
               stroke="black"
           />
         </svg>
-        <span>Add Tasks</span>
+        <span>{{translatedObject.addTaskLabel}}</span>
       </button>
     </div>
     <div class="mb-4">
@@ -38,7 +38,9 @@
             track-by="id"
         >
         </VueMultiselect>
-        <button class="btn btn-sky" @click="addTask('selected')">Add</button>
+        <button class="btn btn-sky" @click="addTask('selected')" :disabled="loading">
+          <SpinnerComponent v-if="loading"/>
+          {{ translatedObject.add }}</button>
       </div>
       <small
           class="text-danger"
@@ -49,7 +51,7 @@
       <input
           v-model="search_task"
           class="w-full text-xs py-4 pl-5 pr-20 bg-[#E7F2F8] rounded-full"
-          placeholder="Task Search"
+          :placeholder="translatedObject.taskSearchbar"
           type="text"
           @input="fetchTask"
       />
@@ -139,7 +141,7 @@
               <DialogPanel
                   class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div class="flex items-center justify-between mb-5 pb-5 border-b border-body">
-                  <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? 'Edit' : 'Add' }} Tasks
+                  <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? translatedObject.editTaskLabel :translatedObject.addTaskLabel }}
                   </DialogTitle>
                   <button class="w-7 h-7 bg-body rounded-md flex items-center justify-center"
                           @click="$event => toggleAddTaskModal(false)">
@@ -154,12 +156,12 @@
                   </button>
                 </div>
                 <div>
-                  <label class="label" for="Address">Task </label>
+                  <label class="label" for="Address">{{translatedObject.taskLabel}}</label>
                   <input
                       id="Task"
                       v-model="task.name"
                       class="input"
-                      placeholder="Enter your task"
+                      :placeholder="translatedObject.enterTask"
                       type="text"
                   />
                   <small
@@ -169,9 +171,11 @@
                 </div>
                 <div class="mt-5 flex justify-end">
                   <button class="btn btn-light-sky mr-5" type="button"
-                          @click="$event => {toggleAddTaskModal(false), this.task={}}">Cancel
+                          @click="$event => {toggleAddTaskModal(false)}">{{translatedObject.cancelBtn}}
                   </button>
-                  <button class="btn btn-sky" type="button" @click="isTaskEditing?editTask():addTask('new')">Save
+                  <button class="btn btn-sky" type="button" @click="isTaskEditing?editTask():addTask('new')" :disabled="loading">
+                    <SpinnerComponent v-if="loading"/>
+                     {{translatedObject.saveSignBtn}}
                   </button>
                 </div>
               </DialogPanel>
@@ -189,11 +193,13 @@ import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot} from 
 import VueMultiselect from 'vue-multiselect'
 import "vue-multiselect/dist/vue-multiselect.css"
 import ConfirmationModal from "../../components/ConfirmationModal.vue";
+import SpinnerComponent from "@/components/Spinner.vue";
 
 
 export default {
   name: 'UpdateCustomerTask',
   components: {
+    SpinnerComponent,
     TransitionRoot,
     TransitionChild,
     Dialog,
@@ -216,6 +222,7 @@ export default {
       isAddTaskModalOpen: false,
       addErrorMsg: '',
       taskErrors: {},
+      loading:false,
     }
   },
   computed: {
@@ -228,34 +235,6 @@ export default {
     this.fetchTask()
   },
   methods: {
-    addTask(addType) {
-      // eslint-disable-next-line no-undef
-      const payload = {
-        object_id: this.objectID
-      }
-      if (this.selectedTask || this.task?.name?.length > 0) {
-        this.addErrorMsg = ''
-        if (addType === 'selected') {
-          Object.assign(payload, {task_list_id: this.selectedTask.id})
-        } else if (addType === 'new') {
-          Object.assign(payload, {name: this.task.name})
-        }
-        console.log('payload', payload)
-        axios.post('tasks', payload)
-            .then(() => {
-              this.toggleAddTaskModal(false)
-              this.fetchTask()
-              this.fetchAllTask()
-            })
-            .catch((error) => {
-              this.taskErrors = error.response.data.errors
-              this.loading = false
-            })
-      } else {
-        this.addErrorMsg = 'You should select task or add new task name.'
-      }
-
-    },
     async fetchAllTask() {
       // eslint-disable-next-line no-undef
       await axios.get('task-lists', {
@@ -288,7 +267,40 @@ export default {
             this.task = response.data.task
           })
     },
+    addTask(addType) {
+      // eslint-disable-next-line no-undef
+      this.loading = true
+      const payload = {
+        object_id: this.objectID
+      }
+      if (this.selectedTask || this.task?.name?.length > 0) {
+        this.addErrorMsg = ''
+
+        if (addType === 'selected') {
+          Object.assign(payload, {task_list_id: this.selectedTask.id})
+        } else if (addType === 'new') {
+          Object.assign(payload, {name: this.task.name})
+        }
+        console.log('payload', payload)
+        axios.post('tasks', payload)
+            .then(() => {
+              this.toggleAddTaskModal(false)
+              this.fetchTask()
+              this.fetchAllTask()
+              this.loading = false
+            })
+            .catch((error) => {
+              this.taskErrors = error.response.data.errors
+              this.loading = false
+            })
+      } else {
+        this.addErrorMsg = 'You should select task or add new task name.'
+        this.loading = false
+      }
+
+    },
     editTask() {
+      this.loading = true
       // eslint-disable-next-line no-undef
       axios.put(`tasks/${this.task.id}`, {
         name: this.task.name,
@@ -298,6 +310,11 @@ export default {
             this.toggleAddTaskModal(false)
             this.task = {}
             this.fetchTask()
+            this.loading = false
+          })
+          .catch((error) => {
+            this.taskErrors = error.response.data.errors
+            this.loading = false
           })
     },
     deleteTask() {

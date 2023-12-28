@@ -22,7 +22,7 @@
               stroke="black"
           />
         </svg>
-        <span>{{translatedObject.addTaskBtn}}</span>
+        <span>{{translatedObject.addTaskLabel}}</span>
       </button>
     </div>
     <div class="flex items-center justify-items-center mb-4 w-full">
@@ -37,7 +37,7 @@
 
       >
       </VueMultiselect>
-      <button class="btn btn-sky" @click="sendTask">Add</button>
+      <button class="btn btn-sky" @click="sendTask">{{ translatedObject.add }}</button>
     </div>
 
     <div class="relative mb-5">
@@ -133,7 +133,7 @@
             >
               <DialogPanel class="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <div class="flex items-center justify-between mb-5 pb-5 border-b border-body">
-                  <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? 'Edit Tasks' :translatedObject.addTaskBtn }}</DialogTitle>
+                  <DialogTitle as="h3" class="text-xl font-bold text-black">{{ isTaskEditing ? translatedObject.editTaskLabel  :translatedObject.addTaskLabel }}</DialogTitle>
                   <button class="w-7 h-7 bg-body rounded-md flex items-center justify-center"
                           @click="toggleAddTaskModal(false)">
                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,7 +164,7 @@
                   <button class="btn btn-light-sky mr-5" type="button" @click="toggleAddTaskModal(false)">
                     {{ translatedObject.cancelBtn }}
                   </button>
-                  <button type="button" class="btn btn-sky" @click="isTaskEditing?editTask():addTask()">
+                  <button type="button" class="btn btn-sky" @click="addTask" :disabled="loading">
                     <SpinnerComponent v-if="loading"/>
                     {{translatedObject.saveBtn}}</button>
                 </div>
@@ -264,6 +264,9 @@ export default {
             const addedTask = response.data.data
             const newTask = {id: addedTask.id, name: addedTask.name}
             this.selectedTasks.push(newTask)
+            if(this.isTaskEditing){
+              this.selectedTasks = this.selectedTasks.filter(task => task.id !==this.task.id)
+            }
             this.emitter.emit("selected-task", this.selectedTasks);
             this.toggleAddTaskModal(false)
             this.loading = false
@@ -278,7 +281,7 @@ export default {
       this.toggleAddTaskModal(true)
       this.task = {...task}
     },
-    editTask(){
+   /* editTask(){
       // eslint-disable-next-line no-undef
       this.loading = true
       axios.put(`task-lists/${this.task.id}`, {
@@ -294,7 +297,7 @@ export default {
         this.taskErrors = error.response.data.errors
         this.loading = false
       })
-    },
+    },*/
     deleteTask(){
       this.selectedTasks = this.selectedTasks.filter(task => task.id !== this.taskDeletingID)
       this.emitter.emit("selected-task", this.selectedTasks);
