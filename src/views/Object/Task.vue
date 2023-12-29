@@ -236,9 +236,7 @@ export default {
     sendTask() {
       if (this.selectedTask) {
         this.selectedTasks.push(this.selectedTask)
-        this.selectedTasks = [...new Map(this.selectedTasks.filter(Boolean).map(item =>
-            [item['id'], item])).values()];
-        console.log('sdsfd', this.selectedTasks)
+        this.selectedTasks = [...new Map(this.selectedTasks.filter(Boolean).map(item => [item['id'], item])).values()];
         this.emitter.emit("selected-task", this.selectedTasks);
         this.selectedTask = null
       }

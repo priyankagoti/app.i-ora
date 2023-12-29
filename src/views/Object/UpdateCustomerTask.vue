@@ -44,7 +44,7 @@
       </div>
       <small
           class="text-danger"
-      >{{ addErrorMsg }}</small>
+      >{{ selectErrorMsg }}</small>
     </div>
 
     <div class="relative mb-5">
@@ -165,13 +165,16 @@
                       type="text"
                   />
                   <small
+                      class="text-danger"
+                  > {{ addErrorMsg }}</small>
+                  <small
                       v-if="taskErrors && taskErrors.name"
                       class="text-danger"
-                  >{{ taskErrors.name[0] }}</small>
+                  > {{ taskErrors.name[0] }}</small>
                 </div>
                 <div class="mt-5 flex justify-end">
                   <button class="btn btn-light-sky mr-5" type="button"
-                          @click="$event => {toggleAddTaskModal(false)}">{{translatedObject.cancelBtn}}
+                          @click="toggleAddTaskModal(false)">{{ translatedObject.cancelBtn }}
                   </button>
                   <button class="btn btn-sky" type="button" @click="isTaskEditing?editTask():addTask('new')" :disabled="loading">
                     <SpinnerComponent v-if="loading"/>
@@ -220,6 +223,7 @@ export default {
       search_task: '',
       taskDeletingID: '',
       isAddTaskModalOpen: false,
+      selectErrorMsg: '',
       addErrorMsg: '',
       taskErrors: {},
       loading:false,
@@ -270,18 +274,17 @@ export default {
     addTask(addType) {
       // eslint-disable-next-line no-undef
       this.loading = true
+      this.addErrorMsg = ''
+      this.selectErrorMsg = ''
       const payload = {
         object_id: this.objectID
       }
       if (this.selectedTask || this.task?.name?.length > 0) {
-        this.addErrorMsg = ''
-
         if (addType === 'selected') {
           Object.assign(payload, {task_list_id: this.selectedTask.id})
         } else if (addType === 'new') {
           Object.assign(payload, {name: this.task.name})
         }
-        console.log('payload', payload)
         axios.post('tasks', payload)
             .then(() => {
               this.toggleAddTaskModal(false)
@@ -294,7 +297,11 @@ export default {
               this.loading = false
             })
       } else {
-        this.addErrorMsg = 'You should select task or add new task name.'
+        if (addType === 'selected') {
+          this.selectErrorMsg = 'You should select task first'
+        } else if (addType === 'new') {
+          this.addErrorMsg = 'Task name is required'
+        }
         this.loading = false
       }
 
@@ -330,6 +337,8 @@ export default {
       this.taskErrors = {}
       this.task = {}
       this.selectedTask = null
+      this.addErrorMsg = ''
+      this.selectErrorMsg = ''
     },
   },
   setup() {
