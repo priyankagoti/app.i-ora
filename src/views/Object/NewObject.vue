@@ -666,7 +666,10 @@
     </div>
     <div class="grid grid-cols-2 gap-30">
       <!--              All Task                  -->
-      <TaskComponent ref="taskDetails" :objectID="objectID"/>
+      <div>
+        <UpdateCustomerTask v-if="isEditing" :objectID="objectID"/>
+        <TaskComponent v-else/>
+      </div>
 
       <ObjectHistory  v-if="isEditing"  :object-history="form.objectHistory" :objectID="objectID"/>
     </div>
@@ -806,6 +809,7 @@ import ConfirmationModal from "../../components/ConfirmationModal.vue";
 import SpinnerComponent from "../../components/Spinner.vue";
 import MultiCheckbox from "@/components/MultiCheckbox";
 import TaskComponent from "@/views/Object/Task";
+import UpdateCustomerTask from "@/views/Object/UpdateCustomerTask.vue";
 import ObjectHistory from "@/views/Object/ObjectHistory";
 import VueMultiselect from 'vue-multiselect'
 import "vue-multiselect/dist/vue-multiselect.css"
@@ -823,13 +827,14 @@ export default {
     SpinnerComponent,
     MultiCheckbox,
     VueMultiselect,
-    TaskComponent,
-    ObjectHistory,
     TransitionRoot,
     TransitionChild,
     Dialog,
     DialogPanel,
-    DialogTitle
+    DialogTitle,
+    TaskComponent,
+    UpdateCustomerTask,
+    ObjectHistory,
   },
   data() {
     return {
@@ -931,7 +936,7 @@ export default {
   },
   mounted() {
     this.emitter.on("selected-task", (selectedTask) => {
-      // console.log('selectedTask from parent',selectedTask.map(task=>task.id))
+      console.log('selectedTask from parent', selectedTask.map(task => task.id))
       this.task_list_ids = selectedTask.map(task => task.id)
     });
     this.hours = this.padNumber(this.hours);
