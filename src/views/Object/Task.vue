@@ -25,19 +25,24 @@
         <span>{{translatedObject.addTaskLabel}}</span>
       </button>
     </div>
-    <div class="flex items-center justify-items-center mb-4 w-full">
-      <VueMultiselect
-          v-model="selectedTask"
-          :close-on-select="true"
-          :options="tasks"
-          class="mr-4"
-          label="name"
-          placeholder="Select Task"
-          track-by="id"
+    <div class="mb-4">
+      <div class="flex items-center justify-items-center mb-1 w-full">
+        <VueMultiselect
+            v-model="selectedTask"
+            :close-on-select="true"
+            :options="tasks"
+            class="mr-4"
+            label="name"
+            placeholder="Select Task"
+            track-by="id"
 
-      >
-      </VueMultiselect>
-      <button class="btn btn-sky" @click="sendTask">{{ translatedObject.add }}</button>
+        >
+        </VueMultiselect>
+        <button class="btn btn-sky" @click="sendTask">{{ translatedObject.add }}</button>
+      </div>
+      <small
+          class="text-danger"
+      >{{ selectTaskErrorMsg }}</small>
     </div>
 
     <div class="relative mb-5">
@@ -209,7 +214,8 @@ export default {
       taskDeletingID: '',
       loading: false,
       taskErrors: {},
-      isAddTaskModalOpen: false
+      isAddTaskModalOpen: false,
+      selectTaskErrorMsg: ''
     }
   },
   computed:{
@@ -239,6 +245,9 @@ export default {
         this.selectedTasks = [...new Map(this.selectedTasks.filter(Boolean).map(item => [item['id'], item])).values()];
         this.emitter.emit("selected-task", this.selectedTasks);
         this.selectedTask = null
+        this.selectTaskErrorMsg = ''
+      } else {
+        this.selectTaskErrorMsg = 'You should select task first'
       }
     },
     async fetchTask() {
