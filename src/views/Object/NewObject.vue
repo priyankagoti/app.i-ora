@@ -655,7 +655,7 @@
             label="first_name"
             track-by="first_name"
             :placeholder="translatedObject.enterEmployeeName"
-            @select="event => toggleAlertModal(true,event)"
+            @select="event => checkObjects(event)"
         >
         </VueMultiselect>
         <small
@@ -895,7 +895,8 @@ export default {
       empObjects: [],
       selectedEmpId:null,
       loading: false,
-      isAlertModalOpen: false
+      isAlertModalOpen: false,
+      userObjects: 0
     };
   },
   computed:{
@@ -952,22 +953,22 @@ export default {
     }
   },
   methods: {
-    toggleAlertModal(s,e) {
-      if(s){
-        this.selectedEmpId = e.id
-        this.fetchEmpObjects()
+    async checkObjects(e){
+      this.selectedEmpId = e.id
+      await this.fetchEmpObjects()
+      if(this.userObjects>10){
+        this.toggleAlertModal(true)
       }
       else {
         this.selectedEmpId=null
       }
+    },
+    toggleAlertModal(s) {
       this.isAlertModalOpen= s;
     },
     selectNo(s){
       this.form.employee_id =this.form.employee_id.filter(e => e.id !== this.selectedEmpId)
       this.toggleAlertModal(s)
-    },
-    onChange(value) {
-      this.emitter.emit('change', value);
     },
     changePDF(){
       this.pdfs=this.$refs.pdfFile.files
@@ -1050,10 +1051,12 @@ export default {
           })
           .catch(()=>{})
     },
-    fetchEmpObjects(){
-      axios.get(`object/user/${this.selectedEmpId}`)
+    async fetchEmpObjects(){
+      await axios.get(`object/user/${this.selectedEmpId}`)
           .then(res =>{
             this.empObjects = res.data.object
+            this.userObjects = res.data.total_user_object
+            console.log('userObjects',this.userObjects)
           })
     },
     confirmSave(){
