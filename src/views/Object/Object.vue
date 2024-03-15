@@ -221,13 +221,13 @@
   >
     <template v-slot:body>
       <div class="flex">
-        <p class="label font-semibold"> &#x25cf; Assigned Employee:</p>
+        <p class="label font-semibold"> &#x25cf; {{translatedObject.assignedEmployee}}:</p>
         <ul class="text-sm font-normal ml-1.5">
           <li v-for="(employee, index) in assignedEmployees" :key="employee.id">{{index+1}}. {{employee.first_name}} {{employee.last_name}}</li>
         </ul>
       </div>
       <div>
-        <label class="label font-semibold">&#x25cf; Objects without this object</label>
+        <label class="label font-semibold">&#x25cf; {{translatedObject.objectsWithoutThisObject}}</label>
         <select class="input" v-model="this.newObjectId">
           <option :value="null" selected disabled>Select Customer</option>
           <option v-for="object in unassignedObjects" :key="object.id" :value="object.id">{{object.client_name}}</option>
