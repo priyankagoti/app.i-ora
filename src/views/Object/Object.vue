@@ -229,7 +229,7 @@
       <div>
         <label class="label font-semibold">&#x25cf; {{translatedObject.objectsWithoutThisObject}}</label>
         <select class="input" v-model="this.newObjectId">
-          <option :value="null" selected disabled>Select Customer</option>
+          <option :value="null" selected disabled>{{translatedObject.selectCustomer}}</option>
           <option v-for="object in unassignedObjects" :key="object.id" :value="object.id">{{object.client_name}}</option>
         </select>
       </div>
