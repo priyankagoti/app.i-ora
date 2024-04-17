@@ -605,7 +605,11 @@ export default {
       }
       formData.append('status',1)
       // eslint-disable-next-line no-undef
-      axios.post('employee',formData)
+      axios.post('employee',formData, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
+      })
       .then(()=>{
         this.loading = false
         this.toggleConfSuccess(true)
@@ -647,7 +651,11 @@ export default {
       formData.append('status',1)
       formData.append('_method','put')
       // eslint-disable-next-line no-undef
-      axios.post(`employee/${this.employee.id}`,formData)
+      axios.post(`employee/${this.employee.id}`,formData, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
+      })
           .then(()=>{
             this.toggleConfSuccess(true)
             this.emitter.emit("employee.refresh");

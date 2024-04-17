@@ -141,6 +141,10 @@ export default {
       axios.post(`remove-profile`,{
         user_id: this.auth_user_id,
         profile:''
+      }, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
       })
           .then(() => {
            this.fetchAuthUser()
@@ -179,7 +183,11 @@ export default {
       }
 
       // eslint-disable-next-line no-undef
-      axios.post('edit-profile',formData)
+      axios.post('edit-profile',formData, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
+      })
           .then(() => {
             this.errors = {}
             this.emitter.emit('profile-edit')

@@ -127,7 +127,7 @@
           >{{ errors.start_date[0] }}</small>
         </div>
         <div class="col-span-6 md:col-span-3 lg:col-span-2">
-          <label class="label" for="PhoneNumber">{{translatedObject.phoneNumberLabel}}</label>
+          <label class="label" for="PhoneNumber">{{translatedObject.phoneNumberLabel}} *</label>
           <input
               type="text"
               id="PhoneNumber"
@@ -1115,7 +1115,11 @@ export default {
         }
       }
 
-      axios.post('object',formData)
+      axios.post('object',formData,{
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
+      })
           .then(()=>{
             this.toggleConfSuccess(true)
             this.loading = false
@@ -1165,7 +1169,11 @@ export default {
         }
       }
       formData.append('_method','put')
-      axios.post(`object/${this.objectID}`,formData)
+      axios.post(`object/${this.objectID}`,formData, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
+      })
           .then(()=>{
             this.toggleConfSuccess(true)
             this.loading = false
@@ -1180,7 +1188,11 @@ export default {
           })
     },
     deletePdf(id){
-      axios.delete(`object-documents/${id}`)
+      axios.delete(`object-documents/${id}`,{
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
+      })
           .then(()=>{
             this.fetchObject()
             this.toggleConfDeletePdf(false)

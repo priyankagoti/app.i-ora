@@ -56,7 +56,11 @@ const actions = {
       return dispatch('validate')
     }
     // eslint-disable-next-line no-undef
-    return axios.post('auth/login', form).then(response => {
+    return axios.post('auth/login', form, {
+      headers:{
+        'Accept-Language': this.translatedLang.value
+      }
+    }).then(response => {
       commit('SET_TOKEN', response.data.data.token)
       commit('SET_USER', response.data.data.user)
       return response
