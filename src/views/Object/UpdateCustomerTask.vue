@@ -285,7 +285,11 @@ export default {
         } else if (addType === 'new') {
           Object.assign(payload, {name: this.task.name})
         }
-        axios.post('tasks', payload)
+        axios.post('tasks', payload, {
+          headers:{
+            'Accept-Language': this.translatedLang.value
+          }
+        })
             .then(() => {
               this.toggleAddTaskModal(false)
               this.fetchTask()
@@ -312,6 +316,10 @@ export default {
       axios.put(`tasks/${this.task.id}`, {
         name: this.task.name,
         object_id: this.objectID
+      }, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
       })
           .then(() => {
             this.toggleAddTaskModal(false)
@@ -326,7 +334,11 @@ export default {
     },
     deleteTask() {
       // eslint-disable-next-line no-undef
-      axios.delete(`tasks/${this.taskDeletingID}`)
+      axios.delete(`tasks/${this.taskDeletingID}`, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
+      })
           .then(() => {
             this.toggleConfDeleteTask(false)
             this.fetchTask()

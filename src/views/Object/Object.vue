@@ -350,7 +350,11 @@ export default {
     },
     deleteObject(){
       this.deleteLoading = true
-      axios.delete(`delete-old-object-assign-new-object/${this.deletingId}/${this.newObjectId}`)
+      axios.delete(`delete-old-object-assign-new-object/${this.deletingId}/${this.newObjectId}`, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
+      })
           .then(()=>{
             this.fetch()
             this.toggleConfDelete(false)

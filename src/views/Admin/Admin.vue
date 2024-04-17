@@ -288,7 +288,11 @@ export default {
     },
     destroy() {
       // eslint-disable-next-line no-undef
-      axios.delete(`employee/${this.deletingId}`)
+      axios.delete(`employee/${this.deletingId}`, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
+      })
           .then(() => {
             this.emitter.emit("employee.refresh")
             this.toggleConfDelete(false)

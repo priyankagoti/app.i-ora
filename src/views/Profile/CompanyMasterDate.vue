@@ -230,6 +230,10 @@ export default {
         billing_postcode: this.company.billing_postcode,
         billing_city: this.company.billing_city,
         billing_country_id: this.company.billing_country_id,
+      }, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
       })
           .then(() => {
             this.errors = {}

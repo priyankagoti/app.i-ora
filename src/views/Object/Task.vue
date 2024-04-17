@@ -266,6 +266,10 @@ export default {
       this.loading = true
       axios.post('task-lists', {
         name: this.task.name,
+      }, {
+        headers:{
+          'Accept-Language': this.translatedLang.value
+        }
       })
           .then((response) => {
             const addedTask = response.data.data

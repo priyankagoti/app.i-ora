@@ -357,7 +357,11 @@ export default {
         formData.append('password',this.form.password )
         formData.append('password_confirmation',this.form.password_confirmation)
         // eslint-disable-next-line no-undef
-        axios.post('auth/register',formData)
+        axios.post('auth/register',formData, {
+          headers:{
+            'Accept-Language': this.translatedLang.value
+          }
+        })
             .then(() => {
               // const user =
               // window.localStorage.setItem('auth.user', JSON.stringify(state))
