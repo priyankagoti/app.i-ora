@@ -314,7 +314,7 @@
                   >{{ errors.phone_number[0] }}</small>
                 </div>
                 <div class="col-span-2">
-                  <label class="label" for="JoinDate">{{translatedObject.joinDate}}</label>
+                  <label class="label" for="JoinDate">{{translatedObject.joinDate}} *</label>
                   <input
                     type="date"
                     id="JoinDate"
@@ -349,6 +349,7 @@
                   <label class="label" for="VacationDays"
                     >{{translatedObject.vacationLabel}} *</label
                   >
+                  {{form.amount_of_vacation_days}}
                   <input
                     type="text"
                     id="VacationDays"
@@ -640,9 +641,9 @@ export default {
       formData.append('country_id',this.form.country_id)
       formData.append('phone_number',this.form.phone_number)
       formData.append('join_date',this.form.join_date)
-      formData.append('employee_number',this.form.employee_number)
-      formData.append('amount_of_vacation_days',this.form.amount_of_vacation_days)
-      formData.append('amount_of_hours_work',this.form.amount_of_hours_work)
+      formData.append('employee_number',this.form.employee_number ?? "")
+      formData.append('amount_of_vacation_days',this.form.amount_of_vacation_days ?? "")
+      formData.append('amount_of_hours_work',this.form.amount_of_hours_work ?? "")
       if(this.object_ids.length>0){
         for(let i=0; i<this.object_ids.length; i++){
           formData.append(`object_ids[${i}]`,this.object_ids[i].id)
