@@ -370,12 +370,10 @@ export default {
             .catch(error => {
               this.errors = error.response.data.errors
               this.errMsg = ''
-              // console.log(error.response.data.errors)
             })
       }
       else {
         this.errMsg = 'Read all privacy policy and terms and conditions.'
-        // console.log('Read all privacy policy and terms and conditions.')
       }
     }
   }

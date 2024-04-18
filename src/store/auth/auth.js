@@ -58,7 +58,7 @@ const actions = {
     // eslint-disable-next-line no-undef
     return axios.post('auth/login', form, {
       headers:{
-        'Accept-Language': this.translatedLang.value
+        'Accept-Language': getters.getLanguage.value
       }
     }).then(response => {
       commit('SET_TOKEN', response.data.data.token)

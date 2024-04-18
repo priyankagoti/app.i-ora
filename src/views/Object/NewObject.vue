@@ -937,7 +937,6 @@ export default {
   },
   mounted() {
     this.emitter.on("selected-task", (selectedTask) => {
-      console.log('selectedTask from parent', selectedTask.map(task => task.id))
       this.task_list_ids = selectedTask.map(task => task.id)
     });
     this.hours = this.padNumber(this.hours);
@@ -1056,7 +1055,6 @@ export default {
           .then(res =>{
             this.empObjects = res.data.object
             this.userObjects = res.data.total_user_object
-            console.log('userObjects',this.userObjects)
           })
     },
     confirmSave(){

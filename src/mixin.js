@@ -1,9 +1,6 @@
 import store from "@/store";
 
 export default {
-    mounted() {
-        // console.log(this.jsonFile)
-    },
     computed:{
         auth_user(){
            return  store.getters["auth/getUser"]
@@ -37,12 +34,9 @@ export default {
                }
            })
                 .then(response => {
-                    // console.log(response)
                     this.jsonFile = response.data
-                    // return response.data.text;
                 })
-                .catch(error => {
-                    console.error(error);
+                .catch(() => {
                     return ''; // Return an empty string or handle error as per your requirements
                 });
         },
